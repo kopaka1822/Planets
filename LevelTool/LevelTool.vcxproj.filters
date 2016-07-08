@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Console">
+      <UniqueIdentifier>{c5332aea-f8d7-4b60-97fa-f932c4727b59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{a75c8b41-a06f-4421-85d2-34d3c9817061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\NFD">
+      <UniqueIdentifier>{e783464b-8a44-4068-8de0-ffaa8381b1af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{c9cbf085-a537-44c3-be2a-5f48d20d6361}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\LevelTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Console\Console.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Console\LevelToolApp.cpp">
+      <Filter>Source Files\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_common.c">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_win.cpp">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\DialogOpenFile.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\DialogSaveFile.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Directory.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\Console\Console.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\ConsoleMenu.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\ConsoleApp.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\ConsoleState.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\LevelToolApp.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\StateReadSave.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\StateMenu.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DialogOpenFile.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DialogSaveFile.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Directory.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\SDL\dirent.h">
+      <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Console\StateSaveAnalyse.h">
+      <Filter>Source Files\Console</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

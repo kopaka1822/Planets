@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ServerLinux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ServerLinux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ServerLinux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-O3" />
+			<Add option="-Wnon-virtual-dtor" />
+			<Add option="-Winit-self" />
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wunreachable-code" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-std=c++11" />
+			<Add option="-fexceptions" />
+			<Add option="-Wunused-value" />
+			<Add option="-Wunused-variable" />
+			<Add option="-Wc++11-compat" />
+			<Add option="-Wmaybe-uninitialized" />
+		</Compiler>
+		<Linker>
+			<Add library="SDL2" />
+			<Add library="SDL2_net" />
+		</Linker>
+		<Unit filename="../../Source/Console/Console.cpp" />
+		<Unit filename="../../Source/Console/Console.h" />
+		<Unit filename="../../Source/Game/BomberHuntTask.cpp" />
+		<Unit filename="../../Source/Game/BomberHuntTask.h" />
+		<Unit filename="../../Source/Game/HuntTask.cpp" />
+		<Unit filename="../../Source/Game/HuntTask.h" />
+		<Unit filename="../../Source/Game/LocalEntity.h" />
+		<Unit filename="../../Source/Game/LocalEntityBomber.h" />
+		<Unit filename="../../Source/Game/LocalEntitySaboteur.h" />
+		<Unit filename="../../Source/Game/LocalEntitySpeeder.h" />
+		<Unit filename="../../Source/Game/LocalMap.cpp" />
+		<Unit filename="../../Source/Game/LocalMap.h" />
+		<Unit filename="../../Source/Game/LocalMapServer.cpp" />
+		<Unit filename="../../Source/Game/LocalMapServer.h" />
+		<Unit filename="../../Source/Game/LocalPlanet.h" />
+		<Unit filename="../../Source/Game/Map.cpp" />
+		<Unit filename="../../Source/Game/Map.h" />
+		<Unit filename="../../Source/Game/MapEntity.cpp" />
+		<Unit filename="../../Source/Game/MapEntity.h" />
+		<Unit filename="../../Source/Game/MapLoader.h" />
+		<Unit filename="../../Source/Game/MapObject.h" />
+		<Unit filename="../../Source/Game/MapPlanet.h" />
+		<Unit filename="../../Source/Game/NetClock.h" />
+		<Unit filename="../../Source/Game/PacketTypes.h" />
+		<Unit filename="../../Source/Game/PlanetAttackTask.cpp" />
+		<Unit filename="../../Source/Game/PlanetAttackTask.h" />
+		<Unit filename="../../Source/Game/PlanetTask.cpp" />
+		<Unit filename="../../Source/Game/PlanetTask.h" />
+		<Unit filename="../../Source/Game/PlayerAI.cpp" />
+		<Unit filename="../../Source/Game/PlayerAI.h" />
+		<Unit filename="../../Source/Game/UniformGrid.cpp" />
+		<Unit filename="../../Source/Game/UniformGrid.h" />
+		<Unit filename="../../Source/MultiServerMain.cpp" />
+		<Unit filename="../../Source/Server/Client.h" />
+		<Unit filename="../../Source/Server/CommmandHandler.h" />
+		<Unit filename="../../Source/Server/GameServer.h" />
+		<Unit filename="../../Source/Server/GameServerNormal.cpp" />
+		<Unit filename="../../Source/Server/GameServerNormal.h" />
+		<Unit filename="../../Source/Server/GameServerNormalDynMap.cpp" />
+		<Unit filename="../../Source/Server/GameServerNormalDynMap.h" />
+		<Unit filename="../../Source/Server/MultiGameLobby.cpp" />
+		<Unit filename="../../Source/Server/MultiGameLobby.h" />
+		<Unit filename="../../Source/Server/NetHost.cpp" />
+		<Unit filename="../../Source/Server/NetHost.h" />
+		<Unit filename="../../Source/Server/NetServer.h" />
+		<Unit filename="../../Source/Server/NetStreamIn.h" />
+		<Unit filename="../../Source/Server/NetStreamOut.h" />
+		<Unit filename="../../Source/Server/Server.h" />
+		<Unit filename="../../Source/Server/ServerOutput.cpp" />
+		<Unit filename="../../Source/Server/ServerOutput.h" />
+		<Unit filename="../../Source/Server/UDPServer.h" />
+		<Unit filename="../../Source/Utility/DataContainer.h" />
+		<Unit filename="../../Source/Utility/Directory.cpp" />
+		<Unit filename="../../Source/Utility/Directory.h" />
+		<Unit filename="../../Source/Utility/Exception.h" />
+		<Unit filename="../../Source/Utility/FastVector.h" />
+		<Unit filename="../../Source/Utility/FileException.h" />
+		<Unit filename="../../Source/Utility/Line.h" />
+		<Unit filename="../../Source/Utility/LinkedIDList.h" />
+		<Unit filename="../../Source/Utility/LockGuard.h" />
+		<Unit filename="../../Source/Utility/Mutex.h" />
+		<Unit filename="../../Source/Utility/Point.h" />
+		<Unit filename="../../Source/Utility/Rect.h" />
+		<Unit filename="../../Source/Utility/SDL_Exception.h" />
+		<Unit filename="../../Source/Utility/Thread.h" />
+		<Unit filename="../../Source/Utility/Timer.cpp" />
+		<Unit filename="../../Source/Utility/Timer.h" />
+		<Unit filename="../../Source/Utility/Tools.h" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

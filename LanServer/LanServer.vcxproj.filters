@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{f028f3a4-46c7-49c2-b256-eb55ce11e4b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{9e4cf7e7-d3f4-446c-86af-6ee4a5caa25b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Server">
+      <UniqueIdentifier>{4afcd7e0-cdca-4214-b45a-44b68db4123c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{12862604-cf78-48be-96c0-a1bdb6598a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\NFD">
+      <UniqueIdentifier>{0a832413-0ce3-458f-b186-78d1d85d2782}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{2d6644a7-e493-4e0f-8cf2-b5fa3f984376}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\LanMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\DialogOpenFile.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Timer.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Server\GameServerNormal.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Server\GameServerNormalFixedMap.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_common.c">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_win.cpp">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Server\NetHost.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMap.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMapServer.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\MapEntity.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\UniformGrid.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Map.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\System\System.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DataContainer.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DialogOpenFile.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FastVector.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FileException.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Line.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\LinkedIDList.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Mutex.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Point.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Thread.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Timer.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Tools.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\GameServer.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\GameServerNormal.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\GameServerNormalFixedMap.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\UDPServer.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\filedialog\common.h">
+      <Filter>Extern\NFD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\filedialog\nfd_common.h">
+      <Filter>Extern\NFD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\NetHost.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntity.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntityBomber.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntitySaboteur.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntitySpeeder.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMap.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMapServer.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalPlanet.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Map.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapEntity.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapLoader.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapObject.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapPlanet.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\NetClock.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\PacketTypes.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\UniformGrid.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

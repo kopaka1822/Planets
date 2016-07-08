@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="ClientLinux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/ClientLinux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/ClientLinux" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wredundant-decls" />
+			<Add option="-Wmissing-include-dirs" />
+			<Add option="-std=c++11" />
+			<Add option="-DSETTINGS_FULL" />
+			<Add directory="../../Source/freetype" />
+			<Add directory="/usr/include/gtk-2.0" />
+			<Add directory="/usr/include/glib-2.0" />
+			<Add directory="/usr/lib/x86_64-linux-gnu/glib-2.0/include" />
+			<Add directory="/usr/include/cairo" />
+			<Add directory="/usr/include/pixman-1" />
+			<Add directory="/usr/include/pango-1.0" />
+			<Add directory="/usr/lib/x86_64-linux-gnu/gtk-2.0/include" />
+			<Add directory="/usr/include/gdk-pixbuf-2.0" />
+			<Add directory="/usr/include/atk-1.0" />
+		</Compiler>
+		<Linker>
+			<Add library="GL" />
+			<Add library="GLEW" />
+			<Add library="SDL2" />
+			<Add library="SDL2_net" />
+			<Add library="SDL2_mixer" />
+			<Add library="png12" />
+			<Add library="z" />
+			<Add library="freetype" />
+			<Add library="glib-2.0" />
+			<Add library="cairo" />
+			<Add library="pango-1.0" />
+			<Add library="gobject-2.0" />
+			<Add library="gdk-x11-2.0" />
+			<Add library="pangocairo-1.0" />
+			<Add library="gdk_pixbuf-2.0" />
+			<Add library="gtk-x11-2.0" />
+			<Add library="atk-1.0" />
+			<Add library="gio-2.0" />
+			<Add library="pangoft2-1.0" />
+			<Add library="fontconfig" />
+		</Linker>
+		<Unit filename="../../Source/Framework/Color.h" />
+		<Unit filename="../../Source/Framework/Database.cpp" />
+		<Unit filename="../../Source/Framework/Database.h" />
+		<Unit filename="../../Source/Framework/Drawing.cpp" />
+		<Unit filename="../../Source/Framework/Drawing.h" />
+		<Unit filename="../../Source/Framework/Font.cpp" />
+		<Unit filename="../../Source/Framework/Font.h" />
+		<Unit filename="../../Source/Framework/FramebufferObject.h" />
+		<Unit filename="../../Source/Framework/Framework.cpp" />
+		<Unit filename="../../Source/Framework/Framework.h" />
+		<Unit filename="../../Source/Framework/GameState.h" />
+		<Unit filename="../../Source/Framework/Graphic.cpp" />
+		<Unit filename="../../Source/Framework/Graphic.h" />
+		<Unit filename="../../Source/Framework/HSVColorDisc.h" />
+		<Unit filename="../../Source/Framework/Header.h" />
+		<Unit filename="../../Source/Framework/Input.cpp" />
+		<Unit filename="../../Source/Framework/Input.h" />
+		<Unit filename="../../Source/Framework/MapDrawer.h" />
+		<Unit filename="../../Source/Framework/MenuState.h" />
+		<Unit filename="../../Source/Framework/MiniMap.h" />
+		<Unit filename="../../Source/Framework/MusicFile.cpp" />
+		<Unit filename="../../Source/Framework/MusicFile.h" />
+		<Unit filename="../../Source/Framework/ServerStartPage.h" />
+		<Unit filename="../../Source/Framework/Settings.cpp" />
+		<Unit filename="../../Source/Framework/Settings.h" />
+		<Unit filename="../../Source/Framework/Shader.cpp" />
+		<Unit filename="../../Source/Framework/Shader.h" />
+		<Unit filename="../../Source/Framework/ShaderBrightFilter.h" />
+		<Unit filename="../../Source/Framework/ShaderCartoon.h" />
+		<Unit filename="../../Source/Framework/ShaderCirlce.h" />
+		<Unit filename="../../Source/Framework/ShaderCool.h" />
+		<Unit filename="../../Source/Framework/ShaderDisk.h" />
+		<Unit filename="../../Source/Framework/ShaderPlanet.h" />
+		<Unit filename="../../Source/Framework/ShaderRadialBlur.h" />
+		<Unit filename="../../Source/Framework/ShaderStory.h" />
+		<Unit filename="../../Source/Framework/ShaderTexAdd.h" />
+		<Unit filename="../../Source/Framework/ShaderWave.h" />
+		<Unit filename="../../Source/Framework/Sound.cpp" />
+		<Unit filename="../../Source/Framework/Sound.h" />
+		<Unit filename="../../Source/Framework/SoundEffect.cpp" />
+		<Unit filename="../../Source/Framework/SoundEffect.h" />
+		<Unit filename="../../Source/Framework/StateAchiev.h" />
+		<Unit filename="../../Source/Framework/StateColor.h" />
+		<Unit filename="../../Source/Framework/StateConnect.h" />
+		<Unit filename="../../Source/Framework/StateEditor.cpp" />
+		<Unit filename="../../Source/Framework/StateEditor.h" />
+		<Unit filename="../../Source/Framework/StateEditorTeams.h" />
+		<Unit filename="../../Source/Framework/StateError.h" />
+		<Unit filename="../../Source/Framework/StateExtras.h" />
+		<Unit filename="../../Source/Framework/StateGame.cpp" />
+		<Unit filename="../../Source/Framework/StateGame.h" />
+		<Unit filename="../../Source/Framework/StateGameMulti.h" />
+		<Unit filename="../../Source/Framework/StateGameOver.h" />
+		<Unit filename="../../Source/Framework/StateGameSingle.h" />
+		<Unit filename="../../Source/Framework/StateInit.h" />
+		<Unit filename="../../Source/Framework/StateLevelpackEditor.h" />
+		<Unit filename="../../Source/Framework/StateLevelpackWin.h" />
+		<Unit filename="../../Source/Framework/StateMulLobby.h" />
+		<Unit filename="../../Source/Framework/StateMulLobbyDyn.h" />
+		<Unit filename="../../Source/Framework/StateMulLobbyFixed.h" />
+		<Unit filename="../../Source/Framework/StateMultiName.h" />
+		<Unit filename="../../Source/Framework/StateOptions.h" />
+		<Unit filename="../../Source/Framework/StatePause.h" />
+		<Unit filename="../../Source/Framework/StateServerSelect.h" />
+		<Unit filename="../../Source/Framework/StateSingle.h" />
+		<Unit filename="../../Source/Framework/Texture.cpp" />
+		<Unit filename="../../Source/Framework/Texture.h" />
+		<Unit filename="../../Source/Framework/ThemeMixer.h" />
+		<Unit filename="../../Source/Framework/UIAchievLister.h" />
+		<Unit filename="../../Source/Framework/UIBoxInput.h" />
+		<Unit filename="../../Source/Framework/UIButton.h" />
+		<Unit filename="../../Source/Framework/UIButtonColor.h" />
+		<Unit filename="../../Source/Framework/UIButtonCross.h" />
+		<Unit filename="../../Source/Framework/UIButtonDetect.h" />
+		<Unit filename="../../Source/Framework/UIButtonDisc.h" />
+		<Unit filename="../../Source/Framework/UIButtonFile.h" />
+		<Unit filename="../../Source/Framework/UIButtonLevel.h" />
+		<Unit filename="../../Source/Framework/UIButtonPause.h" />
+		<Unit filename="../../Source/Framework/UIButtonRect.h" />
+		<Unit filename="../../Source/Framework/UIButtonText.h" />
+		<Unit filename="../../Source/Framework/UIButtonTextBorderless.h" />
+		<Unit filename="../../Source/Framework/UIButtonTextServer.h" />
+		<Unit filename="../../Source/Framework/UIButtonTexture.h" />
+		<Unit filename="../../Source/Framework/UIButtonTextureBorder.h" />
+		<Unit filename="../../Source/Framework/UIChatBox.h" />
+		<Unit filename="../../Source/Framework/UIClanButton.h" />
+		<Unit filename="../../Source/Framework/UIColorSelect.h" />
+		<Unit filename="../../Source/Framework/UICountdownClock.h" />
+		<Unit filename="../../Source/Framework/UIEditorGrid.h" />
+		<Unit filename="../../Source/Framework/UIEditorList.h" />
+		<Unit filename="../../Source/Framework/UIGrid.h" />
+		<Unit filename="../../Source/Framework/UIGridColor.h" />
+		<Unit filename="../../Source/Framework/UIGridEntity.h" />
+		<Unit filename="../../Source/Framework/UIInfoLister.h" />
+		<Unit filename="../../Source/Framework/UIIngamePlayerList.h" />
+		<Unit filename="../../Source/Framework/UIItemLister.h" />
+		<Unit filename="../../Source/Framework/UIItemListerScroll.h" />
+		<Unit filename="../../Source/Framework/UILabel.h" />
+		<Unit filename="../../Source/Framework/UILabelNumber.h" />
+		<Unit filename="../../Source/Framework/UILabelTexture.h" />
+		<Unit filename="../../Source/Framework/UILevelPackList.h" />
+		<Unit filename="../../Source/Framework/UIListEntity.h" />
+		<Unit filename="../../Source/Framework/UIListPlanet.h" />
+		<Unit filename="../../Source/Framework/UIMenu.h" />
+		<Unit filename="../../Source/Framework/UINumEntityType.h" />
+		<Unit filename="../../Source/Framework/UINumPowerTwo.h" />
+		<Unit filename="../../Source/Framework/UINumUpDown.h" />
+		<Unit filename="../../Source/Framework/UINumUpDownInt.h" />
+		<Unit filename="../../Source/Framework/UIObject.cpp" />
+		<Unit filename="../../Source/Framework/UIObject.h" />
+		<Unit filename="../../Source/Framework/UIParticle.h" />
+		<Unit filename="../../Source/Framework/UIPlanet.h" />
+		<Unit filename="../../Source/Framework/UIPlayerList.h" />
+		<Unit filename="../../Source/Framework/UIProgressBar.h" />
+		<Unit filename="../../Source/Framework/UIScrollBar.h" />
+		<Unit filename="../../Source/Framework/UIServerLister.h" />
+		<Unit filename="../../Source/Framework/UISettings.h" />
+		<Unit filename="../../Source/Framework/UISingleplayerGrid.h" />
+		<Unit filename="../../Source/Framework/UIStar.h" />
+		<Unit filename="../../Source/Framework/UIStatsLister.h" />
+		<Unit filename="../../Source/Framework/UITeamMenu.h" />
+		<Unit filename="../../Source/Framework/UITextBox.h" />
+		<Unit filename="../../Source/Framework/UITextInput.h" />
+		<Unit filename="../../Source/Framework/UITooltip.h" />
+		<Unit filename="../../Source/Framework/UITrackbar.h" />
+		<Unit filename="../../Source/Framework/UIWaiting.h" />
+		<Unit filename="../../Source/Framework/UIYNButton.h" />
+		<Unit filename="../../Source/Framework/WaveFile.cpp" />
+		<Unit filename="../../Source/Framework/WaveFile.h" />
+		<Unit filename="../../Source/Framework/Window.cpp" />
+		<Unit filename="../../Source/Framework/Window.h" />
+		<Unit filename="../../Source/Framework/stb_image.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/Framework/stb_image.h" />
+		<Unit filename="../../Source/Game/BomberHuntTask.cpp" />
+		<Unit filename="../../Source/Game/BomberHuntTask.h" />
+		<Unit filename="../../Source/Game/HuntTask.cpp" />
+		<Unit filename="../../Source/Game/HuntTask.h" />
+		<Unit filename="../../Source/Game/LevelSavedata.h" />
+		<Unit filename="../../Source/Game/Levelpack.h" />
+		<Unit filename="../../Source/Game/LocalEntity.h" />
+		<Unit filename="../../Source/Game/LocalEntityBomber.h" />
+		<Unit filename="../../Source/Game/LocalEntitySaboteur.h" />
+		<Unit filename="../../Source/Game/LocalEntitySpeeder.h" />
+		<Unit filename="../../Source/Game/LocalMap.cpp" />
+		<Unit filename="../../Source/Game/LocalMap.h" />
+		<Unit filename="../../Source/Game/LocalMapClassicMode.cpp" />
+		<Unit filename="../../Source/Game/LocalMapClassicMode.h" />
+		<Unit filename="../../Source/Game/LocalMapLazyMode.cpp" />
+		<Unit filename="../../Source/Game/LocalMapLazyMode.h" />
+		<Unit filename="../../Source/Game/LocalMapSingleplayer.cpp" />
+		<Unit filename="../../Source/Game/LocalMapSingleplayer.h" />
+		<Unit filename="../../Source/Game/LocalPlanet.h" />
+		<Unit filename="../../Source/Game/Map.cpp" />
+		<Unit filename="../../Source/Game/Map.h" />
+		<Unit filename="../../Source/Game/MapEntity.cpp" />
+		<Unit filename="../../Source/Game/MapEntity.h" />
+		<Unit filename="../../Source/Game/MapLoader.h" />
+		<Unit filename="../../Source/Game/MapObject.h" />
+		<Unit filename="../../Source/Game/MapPlanet.h" />
+		<Unit filename="../../Source/Game/NetClock.h" />
+		<Unit filename="../../Source/Game/PacketTypes.h" />
+		<Unit filename="../../Source/Game/PlanetAttackTask.cpp" />
+		<Unit filename="../../Source/Game/PlanetAttackTask.h" />
+		<Unit filename="../../Source/Game/PlanetTask.cpp" />
+		<Unit filename="../../Source/Game/PlanetTask.h" />
+		<Unit filename="../../Source/Game/PlayerAI.cpp" />
+		<Unit filename="../../Source/Game/PlayerAI.h" />
+		<Unit filename="../../Source/Game/RemoteEntity.h" />
+		<Unit filename="../../Source/Game/RemoteMap.cpp" />
+		<Unit filename="../../Source/Game/RemoteMap.h" />
+		<Unit filename="../../Source/Game/RemotePlanet.h" />
+		<Unit filename="../../Source/Game/UniformGrid.cpp" />
+		<Unit filename="../../Source/Game/UniformGrid.h" />
+		<Unit filename="../../Source/Game/Version.h" />
+		<Unit filename="../../Source/PlanetsMain.cpp" />
+		<Unit filename="../../Source/Server/Client.h" />
+		<Unit filename="../../Source/Server/CommmandHandler.h" />
+		<Unit filename="../../Source/Server/NetHost.cpp" />
+		<Unit filename="../../Source/Server/NetHost.h" />
+		<Unit filename="../../Source/Server/NetServer.h" />
+		<Unit filename="../../Source/Server/NetStreamIn.h" />
+		<Unit filename="../../Source/Server/NetStreamOut.h" />
+		<Unit filename="../../Source/Server/UDPServer.h" />
+		<Unit filename="../../Source/System/FileReader.h" />
+		<Unit filename="../../Source/System/FileWriter.h" />
+		<Unit filename="../../Source/System/Log.cpp" />
+		<Unit filename="../../Source/System/Log.h" />
+		<Unit filename="../../Source/System/System.h" />
+		<Unit filename="../../Source/System/UDPServer.h" />
+		<Unit filename="../../Source/Utility/DataContainer.h" />
+		<Unit filename="../../Source/Utility/DialogOpenFile.cpp" />
+		<Unit filename="../../Source/Utility/DialogOpenFile.h" />
+		<Unit filename="../../Source/Utility/DialogSaveFile.cpp" />
+		<Unit filename="../../Source/Utility/DialogSaveFile.h" />
+		<Unit filename="../../Source/Utility/Directory.cpp" />
+		<Unit filename="../../Source/Utility/Directory.h" />
+		<Unit filename="../../Source/Utility/Exception.h" />
+		<Unit filename="../../Source/Utility/FastVector.h" />
+		<Unit filename="../../Source/Utility/FileException.h" />
+		<Unit filename="../../Source/Utility/GLEW_Exception.h" />
+		<Unit filename="../../Source/Utility/GL_Exception.h" />
+		<Unit filename="../../Source/Utility/GameError.h" />
+		<Unit filename="../../Source/Utility/Line.h" />
+		<Unit filename="../../Source/Utility/LinkedIDList.h" />
+		<Unit filename="../../Source/Utility/LockGuard.h" />
+		<Unit filename="../../Source/Utility/MIX_Exception.h" />
+		<Unit filename="../../Source/Utility/Mutex.h" />
+		<Unit filename="../../Source/Utility/Point.h" />
+		<Unit filename="../../Source/Utility/Rect.h" />
+		<Unit filename="../../Source/Utility/SDL_Exception.h" />
+		<Unit filename="../../Source/Utility/Semaphore.h" />
+		<Unit filename="../../Source/Utility/Thread.h" />
+		<Unit filename="../../Source/Utility/Timer.cpp" />
+		<Unit filename="../../Source/Utility/Timer.h" />
+		<Unit filename="../../Source/Utility/Tools.h" />
+		<Unit filename="../../Source/filedialog/common.h" />
+		<Unit filename="../../Source/filedialog/nfd_common.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="../../Source/filedialog/nfd_common.h" />
+		<Unit filename="../../Source/filedialog/nfd_gtk.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

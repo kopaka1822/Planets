@@ -1,0 +1,914 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Files\System">
+      <UniqueIdentifier>{984d3bf6-c0c4-48a3-b1f5-372b6471cf10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework">
+      <UniqueIdentifier>{817427aa-b54f-4ba7-96a5-a93e67711ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{0cf2930c-3111-458f-9fae-7b4b41c8a77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{b7054c96-ccc5-48a6-bb28-96d3f7570463}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine">
+      <UniqueIdentifier>{70f5d9c9-452f-4050-8365-26140a8efca5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game">
+      <UniqueIdentifier>{8fea6782-141f-466c-a0e1-f9103ecf4355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Graphics">
+      <UniqueIdentifier>{fa52872d-ab2e-4327-938b-45d6a406bb60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Graphics\OpenGL">
+      <UniqueIdentifier>{f6506a9d-2256-4c2c-8080-cba95dbc4d43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Input">
+      <UniqueIdentifier>{e3140a31-aebe-441e-bbab-32c80b26384e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Graphics\OpenGL\Shader">
+      <UniqueIdentifier>{74f1069c-6844-4ef1-87e0-e099074f9480}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Sound">
+      <UniqueIdentifier>{5e7b595c-6209-43d5-a882-85f3d7c46f66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Engine\Graphics\Texture">
+      <UniqueIdentifier>{936150ea-d8b1-4b70-9765-d22c908a1d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\States">
+      <UniqueIdentifier>{1d868bd8-bff9-4d5e-bc67-93c8619242c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface">
+      <UniqueIdentifier>{9ac61485-7252-406b-8220-202adc3a9ed5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Button">
+      <UniqueIdentifier>{688d0563-2805-411d-97db-afd069837519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\List">
+      <UniqueIdentifier>{0f049c02-1983-4aad-be0e-5ad71f5de2e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Input">
+      <UniqueIdentifier>{6499dc1c-8675-4a1c-9dae-daeceacf3092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Special">
+      <UniqueIdentifier>{6a247065-5375-4ccc-ac5a-47ccbed08508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Editor">
+      <UniqueIdentifier>{371cacde-e160-4d6c-b153-218220f881cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Text">
+      <UniqueIdentifier>{c76fd20e-c42d-43fd-91be-f9c19d0e33b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Numeric">
+      <UniqueIdentifier>{82df5f31-906c-49a4-9d11-61d6bb775398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\Interface\Decoration">
+      <UniqueIdentifier>{29aba397-8a80-41e8-ad41-09260256f0de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game">
+      <UniqueIdentifier>{cb40efc1-3c10-4696-88de-35d924faefd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\States\Extras">
+      <UniqueIdentifier>{e9e8af87-b86a-4d8a-a0f1-6127e3391275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\States\Game">
+      <UniqueIdentifier>{60e567cb-b36f-4dcc-a488-5598cec91e7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\States\Game\Single">
+      <UniqueIdentifier>{da58edac-b27f-4bd3-8531-1e84359df2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Framework\Game\States\Game\Multi">
+      <UniqueIdentifier>{924b3f7f-ee33-412f-a85d-18c3f5672198}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{5d2cec2c-f05c-49ee-bb93-4fddc443772a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern\NFD">
+      <UniqueIdentifier>{ee7fbb1c-16f8-4fc4-bd6d-b6ac97054df5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Server">
+      <UniqueIdentifier>{92177ad3-1587-4838-956f-fec8872ce052}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map">
+      <UniqueIdentifier>{94d58779-778e-444f-aff7-1a5d7c3475b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Level">
+      <UniqueIdentifier>{164c8e2c-bbf8-4f3c-bd31-c7badf6fbed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map\Local">
+      <UniqueIdentifier>{32b6522e-0986-43da-8ec3-5d0c23c383db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map\Server">
+      <UniqueIdentifier>{a88c17b1-f9ef-4726-9a08-c857caf81deb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map\Remote">
+      <UniqueIdentifier>{cbacc534-e27a-4b66-8558-aded9e7a48e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entity">
+      <UniqueIdentifier>{622a85ca-02e0-4f03-b54d-292a36144920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entity\Local">
+      <UniqueIdentifier>{817b4d50-bd89-40c6-8455-cb568906e3a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entity\Server">
+      <UniqueIdentifier>{68bda4a3-973b-4330-a8c6-24e2d78908f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Entity\Remote">
+      <UniqueIdentifier>{4182a8a2-cb7c-46ab-89c8-c9dc1d202a71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map\AI">
+      <UniqueIdentifier>{80265587-cae6-45db-8762-d0c08f2cd57d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\Map\Local\Special">
+      <UniqueIdentifier>{4571ba1b-5e31-439f-9cb9-c5345eaf710f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\PlanetsMain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\System\Log.cpp">
+      <Filter>Source Files\System</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Directory.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\Timer.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Framework.cpp">
+      <Filter>Source Files\Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Drawing.cpp">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Graphic.cpp">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Input.cpp">
+      <Filter>Source Files\Framework\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Shader.cpp">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Sound.cpp">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\stb_image.c">
+      <Filter>Source Files\Framework\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Texture.cpp">
+      <Filter>Source Files\Framework\Engine\Graphics\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\UIObject.cpp">
+      <Filter>Source Files\Framework\Game\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Settings.cpp">
+      <Filter>Source Files\Framework\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Database.cpp">
+      <Filter>Source Files\Framework\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Window.cpp">
+      <Filter>Source Files\Framework\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\Font.cpp">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\MusicFile.cpp">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\WaveFile.cpp">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\SoundEffect.cpp">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\DialogOpenFile.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_common.c">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\filedialog\nfd_win.cpp">
+      <Filter>Extern\NFD</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\StateEditor.cpp">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Utility\DialogSaveFile.cpp">
+      <Filter>Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Server\NetHost.cpp">
+      <Filter>Source Files\Server</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMap.cpp">
+      <Filter>Source Files\Game\Map\Local</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\MapEntity.cpp">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\PlanetAttackTask.cpp">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\PlanetTask.cpp">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\PlayerAI.cpp">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\RemoteMap.cpp">
+      <Filter>Source Files\Game\Map\Remote</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\UniformGrid.cpp">
+      <Filter>Source Files\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Framework\StateGame.cpp">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\HuntTask.cpp">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\BomberHuntTask.cpp">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\Map.cpp">
+      <Filter>Source Files\Game\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMapSingleplayer.cpp">
+      <Filter>Source Files\Game\Map\Local</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMapClassicMode.cpp">
+      <Filter>Source Files\Game\Map\Local\Special</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Source\Game\LocalMapLazyMode.cpp">
+      <Filter>Source Files\Game\Map\Local\Special</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\System\Log.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\System\System.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\System\UDPServer.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\GLEW_Exception.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DataContainer.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Directory.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FastVector.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Line.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\LinkedIDList.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\LockGuard.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Mutex.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Point.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Rect.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\SDL_Exception.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Thread.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Timer.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\GL_Exception.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Framework.h">
+      <Filter>Source Files\Framework</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Semaphore.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Color.h">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Drawing.h">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Font.h">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\FramebufferObject.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Graphic.h">
+      <Filter>Source Files\Framework\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Shader.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderBrightFilter.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderCirlce.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderCool.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderDisk.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderRadialBlur.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderTexAdd.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Sound.h">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\stb_image.h">
+      <Filter>Source Files\Framework\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Texture.h">
+      <Filter>Source Files\Framework\Engine\Graphics\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Window.h">
+      <Filter>Source Files\Framework\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIObject.h">
+      <Filter>Source Files\Framework\Game\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\GameState.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Settings.h">
+      <Filter>Source Files\Framework\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\System\FileWriter.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\System\FileReader.h">
+      <Filter>Source Files\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Tools.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\MenuState.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Database.h">
+      <Filter>Source Files\Framework\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIAchievLister.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIBoxInput.h">
+      <Filter>Source Files\Framework\Game\Interface\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButton.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonColor.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonCross.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonDetect.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonPause.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonRect.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonDisc.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonText.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonTextBorderless.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonTextServer.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonTexture.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonTextureBorder.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIChatBox.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIClanButton.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIColorSelect.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UICountdownClock.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIEditorGrid.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIEditorList.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIGrid.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIGridColor.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIGridEntity.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIInfoLister.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIItemLister.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIIngamePlayerList.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIItemListerScroll.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UILabel.h">
+      <Filter>Source Files\Framework\Game\Interface\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UILabelNumber.h">
+      <Filter>Source Files\Framework\Game\Interface\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateOptions.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIYNButton.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIListPlanet.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIListEntity.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIMenu.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UINumEntityType.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UINumPowerTwo.h">
+      <Filter>Source Files\Framework\Game\Interface\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UINumUpDownInt.h">
+      <Filter>Source Files\Framework\Game\Interface\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UINumUpDown.h">
+      <Filter>Source Files\Framework\Game\Interface\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIParticle.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIPlanet.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIScrollBar.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIServerLister.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIPlayerList.h">
+      <Filter>Source Files\Framework\Game\Interface\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UISettings.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIStatsLister.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITeamMenu.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITextInput.h">
+      <Filter>Source Files\Framework\Game\Interface\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITextBox.h">
+      <Filter>Source Files\Framework\Game\Interface\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITooltip.h">
+      <Filter>Source Files\Framework\Game\Interface\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITrackbar.h">
+      <Filter>Source Files\Framework\Game\Interface\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIWaiting.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\Input.h">
+      <Filter>Source Files\Framework\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\MusicFile.h">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\MIX_Exception.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ThemeMixer.h">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\WaveFile.h">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FileException.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\SoundEffect.h">
+      <Filter>Source Files\Framework\Engine\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UILabelTexture.h">
+      <Filter>Source Files\Framework\Game\Interface\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\GameError.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateError.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateAchiev.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateColor.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateEditor.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateConnect.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateEditorTeams.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateExtras.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameMulti.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameOver.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameSingle.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGame.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateMulLobby.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateMulLobbyDyn.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateMulLobbyFixed.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateMultiName.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateServerSelect.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StatePause.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateSingle.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\MapDrawer.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\MiniMap.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DialogOpenFile.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\filedialog\include\nfd.h">
+      <Filter>Extern\NFD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\filedialog\common.h">
+      <Filter>Extern\NFD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\filedialog\nfd_common.h">
+      <Filter>Extern\NFD</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\DialogSaveFile.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\Client.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\NetHost.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\NetServer.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\NetStreamIn.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\NetStreamOut.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Server\UDPServer.h">
+      <Filter>Source Files\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ServerStartPage.h">
+      <Filter>Source Files\Framework\Game\States\Game\Multi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderStory.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderCartoon.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateInit.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIProgressBar.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UISingleplayerGrid.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntity.h">
+      <Filter>Source Files\Game\Entity\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntityBomber.h">
+      <Filter>Source Files\Game\Entity\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntitySaboteur.h">
+      <Filter>Source Files\Game\Entity\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalEntitySpeeder.h">
+      <Filter>Source Files\Game\Entity\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMap.h">
+      <Filter>Source Files\Game\Map\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalPlanet.h">
+      <Filter>Source Files\Game\Entity\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Map.h">
+      <Filter>Source Files\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapEntity.h">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapLoader.h">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapObject.h">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\MapPlanet.h">
+      <Filter>Source Files\Game\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\NetClock.h">
+      <Filter>Source Files\Game\Map\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\PacketTypes.h">
+      <Filter>Source Files\Game\Map\Server</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\PlanetAttackTask.h">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\PlanetTask.h">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\PlayerAI.h">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\RemoteEntity.h">
+      <Filter>Source Files\Game\Entity\Remote</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\RemoteMap.h">
+      <Filter>Source Files\Game\Map\Remote</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\RemotePlanet.h">
+      <Filter>Source Files\Game\Entity\Remote</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\UniformGrid.h">
+      <Filter>Source Files\Game\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\Levelpack.h">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonLevel.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateLevelpackEditor.h">
+      <Filter>Source Files\Framework\Game\States\Extras</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UILevelPackList.h">
+      <Filter>Source Files\Framework\Game\Interface\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonFile.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LevelSavedata.h">
+      <Filter>Source Files\Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateLevelpackWin.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIStar.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Exception.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderPlanet.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderWave.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderFXAA.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\ShaderGlow.h">
+      <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateFirstStart.h">
+      <Filter>Source Files\Framework\Game\States</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UINumLowMedHigh.h">
+      <Filter>Source Files\Framework\Game\Interface\Numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIUnitFall.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIButtonEnableDisable.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameOverGraph.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIStatsGraph.h">
+      <Filter>Source Files\Framework\Game\Interface\Decoration</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\HuntTask.h">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\BomberHuntTask.h">
+      <Filter>Source Files\Game\Map\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateSelectTutorial.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMapSingleplayer.h">
+      <Filter>Source Files\Game\Map\Local</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameTutorial.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\UITutorialBox.h">
+      <Filter>Source Files\Framework\Game\Interface\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMapClassicMode.h">
+      <Filter>Source Files\Game\Map\Local\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Game\LocalMapLazyMode.h">
+      <Filter>Source Files\Game\Map\Local\Special</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateGameTutorial2.h">
+      <Filter>Source Files\Framework\Game\States\Game\Single</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Framework\StateTutorialProposal.h">
+      <Filter>Source Files\Framework\Game\States\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Reader.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\Writer.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FileReader.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\FileWriter.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\ContainerReader.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Source\Utility\ContainerWriter.h">
+      <Filter>Source Files\Utility</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shader\disk.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\disk.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\circle.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\circle.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\cool.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\cool.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\brightFilter.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\brightFilter.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\texAdd.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\texAdd.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\radial.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\radial.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\text.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\text.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\story.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\story.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\cartoon.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\cartoon.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\planet.vs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\planet.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\glow.fs">
+      <Filter>Shader</Filter>
+    </None>
+    <None Include="data\shader\glow.vs">
+      <Filter>Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="reso.res">
+      <Filter>Source Files</Filter>
+    </Resource>
+  </ItemGroup>
+</Project>

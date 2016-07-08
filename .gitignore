@@ -1,0 +1,25 @@
+# Executables
+*.exe
+*.out
+*.app
+
+# Visual Studio stuff
+*.opensdf
+*.sdf
+*.user
+*.suo
+*.db
+
+#logs
+*.txt
+
+# Build directories
+log.txt
+Debug/
+Release/
+
+#game files
+data/
+*.zip
+LevelTool/saves/
+saves/

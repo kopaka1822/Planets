@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{737E1100-F214-4C84-9FD5-D01BB0F82478}</ProjectGuid>
+    <RootNamespace>Planets</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\Source\freetype;..\Source\SDL;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Source\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\Source\freetype;..\Source\SDL;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Source\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Custom</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SETTINGS_FULL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_mixer.lib;glew32.lib;glew32s.lib;OpenGL32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Custom</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;SETTINGS_FULL;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_mixer.lib;glew32.lib;glew32s.lib;OpenGL32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\filedialog\nfd_common.c" />
+    <ClCompile Include="..\Source\filedialog\nfd_win.cpp" />
+    <ClCompile Include="..\Source\Framework\Database.cpp" />
+    <ClCompile Include="..\Source\Framework\Drawing.cpp" />
+    <ClCompile Include="..\Source\Framework\Font.cpp" />
+    <ClCompile Include="..\Source\Framework\Framework.cpp" />
+    <ClCompile Include="..\Source\Framework\Graphic.cpp" />
+    <ClCompile Include="..\Source\Framework\Input.cpp" />
+    <ClCompile Include="..\Source\Framework\MusicFile.cpp" />
+    <ClCompile Include="..\Source\Framework\Settings.cpp" />
+    <ClCompile Include="..\Source\Framework\Shader.cpp" />
+    <ClCompile Include="..\Source\Framework\Sound.cpp" />
+    <ClCompile Include="..\Source\Framework\SoundEffect.cpp" />
+    <ClCompile Include="..\Source\Framework\StateEditor.cpp" />
+    <ClCompile Include="..\Source\Framework\StateGame.cpp" />
+    <ClCompile Include="..\Source\Framework\stb_image.c" />
+    <ClCompile Include="..\Source\Framework\Texture.cpp" />
+    <ClCompile Include="..\Source\Framework\UIObject.cpp" />
+    <ClCompile Include="..\Source\Framework\WaveFile.cpp" />
+    <ClCompile Include="..\Source\Framework\Window.cpp" />
+    <ClCompile Include="..\Source\Game\BomberHuntTask.cpp" />
+    <ClCompile Include="..\Source\Game\HuntTask.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMap.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMapClassicMode.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMapLazyMode.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMapSingleplayer.cpp" />
+    <ClCompile Include="..\Source\Game\Map.cpp" />
+    <ClCompile Include="..\Source\Game\MapEntity.cpp" />
+    <ClCompile Include="..\Source\Game\PlanetAttackTask.cpp" />
+    <ClCompile Include="..\Source\Game\PlanetTask.cpp" />
+    <ClCompile Include="..\Source\Game\PlayerAI.cpp" />
+    <ClCompile Include="..\Source\Game\RemoteMap.cpp" />
+    <ClCompile Include="..\Source\Game\UniformGrid.cpp" />
+    <ClCompile Include="..\Source\PlanetsMain.cpp" />
+    <ClCompile Include="..\Source\Server\NetHost.cpp" />
+    <ClCompile Include="..\Source\System\Log.cpp" />
+    <ClCompile Include="..\Source\Utility\DialogOpenFile.cpp" />
+    <ClCompile Include="..\Source\Utility\DialogSaveFile.cpp" />
+    <ClCompile Include="..\Source\Utility\Directory.cpp" />
+    <ClCompile Include="..\Source\Utility\Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\filedialog\common.h" />
+    <ClInclude Include="..\Source\filedialog\include\nfd.h" />
+    <ClInclude Include="..\Source\filedialog\nfd_common.h" />
+    <ClInclude Include="..\Source\Framework\Color.h" />
+    <ClInclude Include="..\Source\Framework\Database.h" />
+    <ClInclude Include="..\Source\Framework\Drawing.h" />
+    <ClInclude Include="..\Source\Framework\Font.h" />
+    <ClInclude Include="..\Source\Framework\FramebufferObject.h" />
+    <ClInclude Include="..\Source\Framework\Framework.h" />
+    <ClInclude Include="..\Source\Framework\GameState.h" />
+    <ClInclude Include="..\Source\Framework\Graphic.h" />
+    <ClInclude Include="..\Source\Framework\Input.h" />
+    <ClInclude Include="..\Source\Framework\MapDrawer.h" />
+    <ClInclude Include="..\Source\Framework\MenuState.h" />
+    <ClInclude Include="..\Source\Framework\MiniMap.h" />
+    <ClInclude Include="..\Source\Framework\MusicFile.h" />
+    <ClInclude Include="..\Source\Framework\ServerStartPage.h" />
+    <ClInclude Include="..\Source\Framework\Settings.h" />
+    <ClInclude Include="..\Source\Framework\Shader.h" />
+    <ClInclude Include="..\Source\Framework\ShaderBrightFilter.h" />
+    <ClInclude Include="..\Source\Framework\ShaderCartoon.h" />
+    <ClInclude Include="..\Source\Framework\ShaderCirlce.h" />
+    <ClInclude Include="..\Source\Framework\ShaderCool.h" />
+    <ClInclude Include="..\Source\Framework\ShaderDisk.h" />
+    <ClInclude Include="..\Source\Framework\ShaderFXAA.h" />
+    <ClInclude Include="..\Source\Framework\ShaderGlow.h" />
+    <ClInclude Include="..\Source\Framework\ShaderPlanet.h" />
+    <ClInclude Include="..\Source\Framework\ShaderRadialBlur.h" />
+    <ClInclude Include="..\Source\Framework\ShaderStory.h" />
+    <ClInclude Include="..\Source\Framework\ShaderTexAdd.h" />
+    <ClInclude Include="..\Source\Framework\ShaderWave.h" />
+    <ClInclude Include="..\Source\Framework\Sound.h" />
+    <ClInclude Include="..\Source\Framework\SoundEffect.h" />
+    <ClInclude Include="..\Source\Framework\StateAchiev.h" />
+    <ClInclude Include="..\Source\Framework\StateColor.h" />
+    <ClInclude Include="..\Source\Framework\StateConnect.h" />
+    <ClInclude Include="..\Source\Framework\StateEditor.h" />
+    <ClInclude Include="..\Source\Framework\StateEditorTeams.h" />
+    <ClInclude Include="..\Source\Framework\StateError.h" />
+    <ClInclude Include="..\Source\Framework\StateExtras.h" />
+    <ClInclude Include="..\Source\Framework\StateFirstStart.h" />
+    <ClInclude Include="..\Source\Framework\StateGame.h" />
+    <ClInclude Include="..\Source\Framework\StateGameMulti.h" />
+    <ClInclude Include="..\Source\Framework\StateGameOver.h" />
+    <ClInclude Include="..\Source\Framework\StateGameOverGraph.h" />
+    <ClInclude Include="..\Source\Framework\StateGameSingle.h" />
+    <ClInclude Include="..\Source\Framework\StateGameTutorial.h" />
+    <ClInclude Include="..\Source\Framework\StateGameTutorial2.h" />
+    <ClInclude Include="..\Source\Framework\StateInit.h" />
+    <ClInclude Include="..\Source\Framework\StateLevelpackEditor.h" />
+    <ClInclude Include="..\Source\Framework\StateLevelpackWin.h" />
+    <ClInclude Include="..\Source\Framework\StateMulLobby.h" />
+    <ClInclude Include="..\Source\Framework\StateMulLobbyDyn.h" />
+    <ClInclude Include="..\Source\Framework\StateMulLobbyFixed.h" />
+    <ClInclude Include="..\Source\Framework\StateMultiName.h" />
+    <ClInclude Include="..\Source\Framework\StateOptions.h" />
+    <ClInclude Include="..\Source\Framework\StatePause.h" />
+    <ClInclude Include="..\Source\Framework\StateSelectTutorial.h" />
+    <ClInclude Include="..\Source\Framework\StateServerSelect.h" />
+    <ClInclude Include="..\Source\Framework\StateSingle.h" />
+    <ClInclude Include="..\Source\Framework\StateTutorialProposal.h" />
+    <ClInclude Include="..\Source\Framework\stb_image.h" />
+    <ClInclude Include="..\Source\Framework\Texture.h" />
+    <ClInclude Include="..\Source\Framework\ThemeMixer.h" />
+    <ClInclude Include="..\Source\Framework\UIAchievLister.h" />
+    <ClInclude Include="..\Source\Framework\UIBoxInput.h" />
+    <ClInclude Include="..\Source\Framework\UIButton.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonColor.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonCross.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonDetect.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonDisc.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonEnableDisable.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonFile.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonLevel.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonPause.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonRect.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonText.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonTextBorderless.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonTextServer.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonTexture.h" />
+    <ClInclude Include="..\Source\Framework\UIButtonTextureBorder.h" />
+    <ClInclude Include="..\Source\Framework\UIChatBox.h" />
+    <ClInclude Include="..\Source\Framework\UIClanButton.h" />
+    <ClInclude Include="..\Source\Framework\UIColorSelect.h" />
+    <ClInclude Include="..\Source\Framework\UICountdownClock.h" />
+    <ClInclude Include="..\Source\Framework\UIEditorGrid.h" />
+    <ClInclude Include="..\Source\Framework\UIEditorList.h" />
+    <ClInclude Include="..\Source\Framework\UIGrid.h" />
+    <ClInclude Include="..\Source\Framework\UIGridColor.h" />
+    <ClInclude Include="..\Source\Framework\UIGridEntity.h" />
+    <ClInclude Include="..\Source\Framework\UIInfoLister.h" />
+    <ClInclude Include="..\Source\Framework\UIIngamePlayerList.h" />
+    <ClInclude Include="..\Source\Framework\UIItemLister.h" />
+    <ClInclude Include="..\Source\Framework\UIItemListerScroll.h" />
+    <ClInclude Include="..\Source\Framework\UILabel.h" />
+    <ClInclude Include="..\Source\Framework\UILabelNumber.h" />
+    <ClInclude Include="..\Source\Framework\UILabelTexture.h" />
+    <ClInclude Include="..\Source\Framework\UILevelPackList.h" />
+    <ClInclude Include="..\Source\Framework\UIListEntity.h" />
+    <ClInclude Include="..\Source\Framework\UIListPlanet.h" />
+    <ClInclude Include="..\Source\Framework\UIMenu.h" />
+    <ClInclude Include="..\Source\Framework\UINumEntityType.h" />
+    <ClInclude Include="..\Source\Framework\UINumLowMedHigh.h" />
+    <ClInclude Include="..\Source\Framework\UINumPowerTwo.h" />
+    <ClInclude Include="..\Source\Framework\UINumUpDown.h" />
+    <ClInclude Include="..\Source\Framework\UINumUpDownInt.h" />
+    <ClInclude Include="..\Source\Framework\UIObject.h" />
+    <ClInclude Include="..\Source\Framework\UIParticle.h" />
+    <ClInclude Include="..\Source\Framework\UIPlanet.h" />
+    <ClInclude Include="..\Source\Framework\UIPlayerList.h" />
+    <ClInclude Include="..\Source\Framework\UIProgressBar.h" />
+    <ClInclude Include="..\Source\Framework\UIScrollBar.h" />
+    <ClInclude Include="..\Source\Framework\UIServerLister.h" />
+    <ClInclude Include="..\Source\Framework\UISettings.h" />
+    <ClInclude Include="..\Source\Framework\UISingleplayerGrid.h" />
+    <ClInclude Include="..\Source\Framework\UIStar.h" />
+    <ClInclude Include="..\Source\Framework\UIStatsGraph.h" />
+    <ClInclude Include="..\Source\Framework\UIStatsLister.h" />
+    <ClInclude Include="..\Source\Framework\UITeamMenu.h" />
+    <ClInclude Include="..\Source\Framework\UITextBox.h" />
+    <ClInclude Include="..\Source\Framework\UITextInput.h" />
+    <ClInclude Include="..\Source\Framework\UITooltip.h" />
+    <ClInclude Include="..\Source\Framework\UITrackbar.h" />
+    <ClInclude Include="..\Source\Framework\UITutorialBox.h" />
+    <ClInclude Include="..\Source\Framework\UIUnitFall.h" />
+    <ClInclude Include="..\Source\Framework\UIWaiting.h" />
+    <ClInclude Include="..\Source\Framework\UIYNButton.h" />
+    <ClInclude Include="..\Source\Framework\WaveFile.h" />
+    <ClInclude Include="..\Source\Framework\Window.h" />
+    <ClInclude Include="..\Source\Game\BomberHuntTask.h" />
+    <ClInclude Include="..\Source\Game\HuntTask.h" />
+    <ClInclude Include="..\Source\Game\Levelpack.h" />
+    <ClInclude Include="..\Source\Game\LevelSavedata.h" />
+    <ClInclude Include="..\Source\Game\LocalEntity.h" />
+    <ClInclude Include="..\Source\Game\LocalEntityBomber.h" />
+    <ClInclude Include="..\Source\Game\LocalEntitySaboteur.h" />
+    <ClInclude Include="..\Source\Game\LocalEntitySpeeder.h" />
+    <ClInclude Include="..\Source\Game\LocalMap.h" />
+    <ClInclude Include="..\Source\Game\LocalMapClassicMode.h" />
+    <ClInclude Include="..\Source\Game\LocalMapLazyMode.h" />
+    <ClInclude Include="..\Source\Game\LocalMapSingleplayer.h" />
+    <ClInclude Include="..\Source\Game\LocalPlanet.h" />
+    <ClInclude Include="..\Source\Game\Map.h" />
+    <ClInclude Include="..\Source\Game\MapEntity.h" />
+    <ClInclude Include="..\Source\Game\MapLoader.h" />
+    <ClInclude Include="..\Source\Game\MapObject.h" />
+    <ClInclude Include="..\Source\Game\MapPlanet.h" />
+    <ClInclude Include="..\Source\Game\NetClock.h" />
+    <ClInclude Include="..\Source\Game\PacketTypes.h" />
+    <ClInclude Include="..\Source\Game\PlanetAttackTask.h" />
+    <ClInclude Include="..\Source\Game\PlanetTask.h" />
+    <ClInclude Include="..\Source\Game\PlayerAI.h" />
+    <ClInclude Include="..\Source\Game\RemoteEntity.h" />
+    <ClInclude Include="..\Source\Game\RemoteMap.h" />
+    <ClInclude Include="..\Source\Game\RemotePlanet.h" />
+    <ClInclude Include="..\Source\Game\UniformGrid.h" />
+    <ClInclude Include="..\Source\Server\Client.h" />
+    <ClInclude Include="..\Source\Server\NetHost.h" />
+    <ClInclude Include="..\Source\Server\NetServer.h" />
+    <ClInclude Include="..\Source\Server\NetStreamIn.h" />
+    <ClInclude Include="..\Source\Server\NetStreamOut.h" />
+    <ClInclude Include="..\Source\Server\UDPServer.h" />
+    <ClInclude Include="..\Source\System\FileReader.h" />
+    <ClInclude Include="..\Source\System\FileWriter.h" />
+    <ClInclude Include="..\Source\System\Log.h" />
+    <ClInclude Include="..\Source\System\System.h" />
+    <ClInclude Include="..\Source\System\UDPServer.h" />
+    <ClInclude Include="..\Source\Utility\ContainerReader.h" />
+    <ClInclude Include="..\Source\Utility\ContainerWriter.h" />
+    <ClInclude Include="..\Source\Utility\DataContainer.h" />
+    <ClInclude Include="..\Source\Utility\DialogOpenFile.h" />
+    <ClInclude Include="..\Source\Utility\DialogSaveFile.h" />
+    <ClInclude Include="..\Source\Utility\Directory.h" />
+    <ClInclude Include="..\Source\Utility\Exception.h" />
+    <ClInclude Include="..\Source\Utility\FastVector.h" />
+    <ClInclude Include="..\Source\Utility\FileException.h" />
+    <ClInclude Include="..\Source\Utility\FileReader.h" />
+    <ClInclude Include="..\Source\Utility\FileWriter.h" />
+    <ClInclude Include="..\Source\Utility\GameError.h" />
+    <ClInclude Include="..\Source\Utility\GLEW_Exception.h" />
+    <ClInclude Include="..\Source\Utility\GL_Exception.h" />
+    <ClInclude Include="..\Source\Utility\Line.h" />
+    <ClInclude Include="..\Source\Utility\LinkedIDList.h" />
+    <ClInclude Include="..\Source\Utility\LockGuard.h" />
+    <ClInclude Include="..\Source\Utility\MIX_Exception.h" />
+    <ClInclude Include="..\Source\Utility\Mutex.h" />
+    <ClInclude Include="..\Source\Utility\Point.h" />
+    <ClInclude Include="..\Source\Utility\Reader.h" />
+    <ClInclude Include="..\Source\Utility\Rect.h" />
+    <ClInclude Include="..\Source\Utility\SDL_Exception.h" />
+    <ClInclude Include="..\Source\Utility\Semaphore.h" />
+    <ClInclude Include="..\Source\Utility\Thread.h" />
+    <ClInclude Include="..\Source\Utility\Timer.h" />
+    <ClInclude Include="..\Source\Utility\Tools.h" />
+    <ClInclude Include="..\Source\Utility\Writer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\shader\brightFilter.fs" />
+    <None Include="data\shader\brightFilter.vs" />
+    <None Include="data\shader\cartoon.fs" />
+    <None Include="data\shader\cartoon.vs" />
+    <None Include="data\shader\circle.fs" />
+    <None Include="data\shader\circle.vs" />
+    <None Include="data\shader\cool.fs" />
+    <None Include="data\shader\cool.vs" />
+    <None Include="data\shader\disk.fs" />
+    <None Include="data\shader\disk.vs" />
+    <None Include="data\shader\glow.fs" />
+    <None Include="data\shader\glow.vs" />
+    <None Include="data\shader\planet.fs" />
+    <None Include="data\shader\planet.vs" />
+    <None Include="data\shader\radial.fs" />
+    <None Include="data\shader\radial.vs" />
+    <None Include="data\shader\story.fs" />
+    <None Include="data\shader\story.vs" />
+    <None Include="data\shader\texAdd.fs" />
+    <None Include="data\shader\texAdd.vs" />
+    <None Include="data\shader\text.fs" />
+    <None Include="data\shader\text.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="reso.res" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

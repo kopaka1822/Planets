@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="../../Source/Game/MapEntity.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="339" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/LocalEntity.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="715" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/PlanetTask.cpp" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="0" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/GameServerNormal.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4935" topLine="203" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/NetServer.h" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6475" topLine="234" />
+		</Cursor>
+	</File>
+	<File name="../../Source/MultiServerMain.cpp" open="1" top="0" tabpos="7" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="144" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/NetHost.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="195" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Utility/Rect.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="301" topLine="12" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/Map.cpp" open="1" top="0" tabpos="12" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14468" topLine="702" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/LocalMap.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="991" topLine="15" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/MapPlanet.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="721" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/LocalMapServer.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="8444" topLine="383" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/NetHost.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="14" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/Map.h" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="5093" topLine="182" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/LocalPlanet.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1349" topLine="26" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Utility/Line.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="241" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/GameServerNormalDynMap.cpp" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1813" topLine="71" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Utility/DataContainer.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="6857" topLine="358" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/MultiGameLobby.cpp" open="1" top="0" tabpos="8" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1564" topLine="44" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Console/Console.cpp" open="1" top="0" tabpos="9" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="237" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/MapObject.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="695" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Utility/LinkedIDList.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2082" topLine="102" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/PlayerAI.cpp" open="1" top="0" tabpos="11" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="11253" topLine="461" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/MapLoader.h" open="1" top="0" tabpos="10" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="4543" topLine="170" />
+		</Cursor>
+		<Folding>
+			<Collapse line="24" />
+			<Collapse line="36" />
+			<Collapse line="41" />
+			<Collapse line="48" />
+			<Collapse line="57" />
+			<Collapse line="64" />
+			<Collapse line="145" />
+		</Folding>
+	</File>
+	<File name="../../Source/Server/GameServerNormal.cpp" open="0" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="303" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Utility/Exception.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="358" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/MapEntity.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1141" topLine="27" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/NetStreamOut.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1328" topLine="52" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/MultiGameLobby.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="805" topLine="27" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Game/UniformGrid.h" open="0" top="0" tabpos="0" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="2285" topLine="69" />
+		</Cursor>
+	</File>
+	<File name="../../Source/Server/NetStreamIn.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="476" topLine="5" />
+		</Cursor>
+	</File>
+</CodeBlocks_layout_file>

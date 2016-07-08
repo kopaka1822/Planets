@@ -1,0 +1,1447 @@
+# depslib dependency file v1.0
+1463934682 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/MultiServerMain.cpp
+	"System/System.h"
+	"Server/MultiGameLobby.h"
+	"Utility/Timer.h"
+	<stdio.h>
+	"Server/UDPServer.h"
+	"Console/InputThread.h"
+
+1462911663 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/System/System.h
+	"../SDL/SDL.h"
+	<string>
+	"../Utility/SDL_Exception.h"
+	"Log.h"
+	<time.h>
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_config.h
+	"SDL_platform.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/begin_code.h
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/close_code.h
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_scancode.h
+	"SDL_stdinc.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1462723374 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/SDL_Exception.h
+	"../SDL/SDL.h"
+	<exception>
+	<string>
+	"../SDL/SDL_net.h"
+
+1460844340 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/SDL/SDL_net.h
+	<stdint.h>
+	"SDL.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1461494152 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/System/Log.h
+	<stdio.h>
+	<string>
+	<exception>
+
+1463934422 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/MultiGameLobby.h
+	"../Game/MapLoader.h"
+	<map>
+	"Server.h"
+	"GameServer.h"
+	<memory>
+	"../Game/PacketTypes.h"
+	"CommmandHandler.h"
+	<time.h>
+	"../Utility/Exception.h"
+
+1463129680 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/MapLoader.h
+	<fstream>
+	<string>
+	<vector>
+	<assert.h>
+	<math.h>
+	<memory>
+	<string.h>
+
+1462710238 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/Server.h
+	<map>
+	"NetServer.h"
+	<memory>
+	"NetHost.h"
+
+1463128591 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/NetServer.h
+	"UDPServer.h"
+	"../Utility/DataContainer.h"
+	<vector>
+	"NetHost.h"
+
+1462743738 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/UDPServer.h
+	"../Utility/Thread.h"
+	"../SDL/SDL_net.h"
+	"../System/System.h"
+
+1463944825 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Thread.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_thread.h"
+	<exception>
+	"SDL_Exception.h"
+	<assert.h>
+	"../System/System.h"
+
+1462718244 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/DataContainer.h
+	<string.h>
+	<exception>
+	<stdlib.h>
+	<utility>
+	<assert.h>
+	<algorithm>
+
+1462710218 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/NetHost.h
+	<assert.h>
+	<map>
+	<unordered_set>
+	"../Utility/Timer.h"
+	"NetStreamIn.h"
+	"NetStreamOut.h"
+	"UDPServer.h"
+	"../Utility/Mutex.h"
+	"../Utility/LockGuard.h"
+	<list>
+
+1462984985 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Timer.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_timer.h"
+	"SDL_Exception.h"
+
+1463657563 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/NetStreamIn.h
+	"../Utility/DataContainer.h"
+	<vector>
+
+1462742460 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/NetStreamOut.h
+	"../Utility/DataContainer.h"
+	"../Utility/Timer.h"
+
+1462707842 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Mutex.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_thread.h"
+	"../SDL/SDL_mutex.h"
+	"SDL_Exception.h"
+
+1460838728 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/LockGuard.h
+	"Mutex.h"
+
+1462710512 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/GameServer.h
+	"Server.h"
+	"../Utility/Thread.h"
+	"../Utility/Exception.h"
+
+1463667131 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Exception.h
+	<exception>
+	<string>
+
+1464606897 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PacketTypes.h
+	"../Utility/DataContainer.h"
+
+1460663088 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/CommmandHandler.h
+	<list>
+	<vector>
+	<map>
+	<assert.h>
+	<functional>
+
+1462711580 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/GameServerNormal.cpp
+	"GameServerNormal.h"
+	"MultiGameLobby.h"
+	<memory>
+
+1464797230 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/GameServerNormal.h
+	"GameServer.h"
+	"../Game/PacketTypes.h"
+	"CommmandHandler.h"
+	"../Game/LocalMapServer.h"
+
+1464607083 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalMapServer.h
+	"LocalMap.h"
+	"../Utility/DataContainer.h"
+	"../Server/Server.h"
+	"NetClock.h"
+
+1464799268 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalMap.h
+	"Map.h"
+	"MapLoader.h"
+	<vector>
+
+1464712826 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/Map.h
+	"../Utility/Rect.h"
+	"../Utility/LinkedIDList.h"
+	"MapPlanet.h"
+	"MapEntity.h"
+	<functional>
+	"../Utility/Line.h"
+	"../Utility/Mutex.h"
+	<map>
+	"../Utility/Thread.h"
+	"UniformGrid.h"
+	"../Utility/Exception.h"
+	"../Utility/DataContainer.h"
+
+1462723984 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Rect.h
+	"Point.h"
+	<algorithm>
+
+1460637704 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Point.h
+	<math.h>
+
+1462710988 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/LinkedIDList.h
+	<vector>
+	<assert.h>
+
+1462718330 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/MapPlanet.h
+	"../Utility/Rect.h"
+	"MapLoader.h"
+	"MapObject.h"
+
+1463127764 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/MapObject.h
+	"../Utility/Rect.h"
+	<assert.h>
+
+1462718706 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/MapEntity.h
+	"../Utility/Rect.h"
+	<algorithm>
+	"MapObject.h"
+
+1463657582 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Line.h
+	"Rect.h"
+	<assert.h>
+
+1464441583 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/UniformGrid.h
+	"../Utility/FastVector.h"
+	"../Utility/Point.h"
+	<algorithm>
+	"MapEntity.h"
+	"../Utility/FastVector.h"
+	"../Utility/Tools.h"
+
+1462795080 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/FastVector.h
+	<memory>
+	<utility>
+	<exception>
+	<assert.h>
+	<stdexcept>
+	<initializer_list>
+
+1464448077 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlayerAI.h
+	"Map.h"
+	<list>
+	<functional>
+	<float.h>
+	"../Utility/Mutex.h"
+	<vector>
+	"PlanetTask.h"
+	"PlanetAttackTask.h"
+	"HuntTask.h"
+	"BomberHuntTask.h"
+
+1464447113 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlanetTask.h
+	"Map.h"
+
+1464447932 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlanetAttackTask.h
+	"Map.h"
+
+1460982028 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/NetClock.h
+	"../Utility/Timer.h"
+
+1462716492 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/GameServerNormalDynMap.cpp
+	"GameServerNormalDynMap.h"
+	"ServerOutput.h"
+
+1464711014 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/GameServerNormalDynMap.h
+	"GameServerNormal.h"
+	"MultiGameLobby.h"
+	"../Game/Version.h"
+
+1460979892 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/ServerOutput.h
+
+1464711909 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/MultiGameLobby.cpp
+	"MultiGameLobby.h"
+	"../Utility/Directory.h"
+	"../Game/PacketTypes.h"
+	"GameServerNormal.h"
+	"ServerOutput.h"
+	"GameServerNormalDynMap.h"
+	<algorithm>
+	"../Console/Console.h"
+	"../System/FileReader.h"
+	"../System/FileWriter.h"
+
+1462903172 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Directory.h
+	<vector>
+	<string>
+
+1460931026 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/NetHost.cpp
+	"NetHost.h"
+	"NetServer.h"
+
+1460979892 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Server/ServerOutput.cpp
+	"ServerOutput.h"
+	<stdio.h>
+	"../Utility/Mutex.h"
+
+1463244999 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Directory.cpp
+	"Directory.h"
+	<dirent.h>
+
+1460840220 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Timer.cpp
+	"Timer.h"
+
+1464799256 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalMap.cpp
+	"LocalMap.h"
+	<stdlib.h>
+	<time.h>
+	"../Utility/Line.h"
+	<functional>
+	"LocalEntity.h"
+	"LocalPlanet.h"
+	<memory>
+	"LocalEntityBomber.h"
+	"LocalEntitySaboteur.h"
+	"LocalEntitySpeeder.h"
+	"../Utility/Timer.h"
+
+1463134725 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalEntity.h
+	"MapEntity.h"
+
+1462716410 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalPlanet.h
+	"MapPlanet.h"
+	"MapEntity.h"
+
+1463134812 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalEntityBomber.h
+	"LocalEntity.h"
+
+1463134812 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalEntitySaboteur.h
+	"LocalEntity.h"
+
+1463134812 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalEntitySpeeder.h
+	"LocalEntity.h"
+
+1464607275 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/LocalMapServer.cpp
+	"LocalMapServer.h"
+	"../Game/PacketTypes.h"
+
+1459793504 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlanetAttackTask.cpp
+	"PlanetAttackTask.h"
+	"PlayerAI.h"
+
+1464447539 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlanetTask.cpp
+	"PlanetTask.h"
+	"PlayerAI.h"
+
+1464712502 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/PlayerAI.cpp
+	"PlayerAI.h"
+	<cfloat>
+	"../Utility/LockGuard.h"
+
+1463129569 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/MapEntity.cpp
+	"MapEntity.h"
+
+1463129196 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Utility/Tools.h
+	<algorithm>
+	<memory>
+	<string>
+
+1464191924 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/UniformGrid.cpp
+	"UniformGrid.h"
+	"Map.h"
+
+1463243120 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Console/Console.h
+	<string>
+	<exception>
+
+1463658546 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Console/Console.cpp
+	"Console.h"
+	<stdio.h>
+	<iostream>
+	<exception>
+	<stdexcept>
+
+1463668037 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/System/FileReader.h
+	<string>
+	<stdio.h>
+	<stdexcept>
+
+1461622456 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/System/FileWriter.h
+	<string>
+	<stdio.h>
+
+1464442579 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/HuntTask.h
+	"Map.h"
+
+1464200575 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/BomberHuntTask.h
+	"Map.h"
+
+1463933604 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Console/InputThread.h
+	"Console.h"
+	"../Utility/Thread.h"
+	"../Utility/LockGuard.h"
+	"../System/System.h"
+	<vector>
+	<string>
+
+1464711247 /media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/Version.h
+
+1464630713 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/Map.cpp
+	"Map.h"
+
+1464200646 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/BomberHuntTask.cpp
+	"BomberHuntTask.h"
+	"PlayerAI.h"
+
+1464442554 source:/media/felix/Windows/Users/felix/Documents/Visual Studio 2013/Projects/Planets SDL/Source/Game/HuntTask.cpp
+	"HuntTask.h"
+	"PlayerAI.h"
+
+1463658546 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Console/Console.cpp
+	"Console.h"
+	<stdio.h>
+	<iostream>
+	<exception>
+	<stdexcept>
+
+1463243120 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Console/Console.h
+	<string>
+	<exception>
+
+1464200646 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/BomberHuntTask.cpp
+	"BomberHuntTask.h"
+	"PlayerAI.h"
+
+1464200575 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/BomberHuntTask.h
+	"Map.h"
+
+1465060781 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/Map.h
+	"../Utility/Rect.h"
+	"../Utility/LinkedIDList.h"
+	"MapPlanet.h"
+	"MapEntity.h"
+	<functional>
+	"../Utility/Line.h"
+	"../Utility/Mutex.h"
+	<map>
+	"../Utility/Thread.h"
+	"UniformGrid.h"
+	"../Utility/Exception.h"
+	"../Utility/DataContainer.h"
+
+1465249144 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Rect.h
+	"Point.h"
+	<algorithm>
+	<vector>
+
+1460637704 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Point.h
+	<math.h>
+
+1462710988 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/LinkedIDList.h
+	<vector>
+	<assert.h>
+
+1462718330 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/MapPlanet.h
+	"../Utility/Rect.h"
+	"MapLoader.h"
+	"MapObject.h"
+
+1463129680 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/MapLoader.h
+	<fstream>
+	<string>
+	<vector>
+	<assert.h>
+	<math.h>
+	<memory>
+	<string.h>
+
+1463127764 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/MapObject.h
+	"../Utility/Rect.h"
+	<assert.h>
+
+1462718706 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/MapEntity.h
+	"../Utility/Rect.h"
+	<algorithm>
+	"MapObject.h"
+
+1463657582 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Line.h
+	"Rect.h"
+	<assert.h>
+
+1462707842 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Mutex.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_thread.h"
+	"../SDL/SDL_mutex.h"
+	"SDL_Exception.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<iconv.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_config.h
+	"SDL_platform.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/begin_code.h
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/close_code.h
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_pixels.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_scancode.h
+	"SDL_stdinc.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815396 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1460815398 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1462723374 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/SDL_Exception.h
+	"../SDL/SDL.h"
+	<exception>
+	<string>
+	"../SDL/SDL_net.h"
+
+1460844340 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/SDL/SDL_net.h
+	<stdint.h>
+	"SDL.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1463944825 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Thread.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_thread.h"
+	<exception>
+	"SDL_Exception.h"
+	<assert.h>
+	"../System/System.h"
+
+1462911663 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/System/System.h
+	"../SDL/SDL.h"
+	<string>
+	"../Utility/SDL_Exception.h"
+	"Log.h"
+	<time.h>
+
+1461494152 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/System/Log.h
+	<stdio.h>
+	<string>
+	<exception>
+
+1465669813 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/UniformGrid.h
+	"../Utility/FastVector.h"
+	"../Utility/Point.h"
+	<algorithm>
+	"MapEntity.h"
+	"../Utility/FastVector.h"
+	"../Utility/Tools.h"
+
+1462795080 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/FastVector.h
+	<memory>
+	<utility>
+	<exception>
+	<assert.h>
+	<stdexcept>
+	<initializer_list>
+
+1465557165 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Tools.h
+	<algorithm>
+	<memory>
+	<string>
+
+1463667131 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Exception.h
+	<exception>
+	<string>
+
+1465561249 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/DataContainer.h
+	<string.h>
+	<exception>
+	<stdlib.h>
+	<utility>
+	<assert.h>
+	<algorithm>
+	"ContainerReader.h"
+	"ContainerWriter.h"
+
+1465560654 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/ContainerReader.h
+	"DataContainer.h"
+	"Reader.h"
+	"Tools.h"
+
+1465560393 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Reader.h
+	<stdexcept>
+	<string>
+
+1465561169 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/ContainerWriter.h
+	"DataContainer.h"
+	"Writer.h"
+
+1465559443 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Writer.h
+	<stdexcept>
+	<string>
+
+1465670510 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlayerAI.h
+	"Map.h"
+	<list>
+	<functional>
+	<float.h>
+	"../Utility/Mutex.h"
+	<vector>
+	"PlanetTask.h"
+	"PlanetAttackTask.h"
+	"HuntTask.h"
+	"BomberHuntTask.h"
+	"LocalMapSingleplayer.h"
+
+1465671750 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlanetTask.h
+	"Map.h"
+
+1464447932 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlanetAttackTask.h
+	"Map.h"
+
+1464442579 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/HuntTask.h
+	"Map.h"
+
+1465061969 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalMapSingleplayer.h
+	"LocalMap.h"
+	<memory>
+
+1464799268 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalMap.h
+	"Map.h"
+	"MapLoader.h"
+	<vector>
+
+1464442554 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/HuntTask.cpp
+	"HuntTask.h"
+	"PlayerAI.h"
+
+1464799256 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalMap.cpp
+	"LocalMap.h"
+	<stdlib.h>
+	<time.h>
+	"../Utility/Line.h"
+	<functional>
+	"LocalEntity.h"
+	"LocalPlanet.h"
+	<memory>
+	"LocalEntityBomber.h"
+	"LocalEntitySaboteur.h"
+	"LocalEntitySpeeder.h"
+	"../Utility/Timer.h"
+
+1463134725 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalEntity.h
+	"MapEntity.h"
+
+1462716410 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalPlanet.h
+	"MapPlanet.h"
+	"MapEntity.h"
+
+1463134812 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalEntityBomber.h
+	"LocalEntity.h"
+
+1463134812 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalEntitySaboteur.h
+	"LocalEntity.h"
+
+1463134812 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalEntitySpeeder.h
+	"LocalEntity.h"
+
+1462984985 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Timer.h
+	"../SDL/SDL.h"
+	"../SDL/SDL_timer.h"
+	"SDL_Exception.h"
+
+1464630713 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/Map.cpp
+	"Map.h"
+
+1463129569 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/MapEntity.cpp
+	"MapEntity.h"
+
+1459793504 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlanetAttackTask.cpp
+	"PlanetAttackTask.h"
+	"PlayerAI.h"
+
+1463934682 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/MultiServerMain.cpp
+	"System/System.h"
+	"Server/MultiGameLobby.h"
+	"Utility/Timer.h"
+	<stdio.h>
+	"Server/UDPServer.h"
+	"Console/InputThread.h"
+
+1463934422 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/MultiGameLobby.h
+	"../Game/MapLoader.h"
+	<map>
+	"Server.h"
+	"GameServer.h"
+	<memory>
+	"../Game/PacketTypes.h"
+	"CommmandHandler.h"
+	<time.h>
+	"../Utility/Exception.h"
+
+1465566503 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/Server.h
+	<map>
+	"NetServer.h"
+	<memory>
+	"NetHost.h"
+
+1465566301 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/NetServer.h
+	"UDPServer.h"
+	"../Utility/DataContainer.h"
+	<vector>
+	"NetHost.h"
+
+1465565008 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/UDPServer.h
+	"../Utility/Thread.h"
+	"../SDL/SDL_net.h"
+	"../System/System.h"
+
+1465564316 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/NetHost.h
+	<assert.h>
+	<map>
+	<unordered_set>
+	"../Utility/Timer.h"
+	"NetStreamIn.h"
+	"NetStreamOut.h"
+	"UDPServer.h"
+	"../Utility/Mutex.h"
+	"../Utility/LockGuard.h"
+	<list>
+
+1465564289 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/NetStreamIn.h
+	"../Utility/DataContainer.h"
+	<vector>
+
+1462742460 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/NetStreamOut.h
+	"../Utility/DataContainer.h"
+	"../Utility/Timer.h"
+
+1460838728 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/LockGuard.h
+	"Mutex.h"
+
+1462710512 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/GameServer.h
+	"Server.h"
+	"../Utility/Thread.h"
+	"../Utility/Exception.h"
+
+1464606897 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PacketTypes.h
+	"../Utility/DataContainer.h"
+
+1460663088 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/CommmandHandler.h
+	<list>
+	<vector>
+	<map>
+	<assert.h>
+	<functional>
+
+1463933604 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Console/InputThread.h
+	"Console.h"
+	"../Utility/Thread.h"
+	"../Utility/LockGuard.h"
+	"../System/System.h"
+	<vector>
+	<string>
+
+1460931026 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/NetHost.cpp
+	"NetHost.h"
+	"NetServer.h"
+
+1460979892 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/ServerOutput.cpp
+	"ServerOutput.h"
+	<stdio.h>
+	"../Utility/Mutex.h"
+
+1460979892 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/ServerOutput.h
+
+1463244999 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Directory.cpp
+	"Directory.h"
+	<dirent.h>
+
+1462903172 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Directory.h
+	<vector>
+	<string>
+
+1460840220 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/Timer.cpp
+	"Timer.h"
+
+1465563143 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalMapServer.cpp
+	"LocalMapServer.h"
+	"../Game/PacketTypes.h"
+
+1465563657 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/LocalMapServer.h
+	"LocalMap.h"
+	"../Utility/DataContainer.h"
+	"../Server/Server.h"
+	"NetClock.h"
+
+1460982028 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/NetClock.h
+	"../Utility/Timer.h"
+
+1465678575 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlanetTask.cpp
+	"PlanetTask.h"
+	"PlayerAI.h"
+
+1465670906 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/PlayerAI.cpp
+	"PlayerAI.h"
+	<cfloat>
+	"../Utility/LockGuard.h"
+
+1465669935 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/UniformGrid.cpp
+	"UniformGrid.h"
+	"Map.h"
+
+1465563507 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/GameServerNormal.cpp
+	"GameServerNormal.h"
+	"MultiGameLobby.h"
+	<memory>
+
+1465563657 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/GameServerNormal.h
+	"GameServer.h"
+	"../Game/PacketTypes.h"
+	"CommmandHandler.h"
+	"../Game/LocalMapServer.h"
+
+1465563724 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/GameServerNormalDynMap.cpp
+	"GameServerNormalDynMap.h"
+	"ServerOutput.h"
+
+1464711014 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/GameServerNormalDynMap.h
+	"GameServerNormal.h"
+	"MultiGameLobby.h"
+	"../Game/Version.h"
+
+1464711247 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Game/Version.h
+
+1465564193 source:/media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Server/MultiGameLobby.cpp
+	"MultiGameLobby.h"
+	"../Utility/Directory.h"
+	"../Game/PacketTypes.h"
+	"GameServerNormal.h"
+	"ServerOutput.h"
+	"GameServerNormalDynMap.h"
+	<algorithm>
+	"../Console/Console.h"
+	"../Utility/FileReader.h"
+	"../Utility/FileWriter.h"
+
+1465559287 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/FileReader.h
+	"Reader.h"
+	"Tools.h"
+	<stdio.h>
+	<stdexcept>
+
+1465559483 /media/felix/Windows/Users/Felix/Documents/Visual Studio 2015/Projects/Planets SDL/Source/Utility/FileWriter.h
+	"Writer.h"
+	<stdio.h>
+

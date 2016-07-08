@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9B468890-7B64-4E73-A597-EC3EE79C224D}</ProjectGuid>
+    <RootNamespace>LanServer</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>..\Source\SDL;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Source\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\Source\SDL;$(IncludePath)</IncludePath>
+    <LibraryPath>..\Source\libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Custom</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_net.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Custom</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_net.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Source\filedialog\nfd_common.c" />
+    <ClCompile Include="..\Source\filedialog\nfd_win.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMap.cpp" />
+    <ClCompile Include="..\Source\Game\LocalMapServer.cpp" />
+    <ClCompile Include="..\Source\Game\Map.cpp" />
+    <ClCompile Include="..\Source\Game\MapEntity.cpp" />
+    <ClCompile Include="..\Source\Game\UniformGrid.cpp" />
+    <ClCompile Include="..\Source\LanMain.cpp" />
+    <ClCompile Include="..\Source\Server\GameServerNormal.cpp" />
+    <ClCompile Include="..\Source\Server\GameServerNormalFixedMap.cpp" />
+    <ClCompile Include="..\Source\Server\NetHost.cpp" />
+    <ClCompile Include="..\Source\Utility\DialogOpenFile.cpp" />
+    <ClCompile Include="..\Source\Utility\Timer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Source\filedialog\common.h" />
+    <ClInclude Include="..\Source\filedialog\nfd_common.h" />
+    <ClInclude Include="..\Source\Game\LocalEntity.h" />
+    <ClInclude Include="..\Source\Game\LocalEntityBomber.h" />
+    <ClInclude Include="..\Source\Game\LocalEntitySaboteur.h" />
+    <ClInclude Include="..\Source\Game\LocalEntitySpeeder.h" />
+    <ClInclude Include="..\Source\Game\LocalMap.h" />
+    <ClInclude Include="..\Source\Game\LocalMapServer.h" />
+    <ClInclude Include="..\Source\Game\LocalPlanet.h" />
+    <ClInclude Include="..\Source\Game\Map.h" />
+    <ClInclude Include="..\Source\Game\MapEntity.h" />
+    <ClInclude Include="..\Source\Game\MapLoader.h" />
+    <ClInclude Include="..\Source\Game\MapObject.h" />
+    <ClInclude Include="..\Source\Game\MapPlanet.h" />
+    <ClInclude Include="..\Source\Game\NetClock.h" />
+    <ClInclude Include="..\Source\Game\PacketTypes.h" />
+    <ClInclude Include="..\Source\Game\UniformGrid.h" />
+    <ClInclude Include="..\Source\Server\GameServer.h" />
+    <ClInclude Include="..\Source\Server\GameServerNormal.h" />
+    <ClInclude Include="..\Source\Server\GameServerNormalFixedMap.h" />
+    <ClInclude Include="..\Source\Server\NetHost.h" />
+    <ClInclude Include="..\Source\Server\UDPServer.h" />
+    <ClInclude Include="..\Source\System\System.h" />
+    <ClInclude Include="..\Source\Utility\DataContainer.h" />
+    <ClInclude Include="..\Source\Utility\DialogOpenFile.h" />
+    <ClInclude Include="..\Source\Utility\FastVector.h" />
+    <ClInclude Include="..\Source\Utility\FileException.h" />
+    <ClInclude Include="..\Source\Utility\Line.h" />
+    <ClInclude Include="..\Source\Utility\LinkedIDList.h" />
+    <ClInclude Include="..\Source\Utility\Mutex.h" />
+    <ClInclude Include="..\Source\Utility\Point.h" />
+    <ClInclude Include="..\Source\Utility\Thread.h" />
+    <ClInclude Include="..\Source\Utility\Timer.h" />
+    <ClInclude Include="..\Source\Utility\Tools.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
