@@ -28,12 +28,23 @@ public:
 	{
 		Write(first);
 	}
-
 	template <class ArgF,class... ArgT>
 	static void Write(const ArgF& first,const ArgT&... args)
 	{
 		Write(first);
 		Write(args...);
+	}
+
+	template<class ArgF>
+	static void WriteLine(const ArgF& first)
+	{
+		WriteLine(first);
+	}
+	template <class ArgF, class... ArgT>
+	static void WriteLine(const ArgF& first, const ArgT&... args)
+	{
+		Write(first);
+		WriteLine(args...);
 	}
 
 	// Input
