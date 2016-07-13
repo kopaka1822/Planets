@@ -23,6 +23,19 @@ public:
 	static void WriteLine(bool b);
 	static void WriteLine(char c);
 
+	template<class ArgF>
+	static void Write(const ArgF& first)
+	{
+		Write(first);
+	}
+
+	template <class ArgF,class... ArgT>
+	static void Write(const ArgF& first,const ArgT&... args)
+	{
+		Write(first);
+		Write(args...);
+	}
+
 	// Input
 	static std::string ReadString();
 	static int ReadInt();
@@ -31,3 +44,4 @@ public:
 	// Other
 	static void Pause();
 };
+
