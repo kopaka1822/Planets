@@ -9,6 +9,8 @@
 *.user
 *.suo
 *.db
+*.opendb
+packages/
 
 #logs
 *.txt
