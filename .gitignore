@@ -19,7 +19,7 @@ Debug/
 Release/
 
 #game files
-data/
 *.zip
 LevelTool/saves/
 saves/
+*.dat
