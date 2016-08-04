@@ -539,9 +539,7 @@ void MultiGameLobby::HandleButton(ContainerReader& r, int player)
 void MultiGameLobby::UpdateListWithPlayerPings(LIST side)
 {
 	std::vector< PageItem > lst;
-	// progmem.de
-	lst.push_back(PageItem(PageObject::Label, PageColor(6, 199, 208).color,
-		"Teamspeak: progmem.de"));
+	
 	lst.push_back(PageItem(PageObject::Label, PageColor(255, 255, 255).color,
 		"Players:"));
 	int id = 1;
