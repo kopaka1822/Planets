@@ -298,7 +298,10 @@ void Drawing::ApplyStorybook(FramebufferObject& srcFbo)
 void Drawing::DrawStarfield()
 {
 	// TODO since 3.3
-	if(oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 3))
+	if(curShaderConfig & Storybook)
+		return;
+
+	if(Settings::GetStarfield() && (oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 3)))
 	{
 		shStarfield.Update(planmove);
 

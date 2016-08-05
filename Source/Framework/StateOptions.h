@@ -45,6 +45,8 @@ public:
 		scrollVideo(false),
 		lblFull("Fullscreen", FONT_MED),
 		lblControls("Controls:", FONT_MED),
+		btnStarfield(Settings::GetStarfield()),
+		lblStarfield("Starfield",FONT_MED),
 
 		lblLeft("Set Target", FONT_MED),
 		lblSel("Select Units", FONT_MED),
@@ -165,6 +167,7 @@ public:
 		scrollVideo.AddItem(&lblLines, &btnLines);
 		scrollVideo.AddItem(&lblDetail, &trackDetail);
 		scrollVideo.AddItem(&lblPlanetGlow, &trackPlanetGlow);
+		scrollVideo.AddItem(&lblStarfield, &btnStarfield);
 		scrollVideo.AddItem(&lblPerfInfo, &btnPerfInfo);
 
 		if (Drawing::GetDraw().HasFramebufferSupport())
@@ -335,6 +338,9 @@ public:
 			btnThBass.Pushed())
 			UpdateFilter();
 
+		if (btnStarfield.Pushed())
+			Settings::SetStarfield(btnStarfield.GetState());
+
 		//if (btnShader.Pushed())
 			//Settings::SetShader(btnShader.GetState());
 		Drawing& draw = Drawing::GetDraw();
@@ -491,9 +497,11 @@ private:
 
 
 	UIYNButton btnFullscreen;
+	UIYNButton btnStarfield;
 	UIYNButton btnLines;
 	UILabel lblLines;
 	UILabel lblDetail;
+	UILabel lblStarfield;
 	UITrackbar trackDetail;
 	UILabel lblPerfInfo;
 	UIYNButton btnPerfInfo;

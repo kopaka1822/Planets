@@ -103,6 +103,9 @@ public:
 	static unsigned int GetShader();
 	static void SetShader(unsigned int s);
 
+	static bool GetStarfield();
+	static void SetStarfield(bool val);
+
 	// FXAA
 	static float GetFXAASpan();
 	static float GetFXAAMul();

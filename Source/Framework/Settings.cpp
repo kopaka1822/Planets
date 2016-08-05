@@ -53,8 +53,9 @@ static unsigned int shaderConfig;
 static float fxaaSpan;
 static float fxaaMul;
 static float fxaaShift;
+static bool bStarfield;
 
-static const unsigned int curVersion = 23;
+static const unsigned int curVersion = 24;
 
 static unsigned long long MenuScore;
 
@@ -198,7 +199,8 @@ void Settings::LoadFromFile()
 		try
 		{
 			LOGWRITE("loading settings from file");
-			if (r.readInt() != curVersion)
+			int version = r.readInt();
+			if (!(version == curVersion || version == 23))
 				throw Exception("deprecated config.dat");
 
 			bFullscreen = r.readChar() != 0;
@@ -251,6 +253,15 @@ void Settings::LoadFromFile()
 
 			bDeselectOnTarget = r.readChar() != 0;
 			planetGlowFactor = r.readFloat();
+
+			if(version < curVersion)
+			{
+				bStarfield = true;
+			}
+			else
+			{
+				bStarfield = r.readBool();
+			}
 		}
 		catch (const std::out_of_range& e)
 		{
@@ -324,6 +335,7 @@ void Settings::Save()
 		w.writeChar(bDeselectOnTarget);
 		w.writeFloat(planetGlowFactor);
 
+		w.writeBool(bStarfield);
 		LOGWRITE("settings saved");
 	}
 }
@@ -391,6 +403,8 @@ void Settings::RestoreDefault()
 
 	bDeselectOnTarget= true;
 	planetGlowFactor = 0.4f;
+
+	bStarfield = true;
 }
 Input::GKstruct Settings::GetGamekey(Input::GameKey g)
 {
@@ -577,6 +591,17 @@ void Settings::SetShader(unsigned int b)
 {
 	shaderConfig = b;
 }
+
+bool Settings::GetStarfield()
+{
+	return bStarfield;
+}
+
+void Settings::SetStarfield(bool val)
+{
+	bStarfield = val;
+}
+
 float Settings::GetFXAASpan()
 {
 	return fxaaSpan;
