@@ -297,20 +297,22 @@ void Drawing::ApplyStorybook(FramebufferObject& srcFbo)
 
 void Drawing::DrawStarfield()
 {
-	// TODO since 3.1
-	if(oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 1))
+	// TODO since 3.3
+	if(oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 3))
 	{
+		shStarfield.Update(planmove);
+
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
 		glEnable(GL_POINT_SPRITE);
 		glEnable(GL_PROGRAM_POINT_SIZE);
 
-		Database::GetTexture(Database::GameTex::Particle).Bind(0);
+		Database::GetTexture(Database::GameTex::StarField).Bind(0);
 		shStarfield.Bind();
 		glBindVertexArray(0);
 		glDrawArraysInstanced(GL_POINTS, 0, 1, 1000);
 		shStarfield.Undbind();
-		Database::GetTexture(Database::GameTex::Particle).Unbind();
+		Database::GetTexture(Database::GameTex::StarField).Unbind();
 
 		glDisable(GL_PROGRAM_POINT_SIZE);
 		glDisable(GL_POINT_SPRITE);
@@ -740,12 +742,12 @@ void Drawing::DrawPlanet(PointF center, Color cmain, Color csub, float r, float 
 	DrawSpriteColored(RectF::FromPoint(center, r), Database::GetTexture(Database::GameTex::PlanetDes), csub);*/
 	lastSpawn = tool::clamp(lastSpawn, 0.0f, 1.0f);
 
+	DrawDisc(center, r * 0.9f, Color::Black());
+
 	if (Settings::PlanetGlowEnabled())
 		DrawGlow(center, r * 1.9f, csub);
-
 	// draw spawning shockwave?
 
-	
 
 	texNoise.Bind(0);
 	shPlanet.SetParameters(cmain, csub, PointF(1.0f - lastSpawn,planmove.y));

@@ -69,6 +69,8 @@ public:
 		drag,
 		swipe,
 		selector,
+
+		StarField,
 		// add here
 
 		SIZE

@@ -51,6 +51,8 @@ bool Database::Initialize(Drawing& draw)
 	textures[GameTex::swipe] = draw.MakeTexture("data//pic//swipe.bmp");
 	textures[GameTex::selector] = draw.MakeTexture("data//pic//selector.bmp");
 
+	textures[GameTex::StarField] = draw.MakeTexture("data//pic//star.bmp");
+
 	levelstruct.curLevelpack = 0;
 	levelstruct.curLvl = 0;
 

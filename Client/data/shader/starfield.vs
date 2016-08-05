@@ -1,4 +1,8 @@
-#version 330 core
+#version 330
+
+uniform vec2 rtexel;
+uniform float scalar;
+uniform uint offset;
 
 uint randomInt(uint n)
 {
@@ -28,15 +32,22 @@ out float intense;
 
 void main()
 {
-	uint r = randomInt(uint(gl_InstanceID));
+	uint r = randomInt(uint(gl_InstanceID) + offset);
 	uint r2 = randomInt(r);
 	uint r3 = randomInt(r2);
-	/*gl_Position = vec4(toFloat(r),toFloat(r2), toFloat(r3), 1.0);
-	*/
 	
 	gl_Position = vec4(random(r),random(r2),0.0,1.0);
+	gl_PointSize = scalar * 18.0; // in screen coords
 	
-	gl_PointSize = 5.0; // in screen coords
+	// intensity
 	
-	intense = ((random(r3) * 2.0) - 1.0) * 0.3 + 0.7;
+	float val = ((random(r3) * 2.0) - 1.0) * 0.3 + 0.7;
+	
+	float phi = 0.0;
+	
+	float modfac = mod(gl_InstanceID, 80) + 1.0;
+	phi = (rtexel.y * 6.28 * modfac + float(gl_InstanceID));
+	
+	
+	intense = max(sin(phi),val);
 }

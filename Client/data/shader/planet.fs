@@ -61,6 +61,12 @@ void main()
 		float fac = dist * 2.0; // 0 - 1
 		float alpha = 1.0 - pow(fac, 4.0);
 		
+		/*if(dist < 0.45)
+		{
+			outcol.rgb = outcol.rgb * alpha;
+			alpha = 1.0;
+		}*/
+			
 		outcol.a = alpha;
 	}
 	
