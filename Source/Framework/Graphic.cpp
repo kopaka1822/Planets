@@ -173,6 +173,7 @@ void Graphic::BeginFrame()
 	draw.DrawParticle({ 10, 10 }, Color::Black(), 10.0f);
 
 	draw.DrawBackground();
+	draw.DrawStarfield();
 }
 
 void Graphic::EndFrame()

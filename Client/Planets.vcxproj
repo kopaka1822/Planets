@@ -149,6 +149,7 @@
     <ClInclude Include="..\Source\Framework\ShaderGlow.h" />
     <ClInclude Include="..\Source\Framework\ShaderPlanet.h" />
     <ClInclude Include="..\Source\Framework\ShaderRadialBlur.h" />
+    <ClInclude Include="..\Source\Framework\ShaderStarfield.h" />
     <ClInclude Include="..\Source\Framework\ShaderStory.h" />
     <ClInclude Include="..\Source\Framework\ShaderTexAdd.h" />
     <ClInclude Include="..\Source\Framework\ShaderWave.h" />

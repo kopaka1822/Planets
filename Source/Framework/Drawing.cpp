@@ -89,6 +89,7 @@ void Drawing::Create()
 		shFXAA.Create();
 		shTexAdd.Create();
 		shGlow.Create();
+		shStarfield.Create();
 	}
 
 	Log::Write("creating openGL textures");
@@ -140,6 +141,7 @@ void Drawing::Dispose()
 		shFXAA.Dispose();
 		shTexAdd.Dispose();
 		shGlow.Dispose();
+		shStarfield.Dispose();
 	}
 
 	GLCheck("Dispose");
@@ -293,6 +295,37 @@ void Drawing::ApplyStorybook(FramebufferObject& srcFbo)
 	GLCheck("apply image story");
 }
 
+void Drawing::DrawStarfield()
+{
+	// TODO since 3.1
+	if(oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 1))
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+		glEnable(GL_POINT_SPRITE);
+		glEnable(GL_PROGRAM_POINT_SIZE);
+
+		Database::GetTexture(Database::GameTex::Particle).Bind(0);
+		shStarfield.Bind();
+		glBindVertexArray(0);
+		glDrawArraysInstanced(GL_POINTS, 0, 1, 1000);
+		shStarfield.Undbind();
+		Database::GetTexture(Database::GameTex::Particle).Unbind();
+
+		glDisable(GL_PROGRAM_POINT_SIZE);
+		glDisable(GL_POINT_SPRITE);
+		glDisable(GL_BLEND);
+		glDisable(GL_TEXTURE_2D);
+
+		GLCheck("Drawing::DrawStarfield");
+	}
+}
+
+void Drawing::SetStarfieldColor(const Color& col)
+{
+	shStarfield.setColor(col);
+}
+
 /*
 void Drawing::ApplyGlowing(FramebufferObject* pFbo)
 {
@@ -415,6 +448,7 @@ void Drawing::LoadShaders()
 	shFXAA.Load();
 	shTexAdd.Load();
 	shGlow.Load();
+	shStarfield.Load();
 
 	Log::Write("shaders loaded");
 }

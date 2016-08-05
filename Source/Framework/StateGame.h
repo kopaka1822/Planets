@@ -86,7 +86,7 @@ class StateGame : public GameState
 	};
 public:
 	StateGame(byte myTeam, byte maxTeams);
-	virtual ~StateGame(){}
+	virtual ~StateGame();
 
 	virtual void Event_MouseDown(Input::MouseKey k, const PointF& pos) override;
 	virtual void Event_MouseUp(Input::MouseKey k, const PointF& pos) override final;
@@ -123,6 +123,7 @@ private:
 	void AlignButtons(PointF start, const PointF& dim, float dist, const std::initializer_list< UIObject* >& btns);
 	void SetMiniMap(bool active);
 	float GetCurGametime();
+	void CalcStarfieldColor(Drawing& draw);
 protected:
 	std::unique_ptr<MapDrawer> pMapDraw;
 	GameStruct& gs;

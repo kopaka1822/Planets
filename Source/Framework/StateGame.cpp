@@ -107,7 +107,12 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	score.AddBranch(*gs.pMap); // stamp for time = 0
 }
 
-  ////////////////////////////////////////////////////////////////
+StateGame::~StateGame()
+{
+	Drawing::GetDraw().SetStarfieldColor(Color::White());
+}
+
+////////////////////////////////////////////////////////////////
  /////////////////////////// EVENTS /////////////////////////////
 ////////////////////////////////////////////////////////////////
 
@@ -367,6 +372,8 @@ void StateGame::SetTarget(const PointF& p)
 
 void StateGame::DrawMap(Drawing& draw)
 {
+	CalcStarfieldColor(draw);
+
 	pMapDraw->Draw(draw, Input::GetMouseXY());
 
 	if (bMouseDown)
@@ -578,7 +585,39 @@ float StateGame::GetCurGametime()
 	return score.GetGametime();
 }
 
-  ////////////////////////////////////////////////////////////////
+
+void StateGame::CalcStarfieldColor(Drawing& draw)
+{
+	static const int minUnits = 40;
+	bool minUnitsReached = false;
+
+	size_t curTeamMax = 0;
+	size_t maxUnits = 0;
+	size_t totalUnits = 0;
+	for(int i = 0; i < gs.nTeams; i++)
+	{
+		if(gs.pMap->countUnits(i + 1) > minUnits && gs.pMap->countUnits(i + 1) > maxUnits)
+		{
+			maxUnits = gs.pMap->countUnits(i + 1);
+			curTeamMax = i + 1;
+		}
+		totalUnits += gs.pMap->countUnits(i + 1);
+	}
+
+	const size_t halfUnits = totalUnits / 2;
+	if(curTeamMax != 0 && maxUnits > halfUnits)
+	{
+		float percent = float(maxUnits - halfUnits) / float(halfUnits); // 0 - 1
+		Color c = Color::GetTeamColor(curTeamMax).mix(Color::White(),percent);
+		draw.SetStarfieldColor(c);
+	}
+	else
+	{
+		draw.SetStarfieldColor(Color::White());
+	}
+}
+
+////////////////////////////////////////////////////////////////
  /////////////////////////// SOUND //////////////////////////////
 ////////////////////////////////////////////////////////////////
 

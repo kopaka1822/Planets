@@ -19,6 +19,7 @@
 #include "ShaderWave.h"
 #include "ShaderFXAA.h"
 #include "ShaderGlow.h"
+#include "ShaderStarfield.h"
 
 class Drawing
 {
@@ -123,6 +124,8 @@ public:
 	{
 		return oglMajorVersion >= 3;
 	}
+	void DrawStarfield();
+	void SetStarfieldColor(const Color& col);
 private:
 	void LoadShaders(); // this has to be done once
 
@@ -149,6 +152,7 @@ private:
 	ShaderFXAA shFXAA;
 	ShaderTexAdd shTexAdd;
 	ShaderGlow shGlow;
+	ShaderStarfield shStarfield;
 
 	float curWidth, curHeight; // transformed w and h
 	int realWidth, realHeight; // actual width and height of window

@@ -59,12 +59,14 @@ void Shader::Dispose()
 		program = 0;
 	}
 }
+
+
 void Shader::LoadShaderSource(const std::string& filename)
 {
 	sources[VERTEX] = LoadShader(filename + ".vs");
 	sources[FRAGMENT] = LoadShader(filename + ".fs");
 }
-void Shader::Bind() const
+void Shader::Bind()
 {
 	assert(bLoaded);
 	assert(program);

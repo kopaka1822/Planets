@@ -64,6 +64,7 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{	
+		
 		//draw label
 		logo.Draw(draw);
 
@@ -91,6 +92,7 @@ public:
 			f.Text("Score: ", PointI(10.0f, 10.0f));
 			f.Text(std::to_string(score), PointI(110, 10));
 		}
+		
 	}
 	virtual void ExecuteCode(float dt) override
 	{

@@ -21,13 +21,13 @@ public:
 	virtual void Create();
 	virtual void Dispose();
 
-	virtual void Bind() const;
+	virtual void Bind();
 	void Undbind() const
 	{
 		glUseProgram(0);
 	}
 
-	~Shader();
+	virtual ~Shader();
 
 private:
 	static std::string LoadShader(const std::string& fileName);

@@ -25,7 +25,7 @@ public:
 	void Create();
 	~Font()
 	{}
-	void Text(const std::string& txt, PointF pos) const
+	void Text(const std::string& txt, PointF pos)
 	{
 		GLCheck("before font");
 		Shader::Bind();
@@ -92,7 +92,7 @@ public:
 	{
 		return GetMetrics(txt.c_str());
 	}
-	void Text(const char* txt, const PointF& pos) const
+	void Text(const char* txt, const PointF& pos)
 	{
 		Text(std::string(txt), pos);
 	}
