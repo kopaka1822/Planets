@@ -41,7 +41,7 @@ void main()
 	
 	// intensity
 	
-	float val = ((random(r3) * 2.0) - 1.0) * 0.3 + 0.7;
+	float val = ((random(r3) + 1.0) / 2.0) * 0.3 + 0.2;
 	
 	float phi = 0.0;
 	
