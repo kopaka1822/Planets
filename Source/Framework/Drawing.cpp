@@ -307,9 +307,17 @@ void Drawing::DrawStarfield()
 
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-		glEnable(GL_POINT_SPRITE);
+
+		glEnable(GL_POINT_SPRITE_ARB);
+		glTexEnvf(GL_POINT_SPRITE_ARB, GL_COORD_REPLACE_ARB, GL_TRUE);
+		glPointParameterfARB(GL_POINT_SIZE_MAX_ARB, 30 * Framework::GetScalar());
+		glPointParameterfARB(GL_POINT_SIZE_MIN_ARB, 1.0f);
+		glPointSize(18 * Framework::GetScalar());
+		/*glEnable(GL_POINT_SPRITE);
+		glPointSize(18 * Framework::GetScalar());*/
 		glEnable(GL_PROGRAM_POINT_SIZE);
 
+		glEnable(GL_TEXTURE_2D);
 		Database::GetTexture(Database::GameTex::StarField).Bind(0);
 		shStarfield.Bind();
 		glBindVertexArray(0);

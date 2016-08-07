@@ -1,7 +1,6 @@
 #version 330
 
 uniform vec2 rtexel;
-uniform float scalar;
 uniform uint offset;
 
 uint randomInt(uint n)
@@ -37,7 +36,6 @@ void main()
 	uint r3 = randomInt(r2);
 	
 	gl_Position = vec4(random(r),random(r2),0.0,1.0);
-	gl_PointSize = scalar * 18.0; // in screen coords
 	
 	// intensity
 	

@@ -1,6 +1,5 @@
 #pragma once
 #include "Shader.h"
-#include "Framework.h"
 
 class ShaderStarfield : public Shader
 {
@@ -21,7 +20,6 @@ public:
 	{
 		glUseProgram(program);
 		glUniform2f(rtexel, p.x, p.y);
-		glUniform1f(scalar, Framework::GetScalar());
 		glUseProgram(0);
 	}
 	virtual void Create() override
@@ -35,10 +33,6 @@ public:
 		rtexel = glGetUniformLocation(program, "rtexel");
 		if (rtexel == -1)
 			throw Exception("starfield shader: rtexel uniform not found");
-
-		scalar = glGetUniformLocation(program, "scalar");
-		if (scalar == -1)
-			throw Exception("starfield shader: scalar uniform not found");
 
 		offset = glGetUniformLocation(program, "offset");
 		if (offset == -1)
@@ -65,6 +59,5 @@ private:
 	Color curCol = -1;
 	Color desCol = -1; // desired
 	GLint rtexel = -1;
-	GLint scalar = -1;
 	GLint offset = -1;
 };
