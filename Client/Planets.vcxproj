@@ -59,6 +59,9 @@
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_net.lib;SDL2_mixer.lib;glew32.lib;glew32s.lib;OpenGL32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <Manifest>
+      <AdditionalManifestFiles>app.manifest %(AdditionalManifestFiles)</AdditionalManifestFiles>
+    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
