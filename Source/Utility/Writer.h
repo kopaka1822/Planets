@@ -5,6 +5,7 @@
 class Writer
 {
 public:
+    virtual ~Writer(){}
 
 	template <class T>
 	void write(const T& t)

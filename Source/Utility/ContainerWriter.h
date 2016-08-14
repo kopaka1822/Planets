@@ -9,6 +9,7 @@ public:
 		:
 		ref(r)
 	{}
+	virtual ~ContainerWriter(){}
 protected:
 	virtual void _write(const void* pSrc, size_t len) override
 	{

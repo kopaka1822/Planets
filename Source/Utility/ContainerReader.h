@@ -10,6 +10,7 @@ public:
 		:
 		ref(r)
 	{}
+	virtual ~ContainerReader(){}
 	void skip(size_t s)
 	{
 		rPos += s;

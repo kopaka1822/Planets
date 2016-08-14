@@ -6,7 +6,7 @@
 class Reader
 {
 public:
-
+    virtual ~Reader(){}
 	// should throw out_of_range
 	template <class T>
 	T read()
@@ -30,7 +30,7 @@ public:
 	{
 		return read<uint8_t>();
 	}
-	bool readBool() 
+	bool readBool()
 	{
 		return readChar() != 0;
 	}

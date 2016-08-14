@@ -57,7 +57,7 @@ int main(int argc, char** argv)
 				else
 				{
 					// available commands:
-					Console::WriteLine("comands:");
+					Console::WriteLine("commands:");
 					Console::WriteLine("-quit \t\t quit server");
 					Console::WriteLine("-reload \t reload maps");
 				}

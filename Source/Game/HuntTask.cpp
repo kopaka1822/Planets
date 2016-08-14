@@ -1,4 +1,3 @@
-#pragma once
 #include "HuntTask.h"
 #include "PlayerAI.h"
 
