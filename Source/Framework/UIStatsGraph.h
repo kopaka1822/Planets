@@ -24,25 +24,25 @@ public:
 	}
 	virtual ~UIStatsGraph(){}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		// draw numbers
 
 		font.SetColor(Color::White());
-		float x = pos.y + border + fontpadd;
-		float curY = pos.y + dim.y - border - 2.0f * font.GetFontHeight();
+		float x = m_pos.y + border + fontpadd;
+		float curY = m_pos.y + m_dim.y - border - 2.0f * font.GetFontHeight();
 
-		float yFac = (dim.y - 2.0f * border) / float(maxUnit);
-		while (curY > pos.y + border)
+		float yFac = (m_dim.y - 2.0f * border) / float(maxUnit);
+		while (curY > m_pos.y + border)
 		{
 			// get number
-			float y = dim.y - ((curY + font.GetFontHeight() / 2.0f) - pos.y);
+			float y = m_dim.y - ((curY + font.GetFontHeight() / 2.0f) - m_pos.y);
 			size_t count = size_t(y / yFac);
 
 			font.Text(std::to_string(count), PointF(x, curY));
 
 			// draw horizontal line
-			draw.DrawHLine(PointF(pos.x + numberBarWidth + 1.0f, curY + font.GetFontHeight() / 2.0f), dim.x - numberBarWidth - 2.0f, 2.0f, Color::Gray());
+			draw.DrawHLine(PointF(m_pos.x + numberBarWidth + 1.0f, curY + font.GetFontHeight() / 2.0f), m_dim.x - numberBarWidth - 2.0f, 2.0f, Color::Gray());
 
 
 			curY -= 2.0f * font.GetFontHeight();
@@ -63,8 +63,8 @@ public:
 
 		DrawLine(myIndex, Color::GetTeamColor(myIndex + 1), draw, ucount);
 
-		draw.DrawVLine(pos + PointF(numberBarWidth + border / 2.0f, border / 2.0f), dim.y - border, border, Color::White());
-		draw.DrawTransBox(GetRect(), border, Color::White());
+		draw.DrawVLine(m_pos + PointF(numberBarWidth + border / 2.0f, border / 2.0f), m_dim.y - border, border, Color::White());
+		draw.DrawTransBox(getRect(), border, Color::White());
 	}
 	void Update(float dt)
 	{
@@ -73,13 +73,13 @@ public:
 private:
 	void DrawLine(int team,const Color& col, Drawing& draw, unsigned int maxUnits)
 	{
-		float step = (dim.x - 2.0f * border - numberBarWidth) / (gData.size() - 1);
+		float step = (m_dim.x - 2.0f * border - numberBarWidth) / (gData.size() - 1);
 
 		float x = numberBarWidth;
 
 		float prevY = 0.0f;
 
-		float yFac = (dim.y - 2.0f * border) / float(maxUnit);
+		float yFac = (m_dim.y - 2.0f * border) / float(maxUnit);
 		unsigned int unitCount = 0;
 
 		for (const auto& vec : gData)
@@ -90,7 +90,7 @@ private:
 
 			if (x != numberBarWidth) // dont draw the point...
 			{
-				draw.DrawLine(pos + PointF(border + x - step, dim.y - border - prevY), pos + PointF(border + x, dim.y - border - y), col, 3.0f);
+				draw.DrawLine(m_pos + PointF(border + x - step, m_dim.y - border - prevY), m_pos + PointF(border + x, m_dim.y - border - y), col, 3.0f);
 			}
 
 			prevY = y;

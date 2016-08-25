@@ -16,13 +16,13 @@ public:
 		lblInfo("...",FONT_SMALL),
 		gs(Database::ClearGameStruct())
 	{
-		lblTitle.CenterX(50.0f);
-		lblInfo.CenterX(600.0f);
-		progWaiting.SetMetrics(PointF(300.0f, 300.0f));
-		progWaiting.CenterX(200.0f);
+		lblTitle.centerX(50.0f);
+		lblInfo.centerX(600.0f);
+		progWaiting.setMetrics(PointF(300.0f, 300.0f));
+		progWaiting.centerX(200.0f);
 
 		btnAbort.AdjustToFont();
-		btnAbort.SetOrigin(PointF(10.0f, Framework::STD_DRAW_Y - 10.0f - btnAbort.GetMetrics().y));
+		btnAbort.setOrigin(PointF(10.0f, Framework::STD_DRAW_Y - 10.0f - btnAbort.getMetrics().y));
 
 		AddObject(&btnAbort);
 		Database::GetServerAdress(&servIP, &servPort);
@@ -35,11 +35,11 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
+		lblTitle.draw(draw);
 		if (!denied)
-			progWaiting.Draw(draw);
-		btnAbort.Draw(draw);
-		lblInfo.Draw(draw);
+			progWaiting.draw(draw);
+		btnAbort.draw(draw);
+		lblInfo.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{
@@ -84,7 +84,7 @@ private:
 			SetInfo(gs.pClient->GetError());
 			lblTitle.SetText("Denied");
 			lblTitle.AdjustToFont();
-			lblTitle.CenterX(50.0f);
+			lblTitle.centerX(50.0f);
 			denied = true;
 			break;
 		case Client::States::Disconnected:
@@ -107,7 +107,7 @@ private:
 	{
 		lblInfo.SetText(s);
 		lblInfo.AdjustToFont();
-		lblInfo.CenterX(600.0f);
+		lblInfo.centerX(600.0f);
 	}
 	void HandleData()
 	{

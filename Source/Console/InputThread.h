@@ -27,7 +27,7 @@ public:
 	}
 	bool HasMessage() const
 	{
-		return message.length();
+		return message.length() != 0;
 	}
 	std::string GetMessage()
 	{

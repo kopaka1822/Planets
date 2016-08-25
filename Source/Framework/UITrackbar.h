@@ -11,10 +11,10 @@ public:
 
 	}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawRect(RectF(pos + PointF(0, dim.y / 3.0f), pos + dim + PointF(0, -dim.y / 3)), Color::White());
-		draw.DrawRect(RectF(pos + PointF(value*(dim.x - width), 0), pos + PointF(value*(dim.x-width) + width, dim.y)), Color::White());
+		draw.DrawRect(RectF(m_pos + PointF(0, m_dim.y / 3.0f), m_pos + m_dim + PointF(0, -m_dim.y / 3)), Color::White());
+		draw.DrawRect(RectF(m_pos + PointF(value*(m_dim.x - width), 0), m_pos + PointF(value*(m_dim.x-width) + width, m_dim.y)), Color::White());
 	}
 
 	float GetValue() const
@@ -33,7 +33,7 @@ public:
 	}
 	virtual void Event_MouseMove(const PointF& mpos) override
 	{
-		if (GetRect().PointInside(mpos))
+		if (getRect().PointInside(mpos))
 		{
 			if (!bHover)
 			{
@@ -47,7 +47,7 @@ public:
 		}
 		if (bDown)
 		{
-			float temp = (mpos.x - width / 2 - pos.x) / (dim.x - width);
+			float temp = (mpos.x - width / 2 - m_pos.x) / (m_dim.x - width);
 			SetValue(temp);
 		}
 	}
@@ -66,10 +66,10 @@ public:
 
 		bDown = false;
 	}
-	virtual void SetMetrics(const PointF& d) override
+	virtual void setMetrics(const PointF& d) override
 	{
-		UIObject::SetMetrics(d);
-		width = dim.y / 4.0f;
+		UIObject::setMetrics(d);
+		width = m_dim.y / 4.0f;
 	}
 	bool Changed()
 	{

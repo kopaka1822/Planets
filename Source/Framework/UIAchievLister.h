@@ -46,7 +46,7 @@ private:
 		itm.push_back(n);
 
 		n.pObj = i.lblDesc;
-		n.pos = PointF(padSide, 2 * padding + i.lblTitle->GetMetrics().y);
+		n.pos = PointF(padSide, 2 * padding + i.lblTitle->getMetrics().y);
 		itm.push_back(n);
 
 		UIInfoLister::AddItem(std::move(itm), hei);
@@ -69,7 +69,7 @@ private:
 	}
 	virtual void Event_MouseMove(const PointF& pos) override
 	{
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			float dy = pos.y - lastPos.y;

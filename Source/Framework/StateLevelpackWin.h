@@ -16,34 +16,34 @@ public:
 	{
 		AddObject(&btnContinue);
 
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 		
-		btnContinue.CenterX(640.0f);
+		btnContinue.centerX(640.0f);
 
 		// Set info for time labels
 		packTime = GetPackTime();
 		lblPackTime.SetText("Star Time: " + GetTimeString(packTime));
 		lblPackTime.AdjustToFont();
 
-		lblPackTime.CenterX(560.0f);
+		lblPackTime.centerX(560.0f);
 
 		myTime = gs.time;
 		lblMyTime.SetText("Your Time: " + GetTimeString(myTime));
 		lblMyTime.AdjustToFont();
 
-		lblMyTime.CenterX(500.0f);
+		lblMyTime.centerX(500.0f);
 
 		// Set stars
 		float rad = 280.0f;
 		float off = 50.0f;
-		s1.SetMetrics({ rad, rad });
-		s2.SetMetrics({ rad, rad });
-		s3.SetMetrics({ rad, rad });
+		s1.setMetrics({ rad, rad });
+		s2.setMetrics({ rad, rad });
+		s3.setMetrics({ rad, rad });
 
-		s2.CenterX(150.0f);
+		s2.centerX(150.0f);
 
-		s1.SetOrigin(s2.GetOrigin() - PointF(off + rad,0.0f));
-		s3.SetOrigin(s2.GetOrigin() + PointF(off + rad, 0.0f));
+		s1.setOrigin(s2.getOrigin() - PointF(off + rad,0.0f));
+		s3.setOrigin(s2.getOrigin() + PointF(off + rad, 0.0f));
 
 		CalcStarTypes();
 	}
@@ -60,14 +60,14 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		s1.Draw(draw);
-		s2.Draw(draw);
-		s3.Draw(draw);
+		lblTitle.draw(draw);
+		s1.draw(draw);
+		s2.draw(draw);
+		s3.draw(draw);
 
-		lblPackTime.Draw(draw);
-		lblMyTime.Draw(draw);
-		btnContinue.Draw(draw);
+		lblPackTime.draw(draw);
+		lblMyTime.draw(draw);
+		btnContinue.draw(draw);
 	}
 private:
 	float GetPackTime()

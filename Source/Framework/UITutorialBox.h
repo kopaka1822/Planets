@@ -32,8 +32,8 @@ public:
 		if (pTex || bPlan)
 			totalHeight += 200.0f + padding;
 
-		PointF curPos = pos + PointF(border + padding, border + padding);
-		curPos.y += (dim.y - 2 * (border + padding) - totalHeight) / 2.0f;
+		PointF curPos = m_pos + PointF(border + padding, border + padding);
+		curPos.y += (m_dim.y - 2 * (border + padding) - totalHeight) / 2.0f;
 
 		if (pTex)
 		{
@@ -42,13 +42,13 @@ public:
 			textureDim.y = 200.0f;
 			//textureDim.x = pTex->GetHeight() / textureDim.y * pTex->GetWidth();
 			textureDim.x = textureDim.y / pTex->GetHeight() * pTex->GetWidth();
-			texturePos.x = pos.x + (dim.x - textureDim.x) / 2.0f;
+			texturePos.x = m_pos.x + (m_dim.x - textureDim.x) / 2.0f;
 
 			curPos.y += textureDim.y + padding;
 		}
 		else if (bPlan)
 		{
-			texturePos.x = pos.x + dim.x / 2.0f;
+			texturePos.x = m_pos.x + m_dim.x / 2.0f;
 			texturePos.y = curPos.y + 100.0f;
 
 			curPos.y += 200.0f + padding;
@@ -61,19 +61,19 @@ public:
 
 			PointF fpos;
 			fpos.y = curPos.y;
-			fpos.x = pos.x + dim.x /2.0f - fmet.x / 2.0f;
+			fpos.x = m_pos.x + m_dim.x /2.0f - fmet.x / 2.0f;
 
 			fontPos.push_back(fpos);
 
 			curPos.y += fmet.y + padding;
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{ 
 		if (!bActive)
 			return;
 
-		draw.DrawBox(GetRect(), border, Color::Red().Brightness(0.2f), Color::Black());
+		draw.DrawBox(getRect(), border, Color::Red().Brightness(0.2f), Color::Black());
 
 		if (pTex)
 		{

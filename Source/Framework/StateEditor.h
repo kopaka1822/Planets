@@ -44,7 +44,7 @@ public:
 
 		Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
 
-		menu.Register(*this);
+		menu.registerMe(*this);
 
 		menu.AddSection("File");
 		menu.AddElement("File", "New");
@@ -78,7 +78,7 @@ public:
 		AddObject(&btnPOY);
 		AddObject(&btnMOY);
 
-		listRight.Register(*this);
+		listRight.registerMe(*this);
 	}
 	virtual ~StateEditor()
 	{
@@ -88,75 +88,75 @@ public:
 	{
 		const float Scalar = Framework::GetScalar();
 
-		menu.SetMetrics(dim);
-		menu.SetOrigin(ul);
+		menu.setMetrics(dim);
+		menu.setOrigin(ul);
 
 		btnPOY.AdjustToFont();
 		btnPOX.AdjustToFont();
 		btnMOY.AdjustToFont();
 		btnMOX.AdjustToFont();
 
-		grid.SetOrigin({ ul.x + btnPOX.GetMetrics().x, ul.y + menu.GetMetrics().y + btnPOY.GetMetrics().x });
-		grid.SetMetrics({ dim.x - 420.0f, (dim.y - menu.GetMetrics().y) * 0.8f });
+		grid.setOrigin({ ul.x + btnPOX.getMetrics().x, ul.y + menu.getMetrics().y + btnPOY.getMetrics().x });
+		grid.setMetrics({ dim.x - 420.0f, (dim.y - menu.getMetrics().y) * 0.8f });
 
 		// + - buttons
-		float height = grid.GetMetrics().y / 2.0f;
+		float height = grid.getMetrics().y / 2.0f;
 
 		btnPX.AdjustToFont();
-		btnPX.SetOrigin(grid.GetRect().TopRight());
-		btnPX.SetHeight(height);
+		btnPX.setOrigin(grid.getRect().TopRight());
+		btnPX.setHeight(height);
 
-		btnPOX.SetOrigin(grid.GetRect().TopLeft() - PointF(btnPOX.GetMetrics().x, 0.0f));
-		btnPOX.SetHeight(height);
+		btnPOX.setOrigin(grid.getRect().TopLeft() - PointF(btnPOX.getMetrics().x, 0.0f));
+		btnPOX.setHeight(height);
 
 		btnMX.AdjustToFont();
-		btnMX.SetOrigin(grid.GetRect().TopRight() + PointF(0.0f, grid.GetMetrics().y / 2.0f));
-		btnMX.SetHeight(height);
+		btnMX.setOrigin(grid.getRect().TopRight() + PointF(0.0f, grid.getMetrics().y / 2.0f));
+		btnMX.setHeight(height);
 
-		btnMOX.SetOrigin(btnPOX.GetRect().BottomLeft());
-		btnMOX.SetHeight(height);
+		btnMOX.setOrigin(btnPOX.getRect().BottomLeft());
+		btnMOX.setHeight(height);
 
-		height = btnPX.GetMetrics().x;
-		const float width = grid.GetMetrics().x / 2.0f;
+		height = btnPX.getMetrics().x;
+		const float width = grid.getMetrics().x / 2.0f;
 
 		btnPY.AdjustToFont();
-		btnPY.SetOrigin(grid.GetRect().BottomLeft());
-		btnPY.SetMetrics({width, height});
+		btnPY.setOrigin(grid.getRect().BottomLeft());
+		btnPY.setMetrics({width, height});
 
-		btnPOY.SetOrigin(grid.GetRect().TopLeft() - PointF(0.0f, height));
-		btnPOY.SetMetrics({ width, height });
+		btnPOY.setOrigin(grid.getRect().TopLeft() - PointF(0.0f, height));
+		btnPOY.setMetrics({ width, height });
 
 		btnMY.AdjustToFont();
-		btnMY.SetOrigin(grid.GetRect().BottomLeft() + PointF(grid.GetMetrics().x / 2.0f, 0.0f));
-		btnMY.SetMetrics({ width, height });
+		btnMY.setOrigin(grid.getRect().BottomLeft() + PointF(grid.getMetrics().x / 2.0f, 0.0f));
+		btnMY.setMetrics({ width, height });
 
-		btnMOY.SetOrigin(btnPOY.GetRect().TopRight());
-		btnMOY.SetMetrics({ width, height });
+		btnMOY.setOrigin(btnPOY.getRect().TopRight());
+		btnMOY.setMetrics({ width, height });
 
 
 		//Planet buttons etc.
 
 		//panel setup
-		panelRight.p1 = btnPX.GetRect().TopRight() - PointF(0.0f,height);
+		panelRight.p1 = btnPX.getRect().TopRight() - PointF(0.0f,height);
 		panelRight.p2 = ul + dim;
 
-		panelBottom.p1 = btnPY.GetRect().TopLeft() - PointF(height,0.0f);
+		panelBottom.p1 = btnPY.getRect().TopLeft() - PointF(height,0.0f);
 		panelBottom.p2 = panelRight.p2 - PointF(panelRight.getWidth(), 0);
 
 		panelTop.p1 = ul;
-		panelTop.p2 = btnPX.GetRect().TopRight();
+		panelTop.p2 = btnPX.getRect().TopRight();
 
 
-		listRight.SetOrigin(panelRight.TopLeft());
-		listRight.SetMetrics({ panelRight.getWidth(), panelRight.getHeight() });
+		listRight.setOrigin(panelRight.TopLeft());
+		listRight.setMetrics({ panelRight.getWidth(), panelRight.getHeight() });
 
 		
 		//listRight.OrderItems();
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		//Draw Map
-		grid.Draw(draw);
+		//draw Map
+		grid.draw(draw);
 		
 		// draw cursor
 		if (listRight.GetState() == UIEditorList::state::floating)
@@ -178,21 +178,21 @@ public:
 		draw.DrawRect(panelBottom, Color::Black());
 		draw.DrawRect(panelTop, Color::Black());
 
-		btnPX.Draw(draw);
-		btnMX.Draw(draw);
+		btnPX.draw(draw);
+		btnMX.draw(draw);
 
-		btnPY.Draw(draw);
-		btnMY.Draw(draw);
+		btnPY.draw(draw);
+		btnMY.draw(draw);
 
-		btnPOX.Draw(draw);
-		btnMOX.Draw(draw);
+		btnPOX.draw(draw);
+		btnMOX.draw(draw);
 
-		btnPOY.Draw(draw);
-		btnMOY.Draw(draw);
+		btnPOY.draw(draw);
+		btnMOY.draw(draw);
 
-		listRight.Draw(draw);
+		listRight.draw(draw);
 
-		menu.Draw(draw);	
+		menu.draw(draw);	
 		
 	}
 	virtual void ExecuteCode(float dt) override
@@ -277,7 +277,7 @@ public:
 		case Input::Left:
 			if (listRight.GetState() == UIEditorList::state::floating)
 			{
-				if (grid.GetRect().PointInside(p))
+				if (grid.getRect().PointInside(p))
 				{
 					// place item
 					if (listRight.GetSelection() == UIEditorList::selection::entity)
@@ -292,7 +292,7 @@ public:
 			}
 			else
 			{
-				if (grid.GetRect().PointInside(p))
+				if (grid.getRect().PointInside(p))
 				{
 					// fixed or none -> select at mouse position
 					UIEditorGrid::type ty;

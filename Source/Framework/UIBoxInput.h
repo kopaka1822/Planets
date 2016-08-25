@@ -12,26 +12,26 @@ public:
 	{}
 	void Adjust(float width)
 	{
-		SetMetrics({ width, TextInput.GetFontHeight() + 2.0f * (float)border });
+		setMetrics({ width, TextInput.GetFontHeight() + 2.0f * (float)border });
 	}
 	void SetFlags(UITextInput::FLAGS f)
 	{
 		TextInput.SetFlags(f);
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border,mark ? Color::Red() : Color::White(), Color::Black());
-		TextInput.Draw(draw);
+		draw.DrawBox(getRect(), (float)border,mark ? Color::Red() : Color::White(), Color::Black());
+		TextInput.draw(draw);
 	}
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		TextInput.SetOrigin(p + PointF(border, border));
-		pos = p;
+		TextInput.setOrigin(p + PointF(border, border));
+		m_pos = p;
 	}
-	virtual void SetMetrics(const PointF& d) override
+	virtual void setMetrics(const PointF& d) override
 	{
-		TextInput.SetMetrics(d);
-		dim = d;
+		TextInput.setMetrics(d);
+		m_dim = d;
 	}
 	void SetText(std::string NewText)
 	{
@@ -48,7 +48,7 @@ public:
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& pos) override
 	{
 		TextInput.Event_MouseDown(k, pos);
-		if (GetRect().PointInside(pos))
+		if (getRect().PointInside(pos))
 			mark = false;
 	}
 	virtual void Event_KeyDown(SDL_Scancode code) override

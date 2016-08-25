@@ -23,23 +23,23 @@ public:
 		AddObject(&btnLoadConfig);
 		AddObject(&btnSaveConfig);
 
-		list.Register(*this);
-		list.SetMetrics({ 900, 540 });
-		list.CenterX(150.0f);
+		list.registerMe(*this);
+		list.setMetrics({ 900, 540 });
+		list.centerX(150.0f);
 		// now the trick lol
-		list.SetMetrics({ 700, 540 });
+		list.setMetrics({ 700, 540 });
 
 		list.OrderItems();
 
-		btnBack.SetOrigin({ 10, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
-		lblTitle.CenterX(50.0f);
+		btnBack.setOrigin({ 10, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
+		lblTitle.centerX(50.0f);
 		
 		float xsta = 920.0f;
-		btnCreate.SetOrigin(PointF(xsta, 150.0f));
-		btnSaveConfig.SetOrigin(PointF(xsta, 220.0f));
-		btnLoadConfig.SetOrigin(PointF(xsta, 290.0f));
-		boxStatus.SetOrigin(PointF(xsta, 360.0f));
-		//boxStatus.SetWidth(300.0f);
+		btnCreate.setOrigin(PointF(xsta, 150.0f));
+		btnSaveConfig.setOrigin(PointF(xsta, 220.0f));
+		btnLoadConfig.setOrigin(PointF(xsta, 290.0f));
+		boxStatus.setOrigin(PointF(xsta, 360.0f));
+		//boxStatus.setWidth(300.0f);
 		boxStatus.AdjustToFont(Framework::STD_DRAW_X - xsta);
 	}
 	virtual ~StateLevelPackEditor()
@@ -62,13 +62,13 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		list.Draw(draw);
-		btnCreate.Draw(draw);
-		btnSaveConfig.Draw(draw);
-		btnLoadConfig.Draw(draw);
-		boxStatus.Draw(draw);
-		btnBack.Draw(draw);
+		lblTitle.draw(draw);
+		list.draw(draw);
+		btnCreate.draw(draw);
+		btnSaveConfig.draw(draw);
+		btnLoadConfig.draw(draw);
+		boxStatus.draw(draw);
+		btnBack.draw(draw);
 	}
 private:
 	void CreatePack()

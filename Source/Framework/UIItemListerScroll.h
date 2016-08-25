@@ -20,7 +20,7 @@ public:
 		UIItemLister::Event_MouseMove(pos);
 		float dy = sbar.GetDelta();
 
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			if (dy == 0.0f)
@@ -36,7 +36,7 @@ public:
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& pos) override
 	{
 		UIItemLister::Event_MouseDown(k, pos);
-		if (k == Input::Left && bHover)// && RectF(this->pos, this->pos + PointF(dim.x * midpoint, dim.y)).PointInside(pos))
+		if (k == Input::Left && bHover)// && RectF(this->pos, this->m_pos + PointF(dim.x * midpoint, dim.y)).PointInside(m_pos))
 		{
 			bDown = true;
 			lastPos = pos;

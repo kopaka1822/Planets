@@ -12,10 +12,10 @@ public:
 		for (int i = 0; i < 25; i++)
 		{
 			btns[i] = new UIButtonColor(Color::GetTeamColor(i + 1));
-			btns[i]->SetMetrics({ btnwi, btnwi });
+			btns[i]->setMetrics({ btnwi, btnwi });
 		}
 
-		SetMetrics({ 5 * btnwi + 4 * dist, 5 * btnwi + 4 * dist });
+		setMetrics({ 5 * btnwi + 4 * dist, 5 * btnwi + 4 * dist });
 	}
 	virtual ~UIGridColor()
 	{
@@ -28,25 +28,25 @@ public:
 			btns[i]->SetColor(Color::GetTeamColor(i + 1));
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		for (int i = 0; i < 25; i++)
 		{
-			btns[i]->Draw(draw);
+			btns[i]->draw(draw);
 		}
 	}
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		UIObject::SetOrigin(p);
-		float btnwi = btns[0]->GetMetrics().x;
+		UIObject::setOrigin(p);
+		float btnwi = btns[0]->getMetrics().x;
 
-		float curX = pos.x;
+		float curX = m_pos.x;
 		for (int x = 0; x < 5; x++)
 		{
-			float curY = pos.y;
+			float curY = m_pos.y;
 			for (int y = 0; y < 5; y++)
 			{
-				btns[y * 5 + x]->SetOrigin({ curX, curY });
+				btns[y * 5 + x]->setOrigin({ curX, curY });
 				curY += dist + btnwi;
 			}
 			curX += dist + btnwi;

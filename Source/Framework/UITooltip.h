@@ -20,43 +20,43 @@ public:
 	{
 		msLastPos = pos;
 
-		if (obj.GetRect().PointInside(pos))
+		if (obj.getRect().PointInside(pos))
 		{
 			float xStart = pos.x;
-			float yStart = pos.y - dim.y;
+			float yStart = pos.y - m_dim.y;
 
-			float xEnd = xStart + dim.x;
+			float xEnd = xStart + m_dim.x;
 			if (xEnd > Framework::DrawStart().x + Framework::DrawWidth().x)
-				xStart -= dim.x;
+				xStart -= m_dim.x;
 
 			float yEnd = pos.y;
 
 			if (yStart < Framework::DrawStart().y)
 				yStart = pos.y;
 
-			SetOrigin({ xStart, yStart });
-			objLastPos = obj.GetOrigin();
+			setOrigin({ xStart, yStart });
+			objLastPos = obj.getOrigin();
 			bHover = true;
 		}
 		else
 			bHover = false;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (!isEnabled())
 			return;
 
-		if (obj.GetOrigin() != objLastPos || msLastPos != Input::GetMouseXY())
+		if (obj.getOrigin() != objLastPos || msLastPos != Input::GetMouseXY())
 		{
 			Event_MouseMove(Input::GetMouseXY());
 		}
 
 		if (obj.isEnabled() && bHover)
 		{
-			draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+			draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-			const float x = pos.x + border + padding;
-			float y = pos.y + border + padding;
+			const float x = m_pos.x + border + padding;
+			float y = m_pos.y + border + padding;
 
 			font.SetColor(Color::White());
 			for (const auto& s : info)
@@ -81,7 +81,7 @@ private:
 		float wi = font.GetFontWidth() * maxlen;
 		wi += float(2 * border + 2 * padding);
 
-		SetMetrics({ wi, hei });
+		setMetrics({ wi, hei });
 	}
 private:
 	UIObject& obj;

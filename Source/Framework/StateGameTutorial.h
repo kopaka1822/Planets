@@ -126,8 +126,8 @@ public:
 
 		gs.pMap->addEventReciever(&mapEvents);
 
-		lblMission.SetOrigin(PointF(10, 10));
-		lblMission2.SetOrigin(PointF(10, 10) + PointF(0, lblMission.GetMetrics().y));
+		lblMission.setOrigin(PointF(10, 10));
+		lblMission2.setOrigin(PointF(10, 10) + PointF(0, lblMission.getMetrics().y));
 
 		SetEntitySelector(false);
 	}
@@ -137,20 +137,20 @@ public:
 	{
 		StateGameSingle::ComposeFrame(draw);
 
-		lblMission.Draw(draw);
-		lblMission2.Draw(draw);
+		lblMission.draw(draw);
+		lblMission2.draw(draw);
 
-		boxWelcome.Draw(draw);
-		box1.Draw(draw);
-		box2.Draw(draw);
-		box3.Draw(draw);
-		box4.Draw(draw);
-		box5.Draw(draw);
+		boxWelcome.draw(draw);
+		box1.draw(draw);
+		box2.draw(draw);
+		box3.draw(draw);
+		box4.draw(draw);
+		box5.draw(draw);
 
-		boxWhitePlan.Draw(draw);
-		boxWhitePlan2.Draw(draw);
+		boxWhitePlan.draw(draw);
+		boxWhitePlan2.draw(draw);
 
-		boxDefend.Draw(draw);
+		boxDefend.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override final
 	{
@@ -308,8 +308,8 @@ private:
 	{
 		AddObject(&box);
 		PointF met = { 900.0f, 600.0f };
-		box.SetMetrics(met);
-		box.Center();
+		box.setMetrics(met);
+		box.center();
 		box.OrderItems();
 	}
 	void SetMission(std::string mis)

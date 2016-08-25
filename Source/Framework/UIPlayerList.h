@@ -39,7 +39,7 @@ public:
 	void AddItem(const std::string& player, float ping, int team, bool ready)
 	{
 		const float hei = 60.0f;
-		const float wi = dim.x - 2 * padding;
+		const float wi = m_dim.x - 2 * padding;
 		Item i;
 		i.lblPlayer = new UILabel(player, FONT_SMALL);
 		i.lblPlayer->SetColor(Color::GetTeamColor(team));
@@ -47,7 +47,7 @@ public:
 		i.lblPing->SetColor(Color::GetTeamColor(team));
 		i.lblPing->SetNumber((int)ping);
 		i.part = new UIParticle(ready ? Color::Green() : Color::Red());
-		i.part->SetMetrics({ hei, hei });
+		i.part->setMetrics({ hei, hei });
 
 		std::vector< UIInfoLister::Item > itm;
 		UIInfoLister::Item n;
@@ -56,11 +56,11 @@ public:
 		itm.push_back(n);
 
 		n.pObj = i.lblPing;
-		n.pos = PointF(wi - 2 * padding, hei - padding) - i.lblPing->GetMetrics();
+		n.pos = PointF(wi - 2 * padding, hei - padding) - i.lblPing->getMetrics();
 		itm.push_back(n);
 
 		n.pObj = i.part;
-		n.pos = PointF(wi - 3 * padding - i.lblPing->GetMetrics().x - i.part->GetMetrics().x,
+		n.pos = PointF(wi - 3 * padding - i.lblPing->getMetrics().x - i.part->getMetrics().x,
 			0);
 		itm.push_back(n);
 
@@ -82,7 +82,7 @@ public:
 	}
 	virtual void Event_MouseMove(const PointF& pos) override
 	{
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			float dy = pos.y - lastPos.y;

@@ -88,8 +88,8 @@ protected:
 	{
 		for (auto& o : objs)
 		{
-			o->SetOrigin(start);
-			start.y += distance + o->GetMetrics().y;
+			o->setOrigin(start);
+			start.y += distance + o->getMetrics().y;
 		}
 	}
 private:

@@ -14,16 +14,16 @@ public:
 		curWidth = displaywidth;
 		maxCam = height;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		float totalwidth = dim.y - 2.0f * border;
+		float totalwidth = m_dim.y - 2.0f * border;
 		float yStart = curTop / maxCam * totalwidth;
 		float yEnd = (curTop + curWidth) / maxCam * totalwidth;
 
-		PointF start = pos + PointF(border, border);
-		draw.DrawRect(RectF(start + PointF(0.0f, yStart), start + PointF(dim.x - 2.0f * border, yEnd)), Color::Gray());
+		PointF start = m_pos + PointF(border, border);
+		draw.DrawRect(RectF(start + PointF(0.0f, yStart), start + PointF(m_dim.x - 2.0f * border, yEnd)), Color::Gray());
 	}
 	void SetCam(float cam)
 	{
@@ -32,7 +32,7 @@ public:
 
 	virtual void Event_MouseMove(const PointF& pos) override
 	{
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			dy = -(pos.y - lastPos.y);

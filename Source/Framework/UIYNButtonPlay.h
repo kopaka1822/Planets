@@ -11,13 +11,13 @@ public:
 	virtual ~UIYNButtonPlay()
 	{}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawRect(GetRect(), Color::White());
+		draw.DrawRect(getRect(), Color::White());
 		Texture& tex = GetState() ? Database::GetTexture(Database::GameTex::FastForward) :
 			Database::GetTexture(Database::GameTex::Play);
 		
-		draw.DrawSprite(RectF(pos + PointF(border, border), pos + dim - PointF(border, border)), tex);
+		draw.DrawSprite(RectF(m_pos + PointF(border, border), m_pos + m_dim - PointF(border, border)), tex);
 	}
 
 private:

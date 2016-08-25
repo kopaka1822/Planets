@@ -11,11 +11,11 @@ public:
 		btnMenu("Menu",FONT_MED),
 		boxError(errmsg,FONT_MED)
 	{
-		lblTitle.CenterX(50.0f);
-		btnMenu.CenterX(600.0f);
+		lblTitle.centerX(50.0f);
+		btnMenu.centerX(600.0f);
 
 		boxError.AdjustToFont(1000.0f);
-		boxError.Center();
+		boxError.center();
 
 		AddObject(&btnMenu);
 
@@ -25,9 +25,9 @@ public:
 	{}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		boxError.Draw(draw);
-		btnMenu.Draw(draw);
+		lblTitle.draw(draw);
+		boxError.draw(draw);
+		btnMenu.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

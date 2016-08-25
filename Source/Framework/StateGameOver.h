@@ -14,7 +14,7 @@ public:
 		gs(Database::GetGameStruct()),
 		btnLobby("Lobby",FONT_MED)
 	{
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 
 		Database::GetMainServer(&reServer, &rePort);
 		if (reServer.length())
@@ -22,18 +22,18 @@ public:
 
 		if (bReconnect)
 		{
-			btnLobby.CenterX(Framework::STD_DRAW_Y - 10.0f - btnLobby.GetMetrics().y);
+			btnLobby.centerX(Framework::STD_DRAW_Y - 10.0f - btnLobby.getMetrics().y);
 			AddObject(&btnLobby);
 		}
 		else
 		{
-			btnMenu.CenterX(625.0f);
+			btnMenu.centerX(625.0f);
 			AddObject(&btnMenu);
 		}
 		
 
-		list.SetMetrics(PointF(1000, 450));
-		list.CenterX(150.0f);
+		list.setMetrics(PointF(1000, 450));
+		list.centerX(150.0f);
 
 		list.LoadGameResults(res);
 
@@ -45,14 +45,14 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
+		lblTitle.draw(draw);
 
 		if (bReconnect)
-			btnLobby.Draw(draw);
+			btnLobby.draw(draw);
 		else
-			btnMenu.Draw(draw);
+			btnMenu.draw(draw);
 
-		list.Draw(draw);
+		list.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

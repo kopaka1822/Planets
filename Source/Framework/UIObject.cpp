@@ -1,7 +1,7 @@
 #include "UIObject.h"
 #include "GameState.h"
 
-void UIObject::Register(GameState& g)
+void UIObject::registerMe(GameState& g)
 {
 	g.AddObject(this);
 }

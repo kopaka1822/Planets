@@ -20,20 +20,20 @@ public:
 	{
 		SplitText((int)width);
 		float y = float(2 * padding + (lines.size() - 1) * padding) + font.GetFontHeight() * float(lines.size());
-		SetMetrics({ width, y });
+		setMetrics({ width, y });
 	}
 	void SetText(const std::string& s)
 	{
 		original = s;
-		AdjustToFont(dim.x);
+		AdjustToFont(m_dim.x);
 	}
 	virtual ~UITextBox()
 	{
 
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		PointF start = pos + PointF(padding, padding);
+		PointF start = m_pos + PointF(padding, padding);
 		font.SetColor(col);
 		LockGuard g(muTxt);
 		for (const auto& l : lines)

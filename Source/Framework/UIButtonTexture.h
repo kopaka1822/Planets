@@ -10,27 +10,27 @@ public:
 	{
 		
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawSprite(GetRect(), tex);
+		draw.DrawSprite(getRect(), tex);
 	}
 	virtual void DrawColored(Drawing& draw, Color col)
 	{
-		draw.DrawSpriteColored(GetRect(), tex, col);
+		draw.DrawSpriteColored(getRect(), tex, col);
 	}
 	// draw without stretching image
 	virtual void DrawColoredBox(Drawing& draw, Color col)
 	{
-		RectF rect = GetRect();
-		if (dim.x > dim.y)
+		RectF rect = getRect();
+		if (m_dim.x > m_dim.y)
 		{
-			float s = (dim.x - dim.y) / 2.0f;
+			float s = (m_dim.x - m_dim.y) / 2.0f;
 			rect.p1 += PointF(s, 0.0f);
 			rect.p2 -= PointF(s, 0.0f);
 		}
-		else if (dim.y > dim.x)
+		else if (m_dim.y > m_dim.x)
 		{
-			float s = (dim.y - dim.x) / 2.0f;
+			float s = (m_dim.y - m_dim.x) / 2.0f;
 			rect.p1 += PointF(0.0f, s);
 			rect.p2 -= PointF(0.0f, s);
 		}

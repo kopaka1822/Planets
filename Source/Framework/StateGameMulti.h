@@ -17,8 +17,8 @@ public:
 		AddObject(gs.pChat.get());
 		AddObject(&btnChat);
 
-		btnPlayer.Enable();
-		btnChat.Enable();
+		btnPlayer.enable();
+		btnChat.enable();
 
 		Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
 
@@ -35,14 +35,14 @@ public:
 	{
 		StateGame::Event_Resize(ul, dim);
 
-		gs.pChat->SetOrigin(ctrlBar.TopLeft() + PointF(10.0f,-410.0f));
-		gs.pChat->SetMetrics({ 500.0f, 400.0f });
+		gs.pChat->setOrigin(ctrlBar.TopLeft() + PointF(10.0f,-410.0f));
+		gs.pChat->setMetrics({ 500.0f, 400.0f });
 	}
 	virtual void ComposeFrame(Drawing& draw) override final
 	{
 		DrawMap(draw);
 
-		gs.pChat->Draw(draw);
+		gs.pChat->draw(draw);
 
 		
 

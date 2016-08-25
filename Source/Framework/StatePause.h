@@ -16,15 +16,15 @@ public:
 			bUpdate = prev->BackgroundUpdate();
 		}
 
-		float wi = btnBack.GetMetrics().x + 100.0f;
+		float wi = btnBack.getMetrics().x + 100.0f;
  
-		btnBack.SetWidth(wi);
-		btnMenu.SetWidth(wi);
-		btnOptions.SetWidth(wi);
+		btnBack.setWidth(wi);
+		btnMenu.setWidth(wi);
+		btnOptions.setWidth(wi);
 
-		btnBack.CenterX(200.0f);
-		btnOptions.CenterX(300.0f);
-		btnMenu.CenterX(400.0f);
+		btnBack.centerX(200.0f);
+		btnOptions.centerX(300.0f);
+		btnMenu.centerX(400.0f);
 
 		AddObject(&btnBack);
 		AddObject(&btnMenu);
@@ -37,9 +37,9 @@ public:
 		if (prev)
 			prev->ComposeFrame(draw);
 
-		btnMenu.Draw(draw);
-		btnOptions.Draw(draw);
-		btnBack.Draw(draw);
+		btnMenu.draw(draw);
+		btnOptions.draw(draw);
+		btnBack.draw(draw);
 	}
 	virtual void Event_Resize(const PointF& ul, const PointF& dim) override
 	{

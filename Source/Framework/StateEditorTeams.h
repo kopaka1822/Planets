@@ -10,10 +10,10 @@ public:
 		prev(std::move(previ)),
 		teamMenu(Database::GetEditorTeams())
 	{
-		teamMenu.Register(*this);
+		teamMenu.registerMe(*this);
 
-		teamMenu.SetMetrics({ 500.0f, 500.0f });
-		teamMenu.Center();
+		teamMenu.setMetrics({ 500.0f, 500.0f });
+		teamMenu.center();
 
 	}
 	virtual ~StateEditorTeams()
@@ -29,7 +29,7 @@ public:
 		if (prev)
 			prev->ComposeFrame(draw);
 
-		teamMenu.Draw(draw);
+		teamMenu.draw(draw);
 
 		if (teamMenu.OkayPressed())
 		{

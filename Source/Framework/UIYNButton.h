@@ -9,19 +9,19 @@ public:
 		:
 		bClicked(State)
 	{
-		SetMetrics({ 50, 50 });
+		setMetrics({ 50, 50 });
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		UIButton::Draw(draw);
+		UIButton::draw(draw);
 
 		if (bClicked)
-			draw.DrawCircle(pos + dim / 2.0f, dim.x / 3.3f, Color::Green(), 6.0f);
+			draw.DrawCircle(m_pos + m_dim / 2.0f, m_dim.x / 3.3f, Color::Green(), 6.0f);
 		else
 		{
 			float b = GetBorder() * 2;
-			draw.DrawLine(pos + PointF(b, b), pos + dim - PointF(b, b), Color::Red(), 3);
-			draw.DrawLine(pos + PointF(dim.x - b, b), pos + PointF(b, dim.y - b), Color::Red(), 3);
+			draw.DrawLine(m_pos + PointF(b, b), m_pos + m_dim - PointF(b, b), Color::Red(), 3);
+			draw.DrawLine(m_pos + PointF(m_dim.x - b, b), m_pos + PointF(b, m_dim.y - b), Color::Red(), 3);
 		}
 	}
 	virtual void Event_MouseUp(Input::MouseKey k, const PointF& pos) override

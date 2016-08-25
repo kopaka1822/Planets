@@ -85,7 +85,7 @@ public:
 
 		sh.Bind();
 
-		// Draw Texture
+		// draw Texture
 		glEnable(GL_BLEND);
 		glBlendFunc(sFactor, dFactor);
 		glActiveTexture(GL_TEXTURE0);

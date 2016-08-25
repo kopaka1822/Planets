@@ -23,7 +23,7 @@ public:
 		}
 		btns[myTeam - 1]->SetState(UIClanButton::state::ally);
 		btns[myTeam - 1]->SetConst(true);
-		itmhei = (int)btns[0]->GetMetrics().y;
+		itmhei = (int)btns[0]->getMetrics().y;
 	}
 	virtual ~UIIngamePlayerList()
 	{
@@ -32,19 +32,19 @@ public:
 			tool::safeDelete(b);
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (!bVisible)
 			return;
 
-		draw.DrawBox(GetRect(), (float)border, Color::GetTeamColor(myTeam), Color::Black());
-		draw.DrawVLine(pos + PointF(dim.x / 2.0f - name_padd / 2.0f + padding, 2.0f * border), dim.y - 4.0f * border, (float)border, Color::Gray());
+		draw.DrawBox(getRect(), (float)border, Color::GetTeamColor(myTeam), Color::Black());
+		draw.DrawVLine(m_pos + PointF(m_dim.x / 2.0f - name_padd / 2.0f + padding, 2.0f * border), m_dim.y - 4.0f * border, (float)border, Color::Gray());
 
 		// draw names
-		float leftx = pos.x + border + padding;
+		float leftx = m_pos.x + border + padding;
 		float rightx = leftx + namelen + padding + name_padd;
 
-		float curY = pos.y + border + 1 * padding;
+		float curY = m_pos.y + border + 1 * padding;
 
 		font.SetColor(Color::White());
 		font.Text("Ally", PointF(leftx + MAX_PLAYERLEN * font.GetFontWidth(), curY));
@@ -53,7 +53,7 @@ public:
 
 		for (int i = 0; i < nPlayer; ++i)
 		{
-			btns[i]->Draw(draw);
+			btns[i]->draw(draw);
 			font.SetColor(Color::GetTeamColor(i + 1));
 			if (i % 2 == 0)
 			{
@@ -71,31 +71,31 @@ public:
 	// metric
 	void AdjustToPlayers()
 	{
-		dim.x = 2.0f * border + 3 * padding + 2 * namelen + 2 * name_padd;
+		m_dim.x = 2.0f * border + 3 * padding + 2 * namelen + 2 * name_padd;
 		int playerrows = (nPlayer + 1) / 2;
-		dim.y = 2.0f * border + (playerrows + 1) * itmhei + (playerrows + 2) * padding;
+		m_dim.y = 2.0f * border + (playerrows + 1) * itmhei + (playerrows + 2) * padding;
 	}
 	// position
 	void AdjustToScreen()
 	{
-		Center();
+		center();
 		// adjust buttons
-		float leftx = pos.x + border + padding + font.GetFontWidth() * MAX_PLAYERLEN;
-		float rightx = pos.x + border + padding + namelen + name_padd + padding + font.GetFontWidth() * MAX_PLAYERLEN;
+		float leftx = m_pos.x + border + padding + font.GetFontWidth() * MAX_PLAYERLEN;
+		float rightx = m_pos.x + border + padding + namelen + name_padd + padding + font.GetFontWidth() * MAX_PLAYERLEN;
 
-		float curY = pos.y + border + 1 * padding + font.GetFontHeight() + padding;
+		float curY = m_pos.y + border + 1 * padding + font.GetFontHeight() + padding;
 
 		for (int i = 0; i < nPlayer; ++i)
 		{
 			if (i % 2 == 0)
 			{
 				// left
-				btns[i]->SetOrigin({ leftx, curY });
+				btns[i]->setOrigin({ leftx, curY });
 			}
 			else
 			{
 				// right
-				btns[i]->SetOrigin({ rightx, curY });
+				btns[i]->setOrigin({ rightx, curY });
 				curY += itmhei + padding;
 			}
 		}
@@ -142,14 +142,14 @@ private:
 	{
 		for (auto& b : btns)
 		{
-			b->Enable();
+			b->enable();
 		}
 	}
 	void DisableAll()
 	{
 		for (auto& b : btns)
 		{
-			b->Disable();
+			b->disable();
 		}
 	}
 private:

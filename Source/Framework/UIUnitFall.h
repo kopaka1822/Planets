@@ -23,7 +23,7 @@ public:
 	{}
 	virtual ~UIUnitFall()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		LockGuard g(muEnts);
 
@@ -70,13 +70,13 @@ public:
 
 			// Spawn unit
 			float perc = float(rand() % 1000) / 1000.0f;
-			SpawnUnit(pos + PointF(dim.x * perc, 0.0f));
+			SpawnUnit(m_pos + PointF(m_dim.x * perc, 0.0f));
 		}
 
 		// kill units?
 		while (ents.size())
 		{
-			if (ents.front().pos.y > pos.y + dim.y)
+			if (ents.front().pos.y > m_pos.y + m_dim.y)
 			{
 				// die
 				PointF diepos = ents.front().pos;

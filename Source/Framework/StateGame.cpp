@@ -104,11 +104,11 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	tipSabo.AddLine("Filter by Saboteur");
 	tipDefPlan.AddLine("Set all planets on defense");
 
-	btnChat.Disable();
-	btnFastForward.Disable();
-	btnFastForward.SetMetrics(btnPause.GetMetrics());
+	btnChat.disable();
+	btnFastForward.disable();
+	btnFastForward.setMetrics(btnPause.getMetrics());
 
-	pMapDraw->GetEntitySpawnSelect()->Register(*this);
+	pMapDraw->GetEntitySpawnSelect()->registerMe(*this);
 
 	score.AddBranch(*gs.pMap); // stamp for time = 0
 }
@@ -124,7 +124,7 @@ StateGame::~StateGame()
 
 void StateGame::Event_MouseDown(Input::MouseKey k, const PointF& pos)
 {
-	if (pMapDraw->GetRect().PointInside(pos) && !pMiniMap->GetRect().PointInside(pos))
+	if (pMapDraw->GetRect().PointInside(pos) && !pMiniMap->getRect().PointInside(pos))
 	{
 		if (k == Input::Middle)
 		{
@@ -153,7 +153,7 @@ void StateGame::Event_GameKeyDown(Input::GameKey k, const PointF& p)
 		break;
 
 	case Input::GK_SELECT:
-		if (pMapDraw->GetRect().PointInside(p) && !pMiniMap->GetRect().PointInside(p))
+		if (pMapDraw->GetRect().PointInside(p) && !pMiniMap->getRect().PointInside(p))
 		{
 			bMouseDown = true;
 			msDown = pMapDraw->toModel(p);
@@ -166,7 +166,7 @@ void StateGame::Event_GameKeyDown(Input::GameKey k, const PointF& p)
 		if (Settings::GetGamekey(Input::GK_SELECT) != Settings::GetGamekey(Input::GK_DESELECT))
 			break;
 	case Input::GK_DESELECT:
-		if (pMapDraw->GetRect().PointInside(p) && !pMiniMap->GetRect().PointInside(p))
+		if (pMapDraw->GetRect().PointInside(p) && !pMiniMap->getRect().PointInside(p))
 			gs.pMap->ClickRight(gs.myTeam);
 		break;
 	case Input::GK_FILTERENT:
@@ -272,12 +272,12 @@ void StateGame::Event_Resize(const PointF& ul, const PointF& dim)
 			&btnFilterSabo, &btnDefPlanets, &btnChat
 	});
 
-	pMiniMap->SetMetrics({ 200.0f * scalar, 200.0f * scalar });
+	pMiniMap->setMetrics({ 200.0f * scalar, 200.0f * scalar });
 	SetMiniMap(btnMiniOnOff.GetState());
 
 
-	btnMiniOnOff.SetMetrics(PointF(50.0f, 50.0f));
-	btnMiniOnOff.SetOrigin({ (pMiniMap->GetRect().BottomLeft() - btnMiniOnOff.GetMetrics()).x, ctrlBar.TopRight().y + 10.0f });
+	btnMiniOnOff.setMetrics(PointF(50.0f, 50.0f));
+	btnMiniOnOff.setOrigin({ (pMiniMap->getRect().BottomLeft() - btnMiniOnOff.getMetrics()).x, ctrlBar.TopRight().y + 10.0f });
 	tablist.AdjustToScreen();
 }
 void StateGame::Event_KeyDown(SDL_Scancode code)
@@ -359,7 +359,7 @@ void StateGame::SetTarget(const PointF& p)
 	UIGridEntity& grid = *pMapDraw->GetEntitySpawnSelect();
 	if (grid.isEnabled())
 	{
-		if (!grid.GetRect().PointInside(Input::GetMouseXY()))
+		if (!grid.getRect().PointInside(Input::GetMouseXY()))
 		{
 			planTargeted = gs.pMap->Click(p, gs.myTeam);
 		}
@@ -395,43 +395,43 @@ void StateGame::DrawMap(Drawing& draw)
 
 	draw.DrawRect(ctrlBar, Color::GetTeamColor(gs.myTeam).mix(Color::Black()));
 
-	btnPause.Draw(draw);
+	btnPause.draw(draw);
 
 	if (btnFastForward.isEnabled())
-		btnFastForward.Draw(draw);
+		btnFastForward.draw(draw);
 
-	btnSA.Draw(draw);
-	btnSN.Draw(draw);
+	btnSA.draw(draw);
+	btnSN.draw(draw);
 
-	btnFilterEnt.Draw(draw);
-	btnFilterBomb.Draw(draw);
-	btnFilterSabo.Draw(draw);
-	btnFilterSpeed.Draw(draw);
-	btnDefPlanets.Draw(draw);
+	btnFilterEnt.draw(draw);
+	btnFilterBomb.draw(draw);
+	btnFilterSabo.draw(draw);
+	btnFilterSpeed.draw(draw);
+	btnDefPlanets.draw(draw);
 
 	if (btnChat.isEnabled())
-		btnChat.Draw(draw);
+		btnChat.draw(draw);
 
 	if (btnPlayer.isEnabled())
-		btnPlayer.Draw(draw);
+		btnPlayer.draw(draw);
 
-	pMiniMap->Draw(draw);
-	btnMiniOnOff.Draw(draw);
+	pMiniMap->draw(draw);
+	btnMiniOnOff.draw(draw);
 
-	tipPlayer.Draw(draw);
-	tipChat.Draw(draw);
-	tipSN.Draw(draw);
-	tipSA.Draw(draw);
-	tipDefPlan.Draw(draw);
-	tipPause.Draw(draw);
-	tipMap.Draw(draw);
+	tipPlayer.draw(draw);
+	tipChat.draw(draw);
+	tipSN.draw(draw);
+	tipSA.draw(draw);
+	tipDefPlan.draw(draw);
+	tipPause.draw(draw);
+	tipMap.draw(draw);
 
-	tipEnt.Draw(draw);
-	tipBomb.Draw(draw);
-	tipSpeed.Draw(draw);
-	tipSabo.Draw(draw);
+	tipEnt.draw(draw);
+	tipBomb.draw(draw);
+	tipSpeed.draw(draw);
+	tipSabo.draw(draw);
 
-	tablist.Draw(draw);
+	tablist.draw(draw);
 
 	/*
 	FONT_SMALL.SetColor(Color::White());
@@ -555,7 +555,7 @@ void StateGame::UpdateGameButtons()
 	}
 	else
 	{
-		entSel.Disable();
+		entSel.disable();
 	}
 	
 
@@ -570,8 +570,8 @@ void StateGame::AlignButtons(PointF start, const PointF& dim, float dist, const 
 {
 	for (auto& b : btns)
 	{
-		b->SetMetrics(dim);
-		b->SetOrigin(start);
+		b->setMetrics(dim);
+		b->setOrigin(start);
 		start += PointF(dim.x + dist, 0.0f);
 	}
 }
@@ -582,12 +582,12 @@ void StateGame::SetMiniMap(bool active)
 	const PointF dim = Framework::DrawWidth();
 	if (active)
 	{
-		pMiniMap->SetOrigin(PointF(ul.x + dim.x - pMiniMap->GetMetrics().x - 10.0f,
-			ul.y + dim.y - 10.0f - pMiniMap->GetMetrics().y));
+		pMiniMap->setOrigin(PointF(ul.x + dim.x - pMiniMap->getMetrics().x - 10.0f,
+			ul.y + dim.y - 10.0f - pMiniMap->getMetrics().y));
 	}
 	else
 	{
-		pMiniMap->SetOrigin(PointF(ul.x + dim.x - pMiniMap->GetMetrics().x - 10.0f,
+		pMiniMap->setOrigin(PointF(ul.x + dim.x - pMiniMap->getMetrics().x - 10.0f,
 			ul.y + dim.y - ctrlBar.getHeight() + 10.0f));
 	}
 }

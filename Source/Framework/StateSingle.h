@@ -26,28 +26,28 @@ public:
 		if (packs.size() == 0)
 			throw GameError("no levelpacks found");
 
-		grid.Register(*this);
+		grid.registerMe(*this);
 		AddObject(&test);
 		AddObject(&btnBack);
 		AddObject(&btnLeft);
 		AddObject(&btnRight);
 		AddObject(&btnTutorial);
 
-		grid.Center();
+		grid.center();
 
-		test.SetOrigin({ Framework::STD_DRAW_X - test.GetMetrics().x - 10, Framework::STD_DRAW_Y - test.GetMetrics().y - 10 });
+		test.setOrigin({ Framework::STD_DRAW_X - test.getMetrics().x - 10, Framework::STD_DRAW_Y - test.getMetrics().y - 10 });
 
-		btnBack.SetOrigin({ 10, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
-		lblSingleplayer.CenterX(50);
+		btnBack.setOrigin({ 10, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
+		lblSingleplayer.centerX(50);
 
-		float hei = lblSingleplayer.GetMetrics().y;
-		btnLeft.SetHeight(hei);
-		btnRight.SetHeight(hei);
+		float hei = lblSingleplayer.getMetrics().y;
+		btnLeft.setHeight(hei);
+		btnRight.setHeight(hei);
 
-		btnLeft.SetOrigin(PointF(100.0f, 50.0f));
-		btnRight.SetOrigin(PointF(Framework::STD_DRAW_X - 100.0f - btnRight.GetMetrics().x, 50.0f));
+		btnLeft.setOrigin(PointF(100.0f, 50.0f));
+		btnRight.setOrigin(PointF(Framework::STD_DRAW_X - 100.0f - btnRight.getMetrics().x, 50.0f));
 
-		btnTutorial.SetOrigin({ 450, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
+		btnTutorial.setOrigin({ 450, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
 
 		LoadLevelpack(sPack.curLevelpack);
 	}
@@ -55,17 +55,17 @@ public:
 	{}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		test.Draw(draw);
+		test.draw(draw);
 
-		grid.Draw(draw);
+		grid.draw(draw);
 
-		btnBack.Draw(draw);
+		btnBack.draw(draw);
 
-		lblSingleplayer.Draw(draw);
+		lblSingleplayer.draw(draw);
 
-		btnTutorial.Draw(draw);
-		btnLeft.Draw(draw);
-		btnRight.Draw(draw);
+		btnTutorial.draw(draw);
+		btnLeft.draw(draw);
+		btnRight.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{
@@ -160,7 +160,7 @@ private:
 		std::string cleaname = tool::fileRemovePath(packs[id].GetName());
 
 		// determine max size of cleanname
-		float maxwidth = btnRight.GetRect().TopLeft().x - btnLeft.GetRect().TopRight().x - 10.0f;
+		float maxwidth = btnRight.getRect().TopLeft().x - btnLeft.getRect().TopRight().x - 10.0f;
 		while (FONT_BIG.GetMetrics(cleaname).x > maxwidth)
 		{
 			cleaname.pop_back();
@@ -168,7 +168,7 @@ private:
 
 		lblSingleplayer.SetText(cleaname);
 		lblSingleplayer.AdjustToFont();
-		lblSingleplayer.CenterX(50.0f);
+		lblSingleplayer.centerX(50.0f);
 
 		grid.LoadLevelpack(&(packs[id]));
 	}

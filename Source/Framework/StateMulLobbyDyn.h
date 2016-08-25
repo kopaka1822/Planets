@@ -52,7 +52,7 @@ public:
 	{
 		float time = r.readFloat();
 		clock.SetTimer(time);
-		clock.Enable();
+		clock.enable();
 	}
 	void HandleLobbyAssign(ContainerReader& r)
 	{

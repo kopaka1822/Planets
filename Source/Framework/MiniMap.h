@@ -11,11 +11,11 @@ public:
 		map(map), drawer(drawer),
 		mapWi(map.GetWidth()), mapHi(map.GetHeight())
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		draw.DrawBox(RectF(pos + mStart, pos + mEnd),1.0f,Color::Blue(), Color::Black());
+		draw.DrawBox(RectF(m_pos + mStart, m_pos + mEnd),1.0f,Color::Blue(), Color::Black());
 
 		for (const auto& p : map.plans)
 		{
@@ -23,7 +23,7 @@ public:
 		}
 
 		//draw Cam Rect
-		RectF ownRect = GetRect();
+		RectF ownRect = getRect();
 		ownRect.x1 += border;
 		ownRect.y1 += border;
 		ownRect.x2 -= border;
@@ -34,9 +34,9 @@ public:
 			draw.DrawTransBox(dstRect, 2.0f, Color::Yellow());
 		//draw.DrawTransBox(fromModel(drawer.GetCamRect()), 2.0f, Color::Yellow());
 	}
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		UIObject::SetMetrics(m);
+		UIObject::setMetrics(m);
 
 		float wi = m.x - 2 * float(border);
 		float hi = m.y - 2 * float(border);
@@ -51,25 +51,25 @@ public:
 		if (asp == mAsp)
 		{
 			mStart = PointF(border, border);
-			mEnd = dim - PointF(border, border);
+			mEnd = m_dim - PointF(border, border);
 		}
 		else if (asp > mAsp)
 		{
 			mStart.y = (float)border;
-			mEnd.y = dim.y - border;
+			mEnd.y = m_dim.y - border;
 
 			float w = mAsp / asp * (wi - 2 * border);
 			mStart.x = border + (wi - w) / 2.0f;
-			mEnd.x = dim.y - mStart.x;
+			mEnd.x = m_dim.y - mStart.x;
 		}
 		else
 		{
 			mStart.x = (float)border;
-			mEnd.x = dim.x - border;
+			mEnd.x = m_dim.x - border;
 
 			float h = asp / mAsp * (hi - 2 * border);
 			mStart.y = border + (hi - h) / 2.0f;
-			mEnd.y = dim.y - mStart.y;
+			mEnd.y = m_dim.y - mStart.y;
 		}
 
 		scalar = std::min((mEnd.x - mStart.x) / mapWi,
@@ -82,7 +82,7 @@ private:
 		PointF dim = mEnd - mStart;
 		p.x = p.x / mapWi * dim.x;
 		p.y = p.y / mapHi * dim.y;
-		return p + mStart + pos;
+		return p + mStart + m_pos;
 	}
 	inline float fromModel(float f)
 	{
@@ -97,14 +97,14 @@ private:
 	PointF toModel(PointF p)
 	{
 		PointF dim = mEnd - mStart;
-		p = p - pos - mStart;
+		p = p - m_pos - mStart;
 		p.x = p.x * mapWi / dim.x;
 		p.y = p.y * mapHi / dim.y;
 		return p;
 	}
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& pos) override
 	{
-		if (GetRect().PointInside(pos))
+		if (getRect().PointInside(pos))
 		{
 			bDown = true;
 			Event_MouseMove(pos);

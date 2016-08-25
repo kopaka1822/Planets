@@ -33,42 +33,42 @@ public:
 		}
 	}
 	// call this first!!
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		UIObject::SetMetrics(m);
+		UIObject::setMetrics(m);
 		btnOkay.AdjustToFont();
 		btnCancel.AdjustToFont();
 
-		list.SetMetrics(PointF(dim.x - 2 * (border + padding), dim.y - 2 * border - 3 * padding - btnOkay.GetMetrics().y));
+		list.setMetrics(PointF(m_dim.x - 2 * (border + padding), m_dim.y - 2 * border - 3 * padding - btnOkay.getMetrics().y));
 	}
 	// second!
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		UIObject::SetOrigin(p);
-		list.SetOrigin(pos + PointF(border + padding, border + padding));
-		btnOkay.SetOrigin(list.GetRect().BottomLeft() + PointF(0.0f, padding));
-		btnCancel.SetOrigin(btnOkay.GetRect().TopRight() + PointF(padding, 0.0f));
+		UIObject::setOrigin(p);
+		list.setOrigin(m_pos + PointF(border + padding, border + padding));
+		btnOkay.setOrigin(list.getRect().BottomLeft() + PointF(0.0f, padding));
+		btnCancel.setOrigin(btnOkay.getRect().TopRight() + PointF(padding, 0.0f));
 
 		list.OrderItems();
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		list.Draw(draw);
-		btnOkay.Draw(draw);
-		btnCancel.Draw(draw);
+		list.draw(draw);
+		btnOkay.draw(draw);
+		btnCancel.draw(draw);
 	}
 	virtual ~UITeamMenu()
 	{
 
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		UIObject::Register(gs);
-		btnOkay.Register(gs);
-		btnCancel.Register(gs);
-		list.Register(gs);
+		UIObject::registerMe(gs);
+		btnOkay.registerMe(gs);
+		btnCancel.registerMe(gs);
+		list.registerMe(gs);
 	}
 	bool OkayPressed()
 	{
@@ -82,7 +82,7 @@ public:
 	{
 		if (k == Input::Left)
 		{
-			if (!GetRect().PointInside(pos))
+			if (!getRect().PointInside(pos))
 				bCancel = true;
 		}
 	}

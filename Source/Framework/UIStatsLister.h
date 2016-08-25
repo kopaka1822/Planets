@@ -63,7 +63,7 @@ public:
 	}
 	virtual void Event_MouseMove(const PointF& pos) override
 	{
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			float dy = pos.y - lastPos.y;
@@ -100,9 +100,9 @@ protected:
 		i.lblPlanLost->SetColor(Color::GetTeamColor(team));
 		i.lblPlanLost->AdjustToFont();
 
-		float itmwi = (dim.x - 2 * padding) / 4.0f;
+		float itmwi = (m_dim.x - 2 * padding) / 4.0f;
 		const float pad = 10.0f;
-		const float hei = cap.lblEntSpawn->GetMetrics().y + 2 * pad;
+		const float hei = cap.lblEntSpawn->getMetrics().y + 2 * pad;
 
 		std::vector< UIInfoLister::Item > itm;
 		UIInfoLister::Item n;
@@ -127,7 +127,7 @@ protected:
 	}
 	void MakeCaption()
 	{
-		float itmwi = (dim.x - 2 * padding) / 4.0f;
+		float itmwi = (m_dim.x - 2 * padding) / 4.0f;
 
 		cap.lblEntSpawn = new UILabel("Spawned Units:", FONT_SMALL);
 		cap.lblEntDie = new UILabel("Lost Units:", FONT_SMALL);
@@ -135,7 +135,7 @@ protected:
 		cap.lblPlanLost = new UILabel("Lost Planets:", FONT_SMALL);
 
 		const float pad = 10.0f;
-		const float hei = cap.lblEntSpawn->GetMetrics().y + 2 * pad;
+		const float hei = cap.lblEntSpawn->getMetrics().y + 2 * pad;
 
 		std::vector< UIInfoLister::Item > itm;
 		UIInfoLister::Item n;

@@ -30,7 +30,7 @@ public:
 		entSelect(team)
 	{
 		map.addEventReciever(this);
-		entSelect.Disable();
+		entSelect.disable();
 		planColors.assign(map.nPlans, Color::White());
 		for (const auto& p : map.plans)
 			planColors[p->GetID()] = Color::GetTeamColor(p->GetTeam());
@@ -41,7 +41,7 @@ public:
 	void DisableEntSelect()
 	{
 		bEntSelectEnable = false;
-		entSelect.Disable();
+		entSelect.disable();
 	}
 	UIGridEntity* GetEntitySpawnSelect()
 	{
@@ -87,7 +87,7 @@ public:
 
 		if (entSelect.isEnabled())
 		{
-			entSelect.Draw(draw);
+			entSelect.draw(draw);
 		}
 
 		
@@ -178,7 +178,7 @@ public:
 private:
 	void DrawLinesToEntSelect(Drawing& draw)
 	{
-		const PointF center = entSelect.GetRect().GetMidpoint();
+		const PointF center = entSelect.getRect().GetMidpoint();
 		for (const auto& p : map.plans)
 		{
 			if (p->GetTeam() == myTeam && p->selected())
@@ -223,14 +223,14 @@ private:
 			// exactly one planet is selected -> draw cricle
 			//entSelect.SetCenter(fromModel(map.plans[pid]->GetPos()));
 			const float xMin = Framework::DrawStart().x + 10.0f;
-			const float xMax = Framework::DrawStart().x + Framework::DrawWidth().x - 10.0f - entSelect.GetMetrics().x;
+			const float xMax = Framework::DrawStart().x + Framework::DrawWidth().x - 10.0f - entSelect.getMetrics().x;
 
-			float x = fromModel(map.getPlan(pid).GetPos()).x - entSelect.GetMetrics().x / 2.0f;
+			float x = fromModel(map.getPlan(pid).GetPos()).x - entSelect.getMetrics().x / 2.0f;
 			x = tool::clamp(x, xMin, xMax);
 
-			//entSelect.SetOrigin({ x, Framework::DrawStart().y + 10.0f });
-			//entSelect.CenterX(Framework::DrawStart().y + Framework::DrawWidth().y - entSelect.GetMetrics().y);
-			entSelect.SetOrigin(Framework::DrawStart() + PointF(10, 10));
+			//entSelect.setOrigin({ x, Framework::DrawStart().y + 10.0f });
+			//entSelect.centerX(Framework::DrawStart().y + Framework::DrawWidth().y - entSelect.getMetrics().y);
+			entSelect.setOrigin(Framework::DrawStart() + PointF(10, 10));
 
 			if (bSameType)
 			{
@@ -241,12 +241,12 @@ private:
 				entSelect.SetActiveType(MapObject::entityType::etNone);
 			}
 			//entSelect.SetActiveType(map.getPlan(pid).GetEntityType(), pid);
-			entSelect.Enable();
+			entSelect.enable();
 
 		}
 		else
 		{
-			entSelect.Disable();
+			entSelect.disable();
 		}
 	}
 	void DrawPlanets(Drawing& draw)

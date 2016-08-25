@@ -27,11 +27,11 @@ public:
 		AddObject(&plan);
 		AddObject(&fall);
 
-		list.Register(*this);
+		list.registerMe(*this);
 
-		PointF tdim = { 300.0f, lblMusic.GetMetrics().y };
-		trackMusic.SetMetrics(tdim);
-		trackSound.SetMetrics(tdim);
+		PointF tdim = { 300.0f, lblMusic.getMetrics().y };
+		trackMusic.setMetrics(tdim);
+		trackSound.setMetrics(tdim);
 
 		numGfx.AdjustToFont(300.0f);
 
@@ -40,21 +40,21 @@ public:
 		list.AddItem(&lblSound, &trackSound);
 
 		list.MoveMidpoint(0.7f);
-		list.SetMetrics({ 900, 800 });
-		list.CenterX(300.0f);
+		list.setMetrics({ 900, 800 });
+		list.centerX(300.0f);
 
 		list.OrderItems();
 
-		lblTitle.CenterX(100.0f);
+		lblTitle.centerX(100.0f);
 		
-		btnContinue.CenterX(Framework::STD_DRAW_Y - btnContinue.GetMetrics().y - 10.0f);
+		btnContinue.centerX(Framework::STD_DRAW_Y - btnContinue.getMetrics().y - 10.0f);
 
 		trackMusic.SetValueNoChange(Settings::GetVolMusic());
 		trackSound.SetValueNoChange(Settings::GetVolSound());
 
-		plan.SetOrigin({ 1100.0f, 150.0f });
-		fall.SetMetrics({ 200.0f, 120.0f });
-		fall.SetOrigin({ 420.0f, 190.0f });
+		plan.setOrigin({ 1100.0f, 150.0f });
+		fall.setMetrics({ 200.0f, 120.0f });
+		fall.setOrigin({ 420.0f, 190.0f });
 
 		UpdateGfx();
 	}
@@ -92,12 +92,12 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		list.Draw(draw);
-		plan.Draw(draw);
-		btnContinue.Draw(draw);
+		lblTitle.draw(draw);
+		list.draw(draw);
+		plan.draw(draw);
+		btnContinue.draw(draw);
 		plan.DrawEntities(draw);
-		fall.Draw(draw);
+		fall.draw(draw);
 	}
 private:
 	void UpdateGfx()

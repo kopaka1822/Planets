@@ -14,16 +14,16 @@ public:
 		AddObject(&btnYes);
 		AddObject(&btnNo);
 
-		lblTitle.CenterX(150.0f);
+		lblTitle.centerX(150.0f);
 
-		float wi = btnYes.GetMetrics().x + 20.0f;
-		btnNo.SetWidth(wi);
-		btnYes.SetWidth(wi);
+		float wi = btnYes.getMetrics().x + 20.0f;
+		btnNo.setWidth(wi);
+		btnYes.setWidth(wi);
 
 		PointF mid = PointF(Framework::STD_DRAW_X / 2, 350.0f);
-		btnNo.SetOrigin(mid + PointF(10.0f, 0.0f));
+		btnNo.setOrigin(mid + PointF(10.0f, 0.0f));
 
-		btnYes.SetOrigin(mid - PointF(wi + 10.0f, 0.0f));
+		btnYes.setOrigin(mid - PointF(wi + 10.0f, 0.0f));
 	}
 	virtual ~StateTutorialProposal()
 	{}
@@ -37,9 +37,9 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		btnYes.Draw(draw);
-		btnNo.Draw(draw);
+		lblTitle.draw(draw);
+		btnYes.draw(draw);
+		btnNo.draw(draw);
 	}
 
 private:

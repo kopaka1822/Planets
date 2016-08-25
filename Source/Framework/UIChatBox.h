@@ -20,40 +20,40 @@ public:
 	{
 	}
 	// Set Origin first!
-	virtual void SetMetrics(const PointF& d) override
+	virtual void setMetrics(const PointF& d) override
 	{
-		UIObject::SetMetrics(d);
+		UIObject::setMetrics(d);
 
 		// set inp position
-		inp.SetMetrics({ d.x, font.GetFontHeight() });
-		inp.SetOrigin(PointF(pos.x, pos.y + dim.y - inp.GetMetrics().y));
+		inp.setMetrics({ d.x, font.GetFontHeight() });
+		inp.setOrigin(PointF(m_pos.x, m_pos.y + m_dim.y - inp.getMetrics().y));
 	}
 	virtual ~UIChatBox()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		// draw 2 boxes
-		//draw.DrawRect(RectF(pos, pos + PointF(dim.x, dim.y - inp.GetMetrics().y - padding)), Color::Gray().Transparent(0.2f));
+		//draw.DrawRect(RectF(pos, m_pos + PointF(dim.x, dim.y - inp.getMetrics().y - padding)), Color::Gray().Transparent(0.2f));
 
 		// draw messages
 		// beginning bottom
 		if (bForeground)
 		{
-			float curpos = pos.y + dim.y - padding - inp.GetMetrics().y - font.GetFontHeight();
+			float curpos = m_pos.y + m_dim.y - padding - inp.getMetrics().y - font.GetFontHeight();
 
 			bool isTyping = inp.isSelected();
 
 			muList.Lock();
 			for (const auto& i : messages)
 			{
-				if (curpos > pos.y)
+				if (curpos > m_pos.y)
 				{
 					if (!isTyping)
 						if (t.ConvertMilli(i.time) > 10000.0f)
 							break; // dont disply if message is older than 10 secs
 
 					font.SetColor(i.col);
-					font.Text(i.text, PointF(pos.x, curpos));
+					font.Text(i.text, PointF(m_pos.x, curpos));
 					curpos -= font.GetFontHeight();
 				}
 				else
@@ -65,14 +65,14 @@ public:
 
 			if (inp.isSelected())
 			{
-				draw.DrawRect(inp.GetRect(), Color::Gray());
-				inp.Draw(draw);
+				draw.DrawRect(inp.getRect(), Color::Gray());
+				inp.draw(draw);
 			}
 		}
 	}
 	void AddMessage(std::string mes, byte team)
 	{
-		const unsigned int maxLen = (int)(dim.x / font.GetFontWidth());
+		const unsigned int maxLen = (int)(m_dim.x / font.GetFontWidth());
 		item i;
 		i.col = Color::GetTeamColor(team);
 		i.time = Timer::GetTimestamp();

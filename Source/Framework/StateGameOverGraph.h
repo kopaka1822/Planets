@@ -14,11 +14,11 @@ public:
 		btnContinue("Continue",FONT_MED),
 		graph(res.unitCounts, Database::GetGameStruct().myTeam, FONT_SMALL)
 	{
-		lblTitle.CenterX(50.0f);
-		btnContinue.CenterX(625.0f);
+		lblTitle.centerX(50.0f);
+		btnContinue.centerX(625.0f);
 		
-		graph.SetMetrics(PointF(1100.0f, 500.0f));
-		graph.Center();
+		graph.setMetrics(PointF(1100.0f, 500.0f));
+		graph.center();
 
 		AddObject(&btnContinue);
 	}
@@ -28,9 +28,9 @@ public:
 
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		graph.Draw(draw);
-		btnContinue.Draw(draw);
+		lblTitle.draw(draw);
+		graph.draw(draw);
+		btnContinue.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

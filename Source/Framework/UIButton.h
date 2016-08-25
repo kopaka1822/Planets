@@ -7,17 +7,17 @@ class UIButton : public UIObject
 public:
 	UIButton()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (bDown)
 		{
 			//draw inverted
-			draw.DrawRect(GetRect(), Color::White());
+			draw.DrawRect(getRect(), Color::White());
 		}
 		else
 		{
 			//dont invert
-			draw.DrawBox(GetRect(), (float)border, Color::White(), bHover ? Color::Gray() : Color::Black());
+			draw.DrawBox(getRect(), (float)border, Color::White(), bHover ? Color::Gray() : Color::Black());
 		}
 	}
 	virtual ~UIButton(){}
@@ -40,7 +40,7 @@ public:
 	}
 	virtual void Event_MouseMove(const PointF& pos) override
 	{
-		if (GetRect().PointInside(pos))
+		if (getRect().PointInside(pos))
 		{
 			if (!bHover)
 			{

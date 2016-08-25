@@ -128,7 +128,7 @@ public:
 		AddItem(i);
 	}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		//draw background
 		DrawGrid(draw);
@@ -156,7 +156,7 @@ public:
 	}
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& p) override
 	{
-		if ((k == Input::Middle || k == Input::Left) && GetRect().PointInside(p))
+		if ((k == Input::Middle || k == Input::Left) && getRect().PointInside(p))
 		{
 			bDown = true;
 			lastMouse = p;
@@ -491,7 +491,7 @@ public:
 	PointF MouseToModel() const
 	{
 		PointF ms = Input::GetMouseXY();
-		ms = ms - cam - pos;
+		ms = ms - cam - m_pos;
 		return ms / scale;
 	}
 
@@ -702,7 +702,7 @@ private:
 	{
 		for (const auto& p : plans)
 		{
-			PointF coord = pos + cam + (PointF(p.x, p.y) * scale);
+			PointF coord = m_pos + cam + (PointF(p.x, p.y) * scale);
 			draw.DrawPlanet(coord, Color::GetTeamColor(p.team), p.radius * scale);
 		}
 	}
@@ -710,7 +710,7 @@ private:
 	{
 		for (const auto& s : spawn)
 		{
-			PointF coord = pos + cam + (PointF(s.x, s.y) * scale);
+			PointF coord = m_pos + cam + (PointF(s.x, s.y) * scale);
 			draw.DrawRect(RectF::FromPoint(coord, 20.0f * scale), Color::GetTeamColor(s.team));
 		}
 	}
@@ -724,7 +724,7 @@ private:
 		const float d = 100.0f * scale;
 		const float width = itm.size.x * scale + 0.01f;
 		const float height = itm.size.y * scale + 0.01f;
-		const PointF start(pos + cam);
+		const PointF start(m_pos + cam);
 
 		for (float x = 0.0f; x <= width; x += d)
 		{

@@ -20,23 +20,23 @@ public:
 	{
 		gs.pChat = std::unique_ptr<UIChatBox>(new UIChatBox(FONT_SMALL));
 
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 
 		float btnwi = 150.0f;
-		btnReady.SetWidth(btnwi);
-		btnDisconnect.SetWidth(btnwi);
+		btnReady.setWidth(btnwi);
+		btnDisconnect.setWidth(btnwi);
 		AlignObjects({ 150, 200 }, 20.0f, std::initializer_list<UIObject*>{
 			&btnReady,
 			&btnDisconnect });
 
-		clock.SetOrigin({ 100.0f, 50.0f });
-		clock.Disable();
+		clock.setOrigin({ 100.0f, 50.0f });
+		clock.disable();
 
-		list.SetMetrics(PointF(700, 550));
-		list.SetOrigin({ 450.0f, 150.0f });
+		list.setMetrics(PointF(700, 550));
+		list.setOrigin({ 450.0f, 150.0f });
 
-		gs.pChat->SetOrigin({ 25.0f, 350 });
-		gs.pChat->SetMetrics({ 400.0f, Framework::STD_DRAW_Y - 360 });
+		gs.pChat->setOrigin({ 25.0f, 350 });
+		gs.pChat->setMetrics({ 400.0f, Framework::STD_DRAW_Y - 360 });
 
 		AddObject(&btnDisconnect);
 		AddObject(&btnReady);
@@ -56,18 +56,18 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		btnDisconnect.Draw(draw);
+		lblTitle.draw(draw);
+		btnDisconnect.draw(draw);
 
 		if (clock.isEnabled())
-			clock.Draw(draw);
-		btnReady.Draw(draw);
+			clock.draw(draw);
+		btnReady.draw(draw);
 
 		muList.Lock();
-		list.Draw(draw);
+		list.draw(draw);
 		muList.Unlock();
 
-		gs.pChat->Draw(draw);
+		gs.pChat->draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

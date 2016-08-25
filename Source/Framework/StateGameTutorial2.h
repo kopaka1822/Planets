@@ -104,8 +104,8 @@ public:
 	
 		boxPlanet.RegisterNext(&boxSelector);
 
-		lblMission.SetOrigin(PointF(10, 10));
-		lblMission2.SetOrigin(PointF(10, 10) + PointF(0, lblMission.GetMetrics().y));
+		lblMission.setOrigin(PointF(10, 10));
+		lblMission2.setOrigin(PointF(10, 10) + PointF(0, lblMission.getMetrics().y));
 
 		box1.Activate();
 		SetMapInput(false);
@@ -117,15 +117,15 @@ public:
 	{
 		StateGameSingle::ComposeFrame(draw);
 
-		lblMission.Draw(draw);
-		lblMission2.Draw(draw);
+		lblMission.draw(draw);
+		lblMission2.draw(draw);
 
-		box1.Draw(draw);
-		boxSpeed.Draw(draw);
-		boxBomber.Draw(draw);
-		boxSabo.Draw(draw);
-		boxPlanet.Draw(draw);
-		boxSelector.Draw(draw);
+		box1.draw(draw);
+		boxSpeed.draw(draw);
+		boxBomber.draw(draw);
+		boxSabo.draw(draw);
+		boxPlanet.draw(draw);
+		boxSelector.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override final
 	{
@@ -308,8 +308,8 @@ private:
 	{
 		AddObject(&box);
 		PointF met = { 900.0f, 600.0f };
-		box.SetMetrics(met);
-		box.Center();
+		box.setMetrics(met);
+		box.center();
 		box.OrderItems();
 	}
 	void SetMission(std::string mis)

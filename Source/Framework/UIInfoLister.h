@@ -31,17 +31,17 @@ public:
 	}
 	virtual ~UIInfoLister()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		muItm.Lock();
 
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		float y = pos.y - cam + border + padding;
-		const float miny = pos.y + border;
-		const float maxy = pos.y + dim.y - border;
-		const float xStart = pos.x + border;
-		const float xEnd = pos.x + dim.x - border;
+		float y = m_pos.y - cam + border + padding;
+		const float miny = m_pos.y + border;
+		const float maxy = m_pos.y + m_dim.y - border;
+		const float xStart = m_pos.x + border;
+		const float xEnd = m_pos.x + m_dim.x - border;
 		
 		for (auto& s : itms)
 		{
@@ -53,7 +53,7 @@ public:
 			for (auto& i : s->itms)
 			{
 				if (i.pObj->isEnabled())
-					i.pObj->Draw(draw);
+					i.pObj->draw(draw);
 			}
 			y += s->hei + padding;
 
@@ -89,8 +89,8 @@ public:
 	}
 	void OrderItems()
 	{
-		const float x = pos.x + border;
-		float y = pos.y + border + padding + padding;
+		const float x = m_pos.x + border;
+		float y = m_pos.y + border + padding + padding;
 
 		muItm.Lock();
 		for (auto& s : itms)
@@ -98,7 +98,7 @@ public:
 			const PointF off(x, y);
 			for (auto& i : s->itms)
 			{
-				i.pObj->SetOrigin(i.pos + off);
+				i.pObj->setOrigin(i.pos + off);
 			}
 			y += s->hei + 3 * padding;
 		}
@@ -113,29 +113,29 @@ public:
 	void MoveCam(float d)
 	{
 		float nCam = std::max(0.0f, cam + d);
-		nCam = std::min(nCam, maxCam - dim.y);
+		nCam = std::min(nCam, maxCam - m_dim.y);
 		nCam = std::max(nCam, 0.0f);
 		float dy = cam - nCam;
 		cam = nCam;
 		//move items
 		const PointF off(0.0f, dy);
-		const float miny = pos.y + border;
-		const float my = pos.y + dim.y - border;
+		const float miny = m_pos.y + border;
+		const float my = m_pos.y + m_dim.y - border;
 		for (auto& s : itms)
 		{
 			for (auto& i : s->itms)
 			{
-				i.pObj->SetOrigin(i.pObj->GetOrigin() + off);
+				i.pObj->setOrigin(i.pObj->getOrigin() + off);
 
 				//inside box?
-				if (i.pObj->GetOrigin().y >= miny &&
-					i.pObj->GetOrigin().y + i.pObj->GetMetrics().y <= my)
+				if (i.pObj->getOrigin().y >= miny &&
+					i.pObj->getOrigin().y + i.pObj->getMetrics().y <= my)
 				{
-					i.pObj->Enable();
+					i.pObj->enable();
 				}
 				else
 				{
-					i.pObj->Disable();
+					i.pObj->disable();
 				}
 			}
 		}

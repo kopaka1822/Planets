@@ -15,9 +15,9 @@ public:
 	{
 		AdjustToFont();
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		UIButton::Draw(draw);
+		UIButton::draw(draw);
 
 		LockGuard g(muTxt);
 
@@ -40,8 +40,8 @@ public:
 	void AdjustToFont()
 	{
 		PointF fmet = font.GetMetrics(txt);
-		dim.x =	fmet.x + 2 * border + 2 * padding;
-		dim.y = fmet.y + 2 * border + 2 * padding;
+		m_dim.x =	fmet.x + 2 * border + 2 * padding;
+		m_dim.y = fmet.y + 2 * border + 2 * padding;
 	}
 	virtual void SetText(const std::string& t)
 	{
@@ -54,14 +54,14 @@ protected:
 	{
 		PointF fmet = font.GetMetrics(txt);
 		PointF p;
-		p.x = dim.x - 2 * border - 2 * padding - fmet.x;
+		p.x = m_dim.x - 2 * border - 2 * padding - fmet.x;
 		p.x *= 0.5f;
 		p.x += border + padding;
-		p.y = dim.y - 2 * border - 2 * padding - fmet.y;
+		p.y = m_dim.y - 2 * border - 2 * padding - fmet.y;
 		p.y *= 0.5f;
 		p.y += border + padding;
 
-		return pos + p;
+		return m_pos + p;
 	}
 protected:
 	std::string txt;

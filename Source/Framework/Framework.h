@@ -6,7 +6,7 @@ class Framework
 public:
 	static void SetWindowSize(int CliWidth, int CliHeight, int WinX, int WinY, float scalar);
 
-	static PointF ConvertClientPoint(const PointI& clPoint); // client to draw area  (Mouse pos to draw pos)
+	static PointF ConvertClientPoint(const PointI& clPoint); // client to draw area  (Mouse pos to draw m_pos)
 	static PointI ConvertDrawPoint(PointF drPoint); // draw area to client
 
 	static PointF Denormalize(PointF pos); // 0..1

@@ -8,13 +8,13 @@ public:
 		:
 		c(col)
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		UIButton::Draw(draw);
+		UIButton::draw(draw);
 
-		//Draw geometry
-		const PointF center = GetRect().Midpoint();
-		float r = std::min(dim.x, dim.y);
+		//draw geometry
+		const PointF center = getRect().Midpoint();
+		float r = std::min(m_dim.x, m_dim.y);
 		r = r / 2.0f;
 		r = r -2.0f * border - 4.0f; // some padding + border
 

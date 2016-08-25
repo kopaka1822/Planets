@@ -13,18 +13,18 @@ public:
 	{
 		AdjustToFont();
 	}
-	virtual void Draw(Drawing& draw)
+	virtual void draw(Drawing& draw)
 	{
 		font.SetColor(col);
 		muTxt.Lock();
-		font.Text(txt, pos);
+		font.Text(txt, m_pos);
 		muTxt.Unlock();
 	}
 	void AdjustToFont()
 	{
 		/*dim.x = font.GetFontWidth() * txt.length();
 		dim.y = font.GetFontHeight();*/
-		dim = font.GetMetrics(txt);
+		m_dim = font.GetMetrics(txt);
 	}
 	std::string GetText() const
 	{

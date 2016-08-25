@@ -51,26 +51,26 @@ public:
 		lblError("",FONT_SMALL),
 		btnQuit("Quit",FONT_MED)
 	{
-		waitPlan.SetMetrics(PointF(400, 400));
-		waitPlan.CenterX(150.0f);
+		waitPlan.setMetrics(PointF(400, 400));
+		waitPlan.centerX(150.0f);
 
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 
 		score = Settings::GetMenuScore();
 		
 		AddObject(&planLeft);
 		AddObject(&planRight);
 
-		planLeft.SetOrigin({ 200, 300 });
-		planRight.SetOrigin({ 1100, 400 });
+		planLeft.setOrigin({ 200, 300 });
+		planRight.setOrigin({ 1100, 400 });
 
-		bar.SetMetrics({ 800.0f, 50.0f });
-		bar.CenterX(650.0f);
+		bar.setMetrics({ 800.0f, 50.0f });
+		bar.centerX(650.0f);
 
 		AddObject(&btnQuit);
-		btnQuit.Disable();
+		btnQuit.disable();
 		btnQuit.AdjustToFont();
-		btnQuit.SetOrigin({ 1100, 600.0f });
+		btnQuit.setOrigin({ 1100, 600.0f });
 
 		bFirstStart = Settings::UnlockAchievement(Settings::A_FirstStart);
 	}
@@ -81,18 +81,18 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		waitPlan.Draw(draw);
+		lblTitle.draw(draw);
+		waitPlan.draw(draw);
 
-		planLeft.Draw(draw);
-		planRight.Draw(draw);
+		planLeft.draw(draw);
+		planRight.draw(draw);
 
-		bar.Draw(draw);
+		bar.draw(draw);
 
 		if (bError)
 		{
-			lblError.Draw(draw);
-			btnQuit.Draw(draw);
+			lblError.draw(draw);
+			btnQuit.draw(draw);
 		}
 
 		planLeft.DrawEntities(draw);
@@ -146,8 +146,8 @@ public:
 			{
 				lblError.SetText(initer.GetThreadError());
 				lblError.AdjustToFont();
-				lblError.CenterX(600.0f);
-				btnQuit.Enable();
+				lblError.centerX(600.0f);
+				btnQuit.enable();
 				waitPlan.SetColor(Color::Red());
 				bError = true;
 			}

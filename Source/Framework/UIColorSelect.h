@@ -10,19 +10,19 @@ public:
 		curCol(Color::Red()),
 		btnOkay("OK",FONT_SMALL)
 	{
-		lowerPart = btnOkay.GetMetrics().y + 2 * padding;
+		lowerPart = btnOkay.getMetrics().y + 2 * padding;
 	}
 	virtual ~UIColorSelect()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
 		// midpoint ?
 
-		draw.DrawDiscHSV(pos + cCenter, radius);
-		draw.DrawDisc(pos + cCenter, radius - padding, Color::Black());
-		draw.DrawTriangleHSV(pos + cCenter, radius - padding, curCol);
+		draw.DrawDiscHSV(m_pos + cCenter, radius);
+		draw.DrawDisc(m_pos + cCenter, radius - padding, Color::Black());
+		draw.DrawTriangleHSV(m_pos + cCenter, radius - padding, curCol);
 
 		// draw Line
 		PointF start(1.0f, 0.0f);
@@ -30,24 +30,24 @@ public:
 
 		draw.DrawDisc(trianglePos, 4.0f, Color::Black());
 
-		draw.DrawLine(pos + cCenter + (start * (radius - padding)),
-			pos + cCenter + (start * radius), Color::Black(), 3.0f);
+		draw.DrawLine(m_pos + cCenter + (start * (radius - padding)),
+			m_pos + cCenter + (start * radius), Color::Black(), 3.0f);
 		// draw a box with the selected color
 		//draw.DrawBox(RectF(padding,padding,lowerPart - border - padding, lowerPart - border - padding) + 
 			//PointF(border , dim.y - lowerPart) + pos, border, Color::White(), GetColor());
-		PointF pp = PointF(1.5f * padding + border, 1.5f * padding + border + dim.y - lowerPart) + pos;
+		PointF pp = PointF(1.5f * padding + border, 1.5f * padding + border + m_dim.y - lowerPart) + m_pos;
 		draw.DrawParticle(pp, GetColor(),2.0f * padding);
 		draw.DrawPlanet(pp + PointF(2.0f * padding, 0.0f), GetColor(), (float)padding);
 
-		btnOkay.Draw(draw);
+		btnOkay.draw(draw);
 	}
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& p) override
 	{
-		if (!GetRect().PointInside(p))
-			this->Disable();
+		if (!getRect().PointInside(p))
+			this->disable();
 		else if (k == Input::Left)
 		{
-			float dist = ((pos + cCenter) - p).length();
+			float dist = ((m_pos + cCenter) - p).length();
 			if (dist <= radius && dist >= radius - padding)
 			{
 				bChangeWheel = true;
@@ -71,10 +71,10 @@ public:
 	{
 		if (bChangeWheel)
 		{
-			if (p == cCenter + pos)
+			if (p == cCenter + m_pos)
 				return;
 			// calc color
-			PointF d = p - (pos + cCenter);
+			PointF d = p - (m_pos + cCenter);
 			float angle = atan2f(d.y, d.x);
 			if (angle < 0.0f)
 				angle += 2.0f * float(M_PI);
@@ -88,42 +88,42 @@ public:
 			inTri(p, true); //recalculate a b c
 		}
 	}
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		UIObject::SetMetrics(m);
+		UIObject::setMetrics(m);
 
-		cCenter = PointF(dim.x / 2, dim.x / 2);
+		cCenter = PointF(m_dim.x / 2, m_dim.x / 2);
 		radius = cCenter.x - border - padding;
 
-		dim.y = dim.y + lowerPart;
+		m_dim.y = m_dim.y + lowerPart;
 
 		float r = radius - padding;
 		triRig = (PointF(1.0f, 0.0f) * r) + cCenter;
 		triTop = (PointF(-0.707f, -0.707f) * r) + cCenter;
 		triBot = (PointF(-0.707f, 0.707f) * r) + cCenter;
 
-		trianglePos = triRig + pos;
+		trianglePos = triRig + m_pos;
 	}
-	virtual void SetOrigin(const PointF& p)
+	virtual void setOrigin(const PointF& p)
 	{
-		UIObject::SetOrigin(p);
+		UIObject::setOrigin(p);
 
-		btnOkay.SetOrigin(pos + dim - btnOkay.GetMetrics() - PointF(border + padding, border + padding));
-		trianglePos = triRig + pos;
+		btnOkay.setOrigin(m_pos + m_dim - btnOkay.getMetrics() - PointF(border + padding, border + padding));
+		trianglePos = triRig + m_pos;
 	}
 	UIButtonText& GetButton()
 	{
 		return btnOkay;
 	}
-	virtual void Disable() override
+	virtual void disable() override
 	{
-		UIObject::Disable();
-		btnOkay.Disable();
+		UIObject::disable();
+		btnOkay.disable();
 	}
-	virtual void Enable() override
+	virtual void enable() override
 	{
-		UIObject::Enable();
-		btnOkay.Enable();
+		UIObject::enable();
+		btnOkay.enable();
 	}
 	Color GetColor() const
 	{
@@ -175,7 +175,7 @@ public:
 		// calc point
 		PointF vStart = (triTop + (triBot - triTop) * v);
 		PointF click = vStart + PointF((triRig.x - triTop.x) * s, 0.0f);
-		inTri(click + pos, true);
+		inTri(click + m_pos, true);
 		//curA = s;
 		//curB = v;
 		//curC = 1.0f - v;
@@ -183,9 +183,9 @@ public:
 private:
 	bool inTri(const PointF& p, bool setpos)
 	{
-		PointF p1 = triRig + pos;
-		PointF p2 = triBot + pos;
-		PointF p3 = triTop + pos;
+		PointF p1 = triRig + m_pos;
+		PointF p2 = triBot + m_pos;
+		PointF p3 = triTop + m_pos;
 
 		float denom = ((p2.y - p3.y)*(p1.x - p3.x) + (p3.x - p2.x)*(p1.y - p3.y));
 
@@ -198,7 +198,7 @@ private:
 			curA = a;
 			curB = b;
 			curC = c;
-			trianglePos = ((triRig + pos) * curA + (triBot + pos) * curB + (triTop + pos) * curC);
+			trianglePos = ((triRig + m_pos) * curA + (triBot + m_pos) * curB + (triTop + m_pos) * curC);
 			return true;
 		}
 		else if (setpos)
@@ -215,7 +215,7 @@ private:
 				curC = 0.0f;
 				curB = 1.0f - curA;
 			}
-			trianglePos = ((triRig + pos) * curA + (triBot + pos) * curB + (triTop + pos) * curC);
+			trianglePos = ((triRig + m_pos) * curA + (triBot + m_pos) * curB + (triTop + m_pos) * curC);
 		}
 		return false;
 	}

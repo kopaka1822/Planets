@@ -11,7 +11,7 @@ public:
 	{}
 	void AdjustToFont(float width)
 	{
-		SetMetrics({ width, dim.y });
+		setMetrics({ width, m_dim.y });
 	}
 	virtual void Event_MouseUp(Input::MouseKey k, const PointF& pos) override
 	{

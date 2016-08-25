@@ -10,7 +10,7 @@ public:
 		StateGame(1, Database::GetGameStruct().nTeams)
 	{
 		Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
-		btnFastForward.Enable();
+		btnFastForward.enable();
 	}
 	virtual ~StateGameSingle()
 	{}

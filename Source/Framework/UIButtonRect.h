@@ -8,12 +8,12 @@ public:
 		:
 		c(col)
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		UIButton::Draw(draw);
+		UIButton::draw(draw);
 
-		const PointF d(dim.x * 0.25f, dim.y * 0.25f);
-		draw.DrawRect(RectF(pos + d, pos + dim - d), c);
+		const PointF d(m_dim.x * 0.25f, m_dim.y * 0.25f);
+		draw.DrawRect(RectF(m_pos + d, m_pos + m_dim - d), c);
 	}
 
 private:

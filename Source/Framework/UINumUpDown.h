@@ -13,51 +13,51 @@ public:
 		font(font), step(step),
 		input(font,20)
 	{
-		input.Disable();
+		input.disable();
 	}
-	virtual void Disable() override
+	virtual void disable() override
 	{
-		input.Disable();
-		UIObject::Disable();
+		input.disable();
+		UIObject::disable();
 	}
-	virtual void SetOrigin(const PointF& o) override
+	virtual void setOrigin(const PointF& o) override
 	{
-		UIObject::SetOrigin(o);
-		input.SetOrigin(pos + PointF(border + padding, border + padding));
+		UIObject::setOrigin(o);
+		input.setOrigin(m_pos + PointF(border + padding, border + padding));
 	}
-	virtual void SetMetrics(const PointF& p) override
+	virtual void setMetrics(const PointF& p) override
 	{
-		UIObject::SetMetrics(p);
-		input.SetMetrics(dim - PointF(2 * (border + padding), 2 * (border + padding)));
+		UIObject::setMetrics(p);
+		input.setMetrics(m_dim - PointF(2 * (border + padding), 2 * (border + padding)));
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		input.Register(gs);
-		UIObject::Register(gs);
+		input.registerMe(gs);
+		UIObject::registerMe(gs);
 	}
 	void AdjustToFont(float width)
 	{
-		dim.x = width;
-		dim.y = float(border + padding) * 2 + font.GetFontHeight();
-		SetMetrics(dim);
+		m_dim.x = width;
+		m_dim.y = float(border + padding) * 2 + font.GetFontHeight();
+		setMetrics(m_dim);
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		PointF tpos = pos + PointF(padding + border, padding + border);
+		PointF tpos = m_pos + PointF(padding + border, padding + border);
 
 		font.SetColor(Color::White());
 
 		if (!input.isEnabled())
 			DrawNum(font, tpos);
 
-		// Draw the buttons
+		// draw the buttons
 		if (isEnabled() && !input.isEnabled())
 		{
 			//border
-			draw.DrawRect(RectF(pos + dim + PointF(-2 * border - font.GetFontHeight(), -dim.y),
-				pos + dim + PointF(-border - font.GetFontHeight(), 0)), Color::White());
+			draw.DrawRect(RectF(m_pos + m_dim + PointF(-2 * border - font.GetFontHeight(), -m_dim.y),
+				m_pos + m_dim + PointF(-border - font.GetFontHeight(), 0)), Color::White());
 
 			//line through mid
 			if (bHover1) draw.DrawRect(RectTop(), Color::Gray());
@@ -66,7 +66,7 @@ public:
 			DrawArrow(draw);
 		}
 		if (input.isEnabled())
-			input.Draw(draw);
+			input.draw(draw);
 
 	}
 	virtual void Event_MouseMove(const PointF& pos) override
@@ -74,7 +74,7 @@ public:
 		bHover1 = RectTop().PointInside(pos);
 		bHover2 = RectBot().PointInside(pos) && !bHover1;
 
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		input.Event_MouseMove(pos);
 	}
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& p) override
@@ -98,7 +98,7 @@ public:
 
 				// copy text to input
 				input.SetText(NumToString());
-				input.Enable();
+				input.enable();
 				input.Select();
 			}
 		}
@@ -175,7 +175,7 @@ private:
 				{
 					SetValue(StringToNum(input.GetText()));
 				}
-				input.Disable();
+				input.disable();
 			}
 		}
 	}
@@ -186,16 +186,16 @@ protected:
 
 	RectF RectTop() const
 	{
-		return RectF(pos + dim + PointF(-border - font.GetFontHeight(), -dim.y + border),
-			pos + dim + PointF(- border, -dim.y / 2));
+		return RectF(m_pos + m_dim + PointF(-border - font.GetFontHeight(), -m_dim.y + border),
+			m_pos + m_dim + PointF(- border, -m_dim.y / 2));
 	}
 	RectF RectBot() const
 	{
-		return RectTop() + PointF(0, dim.y / 2 - border);
+		return RectTop() + PointF(0, m_dim.y / 2 - border);
 	}
 	int GetMaxCharWidth() const
 	{
-		int len = (int)dim.x - 2 * border;
+		int len = (int)m_dim.x - 2 * border;
 		if (bEnable)
 			len = len - border - (int)font.GetFontHeight();
 		return len / (int)font.GetFontWidth();

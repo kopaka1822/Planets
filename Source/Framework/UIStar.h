@@ -18,18 +18,18 @@ public:
 	{
 		ty = t;
 	}
-	virtual void Draw(Drawing& draw)
+	virtual void draw(Drawing& draw)
 	{
 		switch (ty)
 		{
 		case EMPTY:
-			draw.DrawSprite(GetRect(), Database::GetTexture(Database::GameTex::StarEmpty));
+			draw.DrawSprite(getRect(), Database::GetTexture(Database::GameTex::StarEmpty));
 			break;
 		case FILLED:
-			draw.DrawSprite(GetRect(), Database::GetTexture(Database::GameTex::StartFilled));
+			draw.DrawSprite(getRect(), Database::GetTexture(Database::GameTex::StartFilled));
 			break;
 		case NEW:
-			draw.DrawSprite(GetRect(), Database::GetTexture(Database::GameTex::StartFilled));
+			draw.DrawSprite(getRect(), Database::GetTexture(Database::GameTex::StartFilled));
 			DrawParticles(draw);
 			break;
 		}
@@ -45,9 +45,9 @@ public:
 private:
 	void DrawParticles(Drawing& draw)
 	{
-		const PointF mid = GetRect().Midpoint();
+		const PointF mid = getRect().Midpoint();
 
-		PointF vec = PointF(dim.x / 2.0f, 0.0f);
+		PointF vec = PointF(m_dim.x / 2.0f, 0.0f);
 		
 		vec = vec.rot(curAngle);
 

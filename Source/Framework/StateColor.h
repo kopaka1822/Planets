@@ -22,16 +22,16 @@ public:
 		AddObject(&btnApply);
 		AddObject(&btnDefault);
 
-		lblTitle.CenterX(50.0f);
-		btnBack.SetOrigin({ 10, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
-		btnApply.SetOrigin({ Framework::STD_DRAW_X - btnApply.GetMetrics().x - 10, btnBack.GetOrigin().y });
-		btnDefault.SetOrigin(btnBack.GetOrigin() - PointF(0.0f, btnBack.GetMetrics().y + 10.0f));
+		lblTitle.centerX(50.0f);
+		btnBack.setOrigin({ 10, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
+		btnApply.setOrigin({ Framework::STD_DRAW_X - btnApply.getMetrics().x - 10, btnBack.getOrigin().y });
+		btnDefault.setOrigin(btnBack.getOrigin() - PointF(0.0f, btnBack.getMetrics().y + 10.0f));
 
-		grid.CenterX(150.0f);
+		grid.centerX(150.0f);
 
-		picker.SetMetrics({ 400.0f, 400.0f });
-		picker.Center();
-		picker.Disable();
+		picker.setMetrics({ 400.0f, 400.0f });
+		picker.center();
+		picker.disable();
 
 		// Add Objects
 		for (unsigned int i = 0; i < grid.GetSize(); i++)
@@ -96,31 +96,31 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		btnDefault.Draw(draw);
-		btnBack.Draw(draw);
-		btnApply.Draw(draw);
-		lblTitle.Draw(draw);
-		grid.Draw(draw);
+		btnDefault.draw(draw);
+		btnBack.draw(draw);
+		btnApply.draw(draw);
+		lblTitle.draw(draw);
+		grid.draw(draw);
 
 		if (picker.isEnabled())
-			picker.Draw(draw);
+			picker.draw(draw);
 	}
 private:
 	void EnableButtons()
 	{
 		for (size_t i = 0; i < grid.GetSize(); i++)
 		{
-			grid.GetButtons()[i]->Enable();
+			grid.GetButtons()[i]->enable();
 		}
-		picker.Disable();
+		picker.disable();
 	}
 	void DisableButtons()
 	{
 		for (unsigned int i = 0; i < grid.GetSize(); i++)
 		{
-			grid.GetButtons()[i]->Disable();
+			grid.GetButtons()[i]->disable();
 		}
-		picker.Enable();
+		picker.enable();
 	}
 private:
 	UIButtonText btnBack;

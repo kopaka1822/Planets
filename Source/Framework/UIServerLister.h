@@ -51,7 +51,7 @@ public:
 	void AddItem(const std::string& serv, const std::string& port, const std::string& nickname)
 	{
 		const float hei = 100.0f;
-		const float wi = dim.x - 2 * padding;
+		const float wi = m_dim.x - 2 * padding;
 		Item i;
 		i.lblServ = new UILabel(nickname, FONT_SMALL);
 		i.lblPort = new UILabel(serv + std::string(":") + port, FONT_SMALL);
@@ -73,11 +73,11 @@ public:
 		itm.push_back(n);
 
 		n.pObj = i.btnConnect;
-		n.pos = PointF(wi - 2 *  padding,hei - padding) - i.btnConnect->GetMetrics();
+		n.pos = PointF(wi - 2 *  padding,hei - padding) - i.btnConnect->getMetrics();
 		itm.push_back(n);
 
 		const float sz = 30.0f;
-		i.btnCross->SetMetrics({ sz, sz });
+		i.btnCross->setMetrics({ sz, sz });
 		n.pObj = i.btnCross;
 		n.pos = { wi - 2 * padding - sz, padding };
 		itm.push_back(n);
@@ -142,7 +142,7 @@ public:
 				i.btnCross->Event_MouseMove(pos);
 		}
 
-		bHover = GetRect().PointInside(pos);
+		bHover = getRect().PointInside(pos);
 		if (bDown)
 		{
 			float dy = pos.y - lastPos.y;

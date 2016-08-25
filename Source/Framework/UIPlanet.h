@@ -27,9 +27,9 @@ public:
 	{
 
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawPlanet(pos, c, radius);
+		draw.DrawPlanet(m_pos, c, radius);
 	}
 	virtual void DrawEntities(Drawing& draw) const
 	{
@@ -92,7 +92,7 @@ public:
 	}
 	virtual void Event_MouseUp(Input::MouseKey k, const PointF& pos) override
 	{
-		if ((this->pos - pos).lengthSq() < radius * radius)
+		if ((this->m_pos - pos).lengthSq() < radius * radius)
 		{
 			//Spawn entity
 
@@ -106,7 +106,7 @@ public:
 
 			Entity e(velo);
 
-			e.pos = (e.vel * radius) + this->pos;
+			e.pos = (e.vel * radius) + this->m_pos;
 			e.time = 0.0f;
 
 			//list full?

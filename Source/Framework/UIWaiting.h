@@ -10,10 +10,10 @@ public:
 	{}
 	virtual ~UIWaiting()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		float wi = dim.y;
-		const PointF mid = GetMidpoint();
+		float wi = m_dim.y;
+		const PointF mid = getMidpoint();
 		draw.DrawPlanet(mid, col, wi / 3.0f);
 
 		float rPart = wi / 6.0f;
@@ -38,7 +38,7 @@ private:
 
 	void DrawPart(PointF rad, Drawing& draw, float radius)
 	{
-		const PointF mid = GetMidpoint();
+		const PointF mid = getMidpoint();
 		Color col = this->col;
 		for (int i = 0; i < 5; i++)
 		{

@@ -17,10 +17,10 @@ public:
 	{
 		return bSelected;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawPlanet(GetRect().Midpoint(), bSelected? Color::Red() : Color::White(), 
-			std::min(dim.x, dim.y) / 2.0f);
+		draw.DrawPlanet(getRect().Midpoint(), bSelected? Color::Red() : Color::White(), 
+			std::min(m_dim.x, m_dim.y) / 2.0f);
 	}
 private:
 	bool bSelected = false;
@@ -33,7 +33,7 @@ public:
 		:
 		UIButtonTexture(tex)
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (!bSelected)
 		{
@@ -80,15 +80,15 @@ public:
 	{}
 	virtual ~UIEditorList()
 	{}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		btnPlan.Register(gs);
-		btnEnt.Register(gs);
+		btnPlan.registerMe(gs);
+		btnEnt.registerMe(gs);
 
-		UIObject::Register(gs);
+		UIObject::registerMe(gs);
 
-		left.Register(gs);
-		right.Register(gs);
+		left.registerMe(gs);
+		right.registerMe(gs);
 	}
 	virtual void Event_MouseUp(Input::MouseKey k, const PointF& p) override
 	{
@@ -157,45 +157,45 @@ public:
 	}
 
 	// call origin first!
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		UIObject::SetMetrics(m);
-		PointF off = PointF(border, border) + pos;
+		UIObject::setMetrics(m);
+		PointF off = PointF(border, border) + m_pos;
 		const float wi2 = (m.x - 3 * border) / 2.0f;
-		btnPlan.SetOrigin(off);
-		btnPlan.SetMetrics({ wi2, hei });
+		btnPlan.setOrigin(off);
+		btnPlan.setMetrics({ wi2, hei });
 
 		off.x += wi2 + border;
-		btnEnt.SetOrigin(off);
-		btnEnt.SetMetrics({ wi2, hei });
+		btnEnt.setOrigin(off);
+		btnEnt.setMetrics({ wi2, hei });
 
-		off = PointF(border, 2 * border + hei) + pos + PointF(border,border);
-		left.SetOrigin(off);
-		right.SetOrigin(off);
+		off = PointF(border, 2 * border + hei) + m_pos + PointF(border,border);
+		left.setOrigin(off);
+		right.setOrigin(off);
 
-		float width = dim.x - 4 * border;
-		float height = dim.y - 5 * border - hei;
-		left.SetMetrics({ width, height });
-		right.SetMetrics({ width, height });
+		float width = m_dim.x - 4 * border;
+		float height = m_dim.y - 5 * border - hei;
+		left.setMetrics({ width, height });
+		right.setMetrics({ width, height });
 
 		left.OrderItems();
 		right.OrderItems();
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
-		btnPlan.Draw(draw);
-		btnEnt.Draw(draw);
+		btnPlan.draw(draw);
+		btnEnt.draw(draw);
 
-		draw.DrawHLine(pos + PointF(0.0f,2.5f * border + hei), dim.x, (float)border, Color::White());
-		draw.DrawVLine(pos + PointF(dim.x / 2.0f, 0.0f), 2 * border + hei, (float)border, Color::White());
+		draw.DrawHLine(m_pos + PointF(0.0f,2.5f * border + hei), m_dim.x, (float)border, Color::White());
+		draw.DrawVLine(m_pos + PointF(m_dim.x / 2.0f, 0.0f), 2 * border + hei, (float)border, Color::White());
 
 		if (btnPlan.isSelected())
-			left.Draw(draw);
+			left.draw(draw);
 
 		if (btnEnt.isSelected())
-			right.Draw(draw);
+			right.draw(draw);
 	}
 
 	bool Changed()
@@ -231,8 +231,8 @@ public:
 		btnPlan.SetSelected(false);
 		btnEnt.SetSelected(false);
 
-		left.Disable();
-		right.Disable();
+		left.disable();
+		right.disable();
 
 		curSelect = selection::none;
 		curState = state::none;
@@ -243,16 +243,16 @@ private:
 		btnPlan.SetSelected(true);
 		btnEnt.SetSelected(false);
 
-		left.Enable();
-		right.Disable();
+		left.enable();
+		right.disable();
 	}
 	void EnableEnts()
 	{
 		btnEnt.SetSelected(true);
 		btnPlan.SetSelected(false);
 
-		left.Disable();
-		right.Enable();
+		left.disable();
+		right.enable();
 	}
 private:
 	UIListPlanet& left;

@@ -10,9 +10,9 @@ public:
 	{}
 	virtual ~UIParticle()
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawParticle(pos + (dim / 2.0f), col, dim.x * 2.0f / 3.0f);
+		draw.DrawParticle(m_pos + (m_dim / 2.0f), col, m_dim.x * 2.0f / 3.0f);
 	}
 	void SetColor(Color c)
 	{

@@ -9,7 +9,7 @@ public:
 		lvl(lvl),
 		font(FONT_SMALL)
 	{
-		SetMetrics({ GetWdith(), GetHeight() });
+		setMetrics({ GetWdith(), GetHeight() });
 
 		// Level format: Level 03
 
@@ -20,35 +20,35 @@ public:
 		name += std::to_string(lvl);
 
 		PointF fontMetric = font.GetMetrics(name);
-		fontStart.x = (dim.x - fontMetric.x) / 2.0f;
+		fontStart.x = (m_dim.x - fontMetric.x) / 2.0f;
 		fontStart.y = 14.0f;
 
 		// StarStart
 		starStart.y = 50.0f;
 		float starwi = 3.0f * StarWidth + 2.0f * StartPadd;
-		starStart.x = (dim.x - starwi) / 2.0f;
+		starStart.x = (m_dim.x - starwi) / 2.0f;
 	}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (isEnabled())
-			UIButton::Draw(draw);
+			UIButton::draw(draw);
 		else
-			draw.DrawBox(GetRect(), (float)border, Color::White(), Color(30, 30, 30));
+			draw.DrawBox(getRect(), (float)border, Color::White(), Color(30, 30, 30));
 		// draw text
 		if (bDown)
 			font.SetColor(Color::Black());
 		else
 			font.SetColor(Color::White());
 
-		font.Text(name, pos + fontStart);
+		font.Text(name, m_pos + fontStart);
 
 		// draw stars
 		PointF cur = starStart;
 		const PointF met = PointF(StarWidth, StarWidth);
 		for (int i = 0; i < 3; i++)
 		{
-			draw.DrawSprite(RectF(pos + cur, pos + cur + met), GetStarTex(i));
+			draw.DrawSprite(RectF(m_pos + cur, m_pos + cur + met), GetStarTex(i));
 			cur.x += StarWidth + StartPadd;
 		}
 	}

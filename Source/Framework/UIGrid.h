@@ -34,18 +34,18 @@ public:
 	{
 		for (unsigned int i = 0; i < btns.size(); i++)
 		{
-			btns[i]->SetOrigin(PointF((int)(i / Rows) * btns[0]->GetMetrics().x + (int)(i / Rows) * 10, btns[0]->GetMetrics().y * (i % Rows) + 10 * (i % Rows) ) + pos);
+			btns[i]->setOrigin(PointF((int)(i / Rows) * btns[0]->getMetrics().x + (int)(i / Rows) * 10, btns[0]->getMetrics().y * (i % Rows) + 10 * (i % Rows) ) + m_pos);
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (bBox)
 		{
-			draw.DrawBox(RectF(btns[0]->GetOrigin() - PointF(2.0f * border, 2.0f * border), PointF(btns[Amount - 1]->GetOrigin().x + btns[Amount - 1]->GetMetrics().x + 2.0f * border, btns[Rows-1]->GetOrigin().y + btns[Rows-1]->GetMetrics().y + 2.0f *border)), (float)border, Color::White(), Color::Black());
+			draw.DrawBox(RectF(btns[0]->getOrigin() - PointF(2.0f * border, 2.0f * border), PointF(btns[Amount - 1]->getOrigin().x + btns[Amount - 1]->getMetrics().x + 2.0f * border, btns[Rows-1]->getOrigin().y + btns[Rows-1]->getMetrics().y + 2.0f *border)), (float)border, Color::White(), Color::Black());
 		}
 		for (unsigned int i = 0; i < btns.size(); i++)
 		{
-			btns[i]->Draw(draw);
+			btns[i]->draw(draw);
 		}
 	}
 	UIButtonText* GetPointer(int i)
@@ -59,9 +59,9 @@ public:
 	{
 		return btns.size();
 	}
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		UIObject::SetOrigin(p);
+		UIObject::setOrigin(p);
 		SetPosition();
 	}
 

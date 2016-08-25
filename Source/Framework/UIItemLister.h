@@ -31,7 +31,7 @@ public:
 		assert(l != nullptr);
 		items.push_back(i);
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (!isEnabled())
 			return;
@@ -40,24 +40,24 @@ public:
 		{
 			if (itm.left->isEnabled())
 			{
-				itm.left->Draw(draw);
+				itm.left->draw(draw);
 				//draw items
 				if (itm.right)
-					itm.right->Draw(draw);
+					itm.right->draw(draw);
 			}
 		}
 		if (drawLines)
 		{
 			for (const auto& f : lines)
 			{
-				//Draw HLines
-				if (f >= pos.y && f <= pos.y + dim.y)
-					draw.DrawHLine(pos + PointF(0.0f, f), dim.x, 3.0f, Color::White());
+				//draw HLines
+				if (f >= m_pos.y && f <= m_pos.y + m_dim.y)
+					draw.DrawHLine(m_pos + PointF(0.0f, f), m_dim.x, 3.0f, Color::White());
 			}
 		}
 
 		if (bNeedScroll)
-			sbar.Draw(draw);
+			sbar.draw(draw);
 	}
 	void SetOrder(Order l, Order r)
 	{
@@ -67,25 +67,25 @@ public:
 	//Only Origins, not Metrics!
 	virtual void OrderItems()
 	{
-		const float mid = dim.x * midpoint;
+		const float mid = m_dim.x * midpoint;
 		float y = 3.0f;
 
 		lines.clear();
 
 		for (auto& itm : items)
 		{
-			float maxHei = itm.left->GetMetrics().y;
+			float maxHei = itm.left->getMetrics().y;
 			if (itm.right)
-				maxHei = std::max(maxHei, itm.right->GetMetrics().y);
+				maxHei = std::max(maxHei, itm.right->getMetrics().y);
 
 			//TODO set order for middle
-			float dy = (maxHei - itm.left->GetMetrics().y) / 2.0f;
-			itm.left->SetOrigin(PointF(pos.x + 3.0f, pos.y + y + dy));
+			float dy = (maxHei - itm.left->getMetrics().y) / 2.0f;
+			itm.left->setOrigin(PointF(m_pos.x + 3.0f, m_pos.y + y + dy));
 
 			if (itm.right)
 			{
-				dy = (maxHei - itm.right->GetMetrics().y) / 2.0f;
-				itm.right->SetOrigin(PointF(pos.x + mid, pos.y + y + dy));
+				dy = (maxHei - itm.right->getMetrics().y) / 2.0f;
+				itm.right->setOrigin(PointF(m_pos.x + mid, m_pos.y + y + dy));
 			}
 
 			y += maxHei + 9.0f; // 6 for horizontal line
@@ -95,18 +95,18 @@ public:
 		cam = 0.0f;
 
 		// order things
-		if (dim.y < maxCam)
+		if (m_dim.y < maxCam)
 		{
-			sbar.Init(cam, dim.y, maxCam);
-			sbar.SetMetrics({ 20.0f, dim.y });// right
-			sbar.SetOrigin(pos + PointF(dim.x - 20.0f, 0.0f));
+			sbar.Init(cam, m_dim.y, maxCam);
+			sbar.setMetrics({ 20.0f, m_dim.y });// right
+			sbar.setOrigin(m_pos + PointF(m_dim.x - 20.0f, 0.0f));
 			bNeedScroll = true;
-			sbar.Enable();
+			sbar.enable();
 		}
 		else
 		{
 			bNeedScroll = false;
-			sbar.Disable();
+			sbar.disable();
 		}
 
 		
@@ -120,7 +120,7 @@ public:
 	void MoveCam(float d)
 	{
 		float nCam = std::max(0.0f, cam + d);
-		nCam = std::min(nCam, maxCam - dim.y);
+		nCam = std::min(nCam, maxCam - m_dim.y);
 		nCam = std::max(nCam, 0.0f);
 		float dy = cam - nCam;
 		cam = nCam;
@@ -129,37 +129,37 @@ public:
 		//if (dy != 0.0f)
 		{
 			//move items
-			const float my = pos.y + dim.y;
+			const float my = m_pos.y + m_dim.y;
 			for (auto& itm : items)
 			{
-				itm.left->SetOrigin(itm.left->GetOrigin() + PointF(0.0f, dy));
+				itm.left->setOrigin(itm.left->getOrigin() + PointF(0.0f, dy));
 				
 				if (itm.right)
-					itm.right->SetOrigin(itm.right->GetOrigin() + PointF(0.0f, dy));
+					itm.right->setOrigin(itm.right->getOrigin() + PointF(0.0f, dy));
 
 				if (itm.right)
 				{
-					if (itm.left->GetOrigin().y >= pos.y && itm.left->GetOrigin().y + itm.left->GetMetrics().y <= my
-						&& itm.right->GetOrigin().y >= pos.y && itm.right->GetOrigin().y + itm.right->GetMetrics().y <= my)
+					if (itm.left->getOrigin().y >= m_pos.y && itm.left->getOrigin().y + itm.left->getMetrics().y <= my
+						&& itm.right->getOrigin().y >= m_pos.y && itm.right->getOrigin().y + itm.right->getMetrics().y <= my)
 					{
-						itm.left->Enable();
-						itm.right->Enable();
+						itm.left->enable();
+						itm.right->enable();
 					}
 					else
 					{
-						itm.left->Disable();
-						itm.right->Disable();
+						itm.left->disable();
+						itm.right->disable();
 					}
 				}
 				else
 				{
-					if (itm.left->GetOrigin().y >= pos.y && itm.left->GetOrigin().y + itm.left->GetMetrics().y <= my)
+					if (itm.left->getOrigin().y >= m_pos.y && itm.left->getOrigin().y + itm.left->getMetrics().y <= my)
 					{
-						itm.left->Enable();
+						itm.left->enable();
 					}
 					else
 					{
-						itm.left->Disable();
+						itm.left->disable();
 					}
 				}
 			}
@@ -170,51 +170,51 @@ public:
 		}
 	}
 
-	virtual void Enable() override
+	virtual void enable() override
 	{
-		UIObject::Enable();
+		UIObject::enable();
 
 		for (auto& i : items)
 		{
 			if (i.left)
-				i.left->Enable();
+				i.left->enable();
 
 			if (i.right)
-				i.right->Enable();
+				i.right->enable();
 		}
 		if (bNeedScroll)
-			sbar.Enable();
+			sbar.enable();
 
 		CheckVisible();
 		//MoveCam(0.0f);
 	}
-	virtual void Disable() override
+	virtual void disable() override
 	{
-		UIObject::Disable();
+		UIObject::disable();
 
 		for (auto& i : items)
 		{
 			if (i.left)
-				i.left->Disable();
+				i.left->disable();
 
 			if (i.right)
-				i.right->Disable();
+				i.right->disable();
 		}
 
-		sbar.Disable();
+		sbar.disable();
 	}
 
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		sbar.Register(gs);
-		UIObject::Register(gs);
+		sbar.registerMe(gs);
+		UIObject::registerMe(gs);
 		/*for (auto& i : items)
 		{
 			if (i.left)
-				i.left->Register(gs);
+				i.left->registerMe(gs);
 
 			if (i.right)
-				i.right->Register(gs);
+				i.right->registerMe(gs);
 		}*/
 	}
 
@@ -314,18 +314,18 @@ public:
 		{
 			if (i.left)
 			{
-				if (GetRect().RectFullInside(i.left->GetRect()))
-					i.left->Enable();
+				if (getRect().RectFullInside(i.left->getRect()))
+					i.left->enable();
 				else
-					i.left->Disable();
+					i.left->disable();
 			}
 
 			if (i.right)
 			{
-				if (GetRect().RectFullInside(i.right->GetRect()))
-					i.right->Enable();
+				if (getRect().RectFullInside(i.right->getRect()))
+					i.right->enable();
 				else
-					i.right->Disable();
+					i.right->disable();
 			}
 		}
 	}

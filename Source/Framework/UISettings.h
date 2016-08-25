@@ -30,61 +30,61 @@ public:
 
 		itms.push_back(i);
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
 		for (auto& i : itms)
 		{
-			i.pBtn->Register(gs);
-			i.pScroll->Register(gs);
+			i.pBtn->registerMe(gs);
+			i.pScroll->registerMe(gs);
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+		draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
 		assert(itms.size());
-		float dy = border + itms[0].pBtn->GetMetrics().y;
-		PointF start(pos.x + border, pos.y + dy + border / 2);
+		float dy = border + itms[0].pBtn->getMetrics().y;
+		PointF start(m_pos.x + border, m_pos.y + dy + border / 2);
 		for (auto& i : itms)
 		{
-			i.pBtn->Draw(draw);
+			i.pBtn->draw(draw);
 			if (i.pScroll->isEnabled())
 			{
-				i.pScroll->Draw(draw);
+				i.pScroll->draw(draw);
 			}
 
 			draw.DrawHLine(start, btnWi, (float)border, Color::White());
 			start.y += dy;
 		}
 
-		draw.DrawVLine(pos + PointF(1.5f * border + btnWi, border), dim.y - 2 * border, (float)border,Color::White());
+		draw.DrawVLine(m_pos + PointF(1.5f * border + btnWi, border), m_dim.y - 2 * border, (float)border,Color::White());
 	}
 	// call this after origin!
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		UIObject::SetMetrics(m);
+		UIObject::setMetrics(m);
 
 		btnWi = 0.0f;
 		for (const auto& i : itms)
 		{
-			btnWi = std::max(btnWi, i.pBtn->GetMetrics().x);
+			btnWi = std::max(btnWi, i.pBtn->getMetrics().x);
 		}
 
-		float curY = pos.y + border;
-		const float xbtn = pos.x + border;
-		float xscroll = pos.x + btnWi + 2 * border + padding;
-		float yscroll = pos.y + border + padding;
+		float curY = m_pos.y + border;
+		const float xbtn = m_pos.x + border;
+		float xscroll = m_pos.x + btnWi + 2 * border + padding;
+		float yscroll = m_pos.y + border + padding;
 
-		float scrollwi = dim.x - 3 * border - btnWi - 2 * padding;
-		float scrollhi = dim.y - 2 * border - 2 * padding;
+		float scrollwi = m_dim.x - 3 * border - btnWi - 2 * padding;
+		float scrollhi = m_dim.y - 2 * border - 2 * padding;
 		for (auto& i : itms)
 		{
-			i.pBtn->SetWidth(btnWi);
-			i.pBtn->SetOrigin(PointF(xbtn, curY));
-			curY += i.pBtn->GetMetrics().y + border;
+			i.pBtn->setWidth(btnWi);
+			i.pBtn->setOrigin(PointF(xbtn, curY));
+			curY += i.pBtn->getMetrics().y + border;
 
-			i.pScroll->SetMetrics(PointF(scrollwi, scrollhi));
-			i.pScroll->SetOrigin(PointF(xscroll, yscroll));
+			i.pScroll->setMetrics(PointF(scrollwi, scrollhi));
+			i.pScroll->setOrigin(PointF(xscroll, yscroll));
 		}
 	}
 	void OrderItems()
@@ -93,13 +93,13 @@ public:
 		{
 			i.pScroll->OrderItems();
 			//i.pScroll->MoveCam(1.0f);
-			i.pScroll->Disable();
+			i.pScroll->disable();
 		}
 
 		if (itms.size())
 		{
 			itms[0].pBtn->SetActive(true);
-			itms[0].pScroll->Enable();
+			itms[0].pScroll->enable();
 		}
 	}
 	void Update()
@@ -113,12 +113,12 @@ public:
 				{
 					if (it.pBtn->isActive())
 					{
-						it.pScroll->Disable();
+						it.pScroll->disable();
 						it.pBtn->SetActive(false);
 					}	
 				}
 				i.pBtn->SetActive(true);
-				i.pScroll->Enable();
+				i.pScroll->enable();
 			}
 		}
 	}

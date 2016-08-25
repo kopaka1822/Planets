@@ -21,16 +21,16 @@ public:
 		AddObject(&btn1);
 		AddObject(&btn2);
 
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 
 		float bwidth = 400.0f;
-		btn1.SetWidth(bwidth);
-		btn2.SetWidth(bwidth);
+		btn1.setWidth(bwidth);
+		btn2.setWidth(bwidth);
 
-		btn1.CenterX(200.0f);
-		btn2.CenterX(300.0f);
+		btn1.centerX(200.0f);
+		btn2.centerX(300.0f);
 
-		btnMenu.CenterX(Framework::STD_DRAW_Y - btnMenu.GetMetrics().y - 10.0f);
+		btnMenu.centerX(Framework::STD_DRAW_Y - btnMenu.getMetrics().y - 10.0f);
 	}
 	virtual ~StateTutorial()
 	{}
@@ -48,10 +48,10 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		btn1.Draw(draw);
-		btn2.Draw(draw);
-		btnMenu.Draw(draw);
+		lblTitle.draw(draw);
+		btn1.draw(draw);
+		btn2.draw(draw);
+		btnMenu.draw(draw);
 	}
 private:
 	void LoadTut1()

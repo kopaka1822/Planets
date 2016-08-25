@@ -20,30 +20,30 @@ public:
 	{
 		Sound::Theme(Sound::ThemeMax());
 
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 		assert(gs.pClient);
 
-		btnDisconnect.SetOrigin(PointF(10.0f,
-			Framework::STD_DRAW_Y - 10.0f - btnDisconnect.GetMetrics().y));
+		btnDisconnect.setOrigin(PointF(10.0f,
+			Framework::STD_DRAW_Y - 10.0f - btnDisconnect.getMetrics().y));
 
-		btnDisconnect.Register(*this);
-		listRight.Register(*this);
-		listLeft.Register(*this);
+		btnDisconnect.registerMe(*this);
+		listRight.registerMe(*this);
+		listLeft.registerMe(*this);
 
 		listRight.MoveMidpoint(1.0f);
 		listLeft.MoveMidpoint(1.0f);
 
-		listLeft.SetMetrics({ 450.0f, 500.0f });
-		listLeft.CenterX(150.0f);
+		listLeft.setMetrics({ 450.0f, 500.0f });
+		listLeft.centerX(150.0f);
 
-		listRight.SetMetrics({ 350.0f, 500.0f });
-		listRight.SetOrigin(listLeft.GetRect().TopRight() + PointF(10.0f, 0.0f));
+		listRight.setMetrics({ 350.0f, 500.0f });
+		listRight.setOrigin(listLeft.getRect().TopRight() + PointF(10.0f, 0.0f));
 
 		SendUsername();
 
 		gs.pChat = std::unique_ptr< UIChatBox >(new UIChatBox(FONT_SMALL));
-		gs.pChat->SetOrigin({ 10.0f, 130.0f });
-		gs.pChat->SetMetrics({ 300.0f, 500.0f });
+		gs.pChat->setOrigin({ 10.0f, 130.0f });
+		gs.pChat->setMetrics({ 300.0f, 500.0f });
 
 		AddObject(gs.pChat.get());
 	}
@@ -56,20 +56,20 @@ public:
 	{
 		muPage.Lock();
 
-		lblTitle.Draw(draw);
+		lblTitle.draw(draw);
 
 		if (listLeft.CountItems() > 0)
-			listLeft.Draw(draw);
+			listLeft.draw(draw);
 
 		if (listRight.CountItems() > 0)
-			listRight.Draw(draw);
+			listRight.draw(draw);
 
 
 
 		muPage.Unlock();
 		
-		gs.pChat->Draw(draw);
-		btnDisconnect.Draw(draw);
+		gs.pChat->draw(draw);
+		btnDisconnect.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{
@@ -166,7 +166,7 @@ private:
 
 		lblTitle.SetText(r.readString());
 		lblTitle.AdjustToFont();
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 	}
 	void HandleUpdateList(UIItemListerScroll& list, std::vector< std::unique_ptr< UITextBox >>& lbls,
 		std::vector< std::unique_ptr< UIButtonTextServer >>& btns, ContainerReader& r)
@@ -182,12 +182,12 @@ private:
 			int id = r.readInt();
 			std::string txt = r.readString();
 
-			float wi = list.GetMetrics().x - 30.0f;
+			float wi = list.getMetrics().x - 30.0f;
 			if (o == PageObject::Button)
 			{
 				// add button
 				auto btn = std::unique_ptr< UIButtonTextServer >(new UIButtonTextServer(txt, id, FONT_MED));
-				btn->SetWidth(wi);
+				btn->setWidth(wi);
 				list.AddItem(btn.get(), nullptr);
 				btns.push_back(std::move(btn));
 			}

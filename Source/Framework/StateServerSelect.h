@@ -22,15 +22,15 @@ public:
 		inpPort(FONT_SMALL,5),
 		inpNickname(FONT_SMALL,15)
 	{
-		lblTitle.CenterX(50.0f);
+		lblTitle.centerX(50.0f);
 
 		btnBack.AdjustToFont();
-		btnBack.SetOrigin(PointF(10.0f, Framework::STD_DRAW_Y - 10.0f - btnBack.GetMetrics().y));
+		btnBack.setOrigin(PointF(10.0f, Framework::STD_DRAW_Y - 10.0f - btnBack.getMetrics().y));
 
 		AddObject(&btnBack);
 
-		list.SetMetrics(PointF(800, 550));
-		list.SetOrigin({ 350.0f, 150.0f });
+		list.setMetrics(PointF(800, 550));
+		list.setOrigin({ 350.0f, 150.0f });
 
 		AddObject(&list);
 		AddObject(&btnAddServer);
@@ -45,8 +45,8 @@ public:
 		inpPort.Adjust(wi);
 		inpNickname.Adjust(wi);
 
-		btnAddServer.SetWidth(wi);
-		btnDirect.SetWidth(wi);
+		btnAddServer.setWidth(wi);
+		btnDirect.setWidth(wi);
 
 		AlignObjects(PointF(50.0f, 150.0f), 10.0f, std::initializer_list < UIObject* > {
 			&lblServer, &inpServer,
@@ -67,24 +67,24 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
+		lblTitle.draw(draw);
 		
-		lblServer.Draw(draw);
-		lblPort.Draw(draw);
-		lblNickname.Draw(draw);
+		lblServer.draw(draw);
+		lblPort.draw(draw);
+		lblNickname.draw(draw);
 
-		btnAddServer.Draw(draw);
-		btnDirect.Draw(draw);
+		btnAddServer.draw(draw);
+		btnDirect.draw(draw);
 
-		inpServer.Draw(draw);
-		inpNickname.Draw(draw);
-		inpPort.Draw(draw);
+		inpServer.draw(draw);
+		inpNickname.draw(draw);
+		inpPort.draw(draw);
 		
-		btnBack.Draw(draw);
+		btnBack.draw(draw);
 
 
 
-		list.Draw(draw);
+		list.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

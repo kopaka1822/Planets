@@ -69,13 +69,13 @@ public:
 	}
 	void SetFixed()
 	{
-		numX.Enable();
-		numY.Enable();
+		numX.enable();
+		numY.enable();
 	}
 	void SetFloating()
 	{
-		numX.Disable();
-		numY.Disable();
+		numX.disable();
+		numY.disable();
 	}
 	bool Changed()
 	{

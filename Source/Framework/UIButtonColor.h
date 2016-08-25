@@ -8,17 +8,17 @@ public:
 		:
 		col(c)
 	{}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (bDown)
 		{
 			//draw inverted
-			draw.DrawRect(GetRect(), Color::White());
+			draw.DrawRect(getRect(), Color::White());
 		}
 		else
 		{
 			//dont invert
-			draw.DrawBox(GetRect(), (float)border, Color::White(),bHover? col.Brightness(0.9f) : col);
+			draw.DrawBox(getRect(), (float)border, Color::White(),bHover? col.Brightness(0.9f) : col);
 		}
 	}
 	void SetColor(Color c)

@@ -23,19 +23,19 @@ protected:
 				font(font),
 				parent(sec)
 			{
-				dim = { font.GetFontWidth() * name.length() + 2 * padd, 0 };
+				m_dim = { font.GetFontWidth() * name.length() + 2 * padd, 0 };
 			}
-			virtual void Draw(Drawing& draw) override
+			virtual void draw(Drawing& draw) override
 			{
 				if (bHover)
 				{
-					draw.DrawRect(GetRect(), Color::Gray());
+					draw.DrawRect(getRect(), Color::Gray());
 				}
-				font.Text(name, pos + PointF(padd, padd));
+				font.Text(name, m_pos + PointF(padd, padd));
 			}
 			virtual void Event_MouseMove(const PointF& pos) override
 			{
-				if (GetRect().PointInside(pos))
+				if (getRect().PointInside(pos))
 				{
 					if (!bHover)
 					{
@@ -50,7 +50,7 @@ protected:
 			}
 			virtual void Event_MouseUp(Input::MouseKey k, const PointF& p) override
 			{
-				bHover = GetRect().PointInside(p);
+				bHover = getRect().PointInside(p);
 				if (bHover) //Click
 				{
 					parent->ElmPressed(name);
@@ -77,26 +77,26 @@ protected:
 		{
 			assert(name.length() != 0);
 			//own dim
-			dim = PointF(name.length() * font.GetFontWidth() + 2 * padd, font.GetFontHeight() + 2 * padd);
+			m_dim = PointF(name.length() * font.GetFontWidth() + 2 * padd, font.GetFontHeight() + 2 * padd);
 
 			//elm dim
 			dim2 = { 0.0f, 0.0f };
 		}
 		virtual ~Section()
 		{}
-		virtual void SetOrigin(const PointF& p) override
+		virtual void setOrigin(const PointF& p) override
 		{
-			UIObject::SetOrigin(p);
-			pos2 = p + PointF(-border, dim.y + border);
+			UIObject::setOrigin(p);
+			pos2 = p + PointF(-border, m_dim.y + border);
 
 			OrderElements();
 		}
-		virtual void Draw(Drawing& draw) override
+		virtual void draw(Drawing& draw) override
 		{
 			if (bHover)
-				draw.DrawRect(GetRect(), Color::Gray());
+				draw.DrawRect(getRect(), Color::Gray());
 			font.SetColor(Color::White());
-			font.Text(name, pos + PointI(padd,padd));
+			font.Text(name, m_pos + PointI(padd,padd));
 
 			if (bActive)
 			{
@@ -105,13 +105,13 @@ protected:
 
 				for (auto& e : elms)
 				{
-					e->Draw(draw);
+					e->draw(draw);
 				}
 			}
 		}
 		virtual void Event_MouseMove(const PointF& p) override
 		{
-			if (GetRect().PointInside(p))
+			if (getRect().PointInside(p))
 			{
 				if (!bHover)
 				{
@@ -137,12 +137,12 @@ protected:
 			//key ist always left
 			if (!bActive)
 			{
-				bActive = GetRect().PointInside(p);
+				bActive = getRect().PointInside(p);
 				if (bActive) Sound::Effect(Sound::S_CLICK);
 			}
 			else
 			{
-				bActive = (GetRect().PointInside(p)) || RectF(pos2, pos2 + dim2).PointInside(p);
+				bActive = (getRect().PointInside(p)) || RectF(pos2, pos2 + dim2).PointInside(p);
 			}
 		}
 		void AddElement(std::string name)
@@ -159,15 +159,15 @@ protected:
 			int len = name.length() * int(font.GetFontWidth()) + 2 * padd;
 			for (const auto& e : elms)
 			{
-				len = std::max(len, (int)e->GetMetrics().x);
+				len = std::max(len, (int)e->getMetrics().x);
 			}
 
 			PointF start = pos2 + PointF(border, 0);
 
 			for (auto& e : elms)
 			{
-				e->SetMetrics({ (float)len, font.GetFontHeight() + 2 * padd});
-				e->SetOrigin(start);
+				e->setMetrics({ (float)len, font.GetFontHeight() + 2 * padd});
+				e->setOrigin(start);
 
 				start += PointF(0.0f, font.GetFontHeight() + 2 * padd);
 			}
@@ -232,12 +232,12 @@ public:
 	{
 
 	}
-	virtual void SetMetrics(const PointF& m) override
+	virtual void setMetrics(const PointF& m) override
 	{
-		dim.x = m.x;
-		dim.y = 2 * padd + border + font.GetFontHeight();
+		m_dim.x = m.x;
+		m_dim.y = 2 * padd + border + font.GetFontHeight();
 
-		btnCross.SetMetrics({ dim.y, dim.y });
+		btnCross.setMetrics({ m_dim.y, m_dim.y });
 	}
 	virtual ~UIMenu()
 	{}
@@ -258,26 +258,26 @@ public:
 			}
 		}
 	}
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		UIObject::SetOrigin(p);
+		UIObject::setOrigin(p);
 		OrderElements();
 
-		btnCross.SetOrigin(pos + PointF(dim.x - dim.y, 0.0f));
+		btnCross.setOrigin(m_pos + PointF(m_dim.x - m_dim.y, 0.0f));
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		float dy = 2 * padd + font.GetFontHeight();
-		draw.DrawRect(RectF(pos, pos + PointF(dim.x, dy)), Color::Black());
-		draw.DrawRect(RectF(pos + PointF(0, dy), pos + PointF(dim.x, dy + border)), Color::White());
+		draw.DrawRect(RectF(m_pos, m_pos + PointF(m_dim.x, dy)), Color::Black());
+		draw.DrawRect(RectF(m_pos + PointF(0, dy), m_pos + PointF(m_dim.x, dy + border)), Color::White());
 
 
-		PointF curP = pos;
+		PointF curP = m_pos;
 		for (auto& s : Sects)
 		{
-			s->Draw(draw);
+			s->draw(draw);
 			//draw border
-			curP += PointF(s->GetMetrics().x, 0);
+			curP += PointF(s->getMetrics().x, 0);
 			draw.DrawRect(RectF(curP, curP + PointF(border, dy)), Color::White());
 			curP += PointF(border, 0);
 		}
@@ -285,7 +285,7 @@ public:
 		curP -= PointF(border, 0);
 		draw.DrawRect(RectF(curP, curP + PointF(border, dy)), Color::Black());
 
-		btnCross.Draw(draw);
+		btnCross.draw(draw);
 	}
 	virtual void Event_MouseDown(Input::MouseKey k,const PointF& pos) override
 	{
@@ -319,10 +319,10 @@ public:
 		}
 		return false;
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		UIObject::Register(gs);
-		btnCross.Register(gs);
+		UIObject::registerMe(gs);
+		btnCross.registerMe(gs);
 	}
 	bool isClosed()
 	{
@@ -331,13 +331,13 @@ public:
 private:
 	void OrderElements()
 	{
-		PointF start = pos;
+		PointF start = m_pos;
 
 		for (auto& s : Sects)
 		{
-			s->SetOrigin(start);
+			s->setOrigin(start);
 
-			start += PointF(s->GetMetrics().x + border,0);
+			start += PointF(s->getMetrics().x + border,0);
 		}
 	}
 	void ElemPress(std::string sec, std::string elm)

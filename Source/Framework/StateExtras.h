@@ -21,20 +21,20 @@ public:
 		lblTitle("Extras",FONT_BIG)
 	{
 		btnAchv.AdjustToFont();
-		PointF dim = btnAchv.GetMetrics();
+		PointF dim = btnAchv.getMetrics();
 
-		btnMenu.SetMetrics(dim);
-		btnColor.SetMetrics(dim);
-		btnEditor.SetMetrics(dim);
+		btnMenu.setMetrics(dim);
+		btnColor.setMetrics(dim);
+		btnEditor.setMetrics(dim);
 
 		lblTitle.AdjustToFont();
 
-		lblTitle.CenterX(50);
+		lblTitle.centerX(50);
 
-		btnAchv.CenterX(200);
-		btnColor.CenterX(300);
-		btnEditor.CenterX(400);
-		btnMenu.CenterX(500);
+		btnAchv.centerX(200);
+		btnColor.centerX(300);
+		btnEditor.centerX(400);
+		btnMenu.centerX(500);
 
 		AddObject(&btnMenu);
 		AddObject(&btnAchv);
@@ -43,12 +43,12 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
+		lblTitle.draw(draw);
 
-		btnAchv.Draw(draw);
-		btnColor.Draw(draw);
-		btnEditor.Draw(draw);
-		btnMenu.Draw(draw);
+		btnAchv.draw(draw);
+		btnColor.draw(draw);
+		btnEditor.draw(draw);
+		btnMenu.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

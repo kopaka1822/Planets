@@ -12,7 +12,7 @@ public:
 	}
 	virtual void AdjustToFont(float width)
 	{
-		SetMetrics({ width, 2 * (padding + border) + font.GetFontHeight() });
+		setMetrics({ width, 2 * (padding + border) + font.GetFontHeight() });
 	}
 	static std::string KeyToString(Input::GKstruct k)
 	{
@@ -83,9 +83,9 @@ public:
 			SetKey(key); // generate string
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		UIButton::Draw(draw);
+		UIButton::draw(draw);
 		muTxt.Lock();
 		std::string s = txt;
 		muTxt.Unlock();
@@ -96,14 +96,14 @@ private:
 	PointF CalculateFontPos(const std::string& txt) const
 	{
 		PointF p;
-		p.x = dim.x - 2 * border - 2 * padding - font.GetFontWidth() * txt.length();
+		p.x = m_dim.x - 2 * border - 2 * padding - font.GetFontWidth() * txt.length();
 		p.x *= 0.5f;
 		p.x += border + padding;
-		p.y = dim.y - 2 * border - 2 * padding - font.GetFontHeight();
+		p.y = m_dim.y - 2 * border - 2 * padding - font.GetFontHeight();
 		p.y *= 0.5f;
 		p.y += border + padding;
 
-		return pos + p;
+		return m_pos + p;
 	}
 private:
 	const int padding = 4;

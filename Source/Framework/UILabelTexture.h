@@ -10,17 +10,17 @@ public:
 		tex(tex)
 	{}
 
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawSprite(GetRect(), tex);
+		draw.DrawSprite(getRect(), tex);
 	}
 	
 	void CenterX(float y, float width)
 	{
 		float height = width / float(tex.GetWidth()) * tex.GetHeight();
-		SetMetrics(PointF(width, height));
+		setMetrics(PointF(width, height));
 		
-		UIObject::CenterX(y);
+		UIObject::centerX(y);
 	}
 private:
 	const Texture& tex;

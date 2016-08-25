@@ -8,75 +8,75 @@
 class UIObject : public Input::EventReceiver
 {
 public:
-	virtual void SetOrigin(const PointF& p)
+	virtual void setOrigin(const PointF& p)
 	{
-		pos = p;
+		m_pos = p;
 	}
-	virtual void SetCenter(const PointF& p)
+	virtual void setCenter(const PointF& p)
 	{
-		SetOrigin(p - (dim / 2.0f));
+		setOrigin(p - (m_dim / 2.0f));
 	}
-	virtual PointF GetOrigin() const
+	virtual PointF getOrigin() const
 	{
-		return pos;
+		return m_pos;
 	}
-	virtual void SetMetrics(const PointF& d)
+	virtual void setMetrics(const PointF& d)
 	{
-		dim = d;
+		m_dim = d;
 	}
-	virtual PointF GetMetrics() const
+	virtual PointF getMetrics() const
 	{
-		return dim;
+		return m_dim;
 	}
-	virtual void CenterX(float y)
+	virtual void centerX(float y)
 	{
-		pos.y = y;
-		pos.x = (float(Framework::STD_DRAW_X) / 2.0f) - (dim.x / 2.0f);
-		SetOrigin(pos);
+		m_pos.y = y;
+		m_pos.x = (float(Framework::STD_DRAW_X) / 2.0f) - (m_dim.x / 2.0f);
+		setOrigin(m_pos);
 	}
-	virtual void Center()
+	virtual void center()
 	{
-		pos.y = (float(Framework::STD_DRAW_Y) / 2.0f) - (dim.y / 2.0f);
-		pos.x = (float(Framework::STD_DRAW_X) / 2.0f) - (dim.x / 2.0f);
-		SetOrigin(pos);
+		m_pos.y = (float(Framework::STD_DRAW_Y) / 2.0f) - (m_dim.y / 2.0f);
+		m_pos.x = (float(Framework::STD_DRAW_X) / 2.0f) - (m_dim.x / 2.0f);
+		setOrigin(m_pos);
 	}
 
-	virtual void Draw(Drawing& draw) = 0;
+	virtual void draw(Drawing& draw) = 0;
 	virtual ~UIObject(){}
-	RectF GetRect() const
+	RectF getRect() const
 	{
-		return RectF(pos, pos + dim);
+		return RectF(m_pos, m_pos + m_dim);
 	}
-	virtual void SetWidth(float w)
+	virtual void setWidth(float w)
 	{
-		SetMetrics({ w, dim.y });
+		setMetrics({ w, m_dim.y });
 	}
-	virtual void SetHeight(float h)
+	virtual void setHeight(float h)
 	{
-		SetMetrics({ dim.x, h });
+		setMetrics({ m_dim.x, h });
 	}
 
-	virtual void Enable()
+	virtual void enable()
 	{
-		enabled = true;
+		m_isEnabled = true;
 	}
-	virtual void Disable()
+	virtual void disable()
 	{
-		enabled = false;
+		m_isEnabled = false;
 	}
 	bool isEnabled() const
 	{
-		return enabled;
+		return m_isEnabled;
 	}
-	virtual void Register(class GameState&);
+	virtual void registerMe(class GameState&);
 protected:
-	inline PointF GetMidpoint()
+	inline PointF getMidpoint()
 	{
-		return PointF(pos + (dim / 2.0f));
+		return PointF(m_pos + (m_dim / 2.0f));
 	}
 protected:
-	PointF pos;
-	PointF dim;
+	PointF m_pos;
+	PointF m_dim;
 private:
-	bool enabled = true;
+	bool m_isEnabled = true;
 };

@@ -17,14 +17,14 @@ public:
 		for (int i = 0; i < 4; i++)
 		{
 			btns[i] = new UIButtonTexture(Database::GetTexture((Database::GameTex)((int)(Database::GameTex::Particle) + i)));
-			btns[i]->SetMetrics({ item, item });
+			btns[i]->setMetrics({ item, item });
 
 			tips[i] = new UITooltip(*btns[i], FONT_SMALL);
 		}
 
-		SetMetrics({ 3 * border + 2 * item, 3 * border + 2 * item });
+		setMetrics({ 3 * border + 2 * item, 3 * border + 2 * item });
 
-		Disable();
+		disable();
 
 		tips[0]->AddLine("Entity");
 		tips[0]->AddLine("HP: 8");
@@ -50,14 +50,14 @@ public:
 		tips[3]->AddLine("or neutral planets");
 		tips[3]->AddLine("by touching an dies");
 	}
-	virtual void SetOrigin(const PointF& p) override
+	virtual void setOrigin(const PointF& p) override
 	{
-		UIObject::SetOrigin(p);
-		btns[0]->SetOrigin(PointF( border, border ) + pos);
-		btns[1]->SetOrigin(PointF(2 * border + item, border) + pos);
+		UIObject::setOrigin(p);
+		btns[0]->setOrigin(PointF( border, border ) + m_pos);
+		btns[1]->setOrigin(PointF(2 * border + item, border) + m_pos);
 		
-		btns[2]->SetOrigin(PointF(border, 2 * border + item) + pos);
-		btns[3]->SetOrigin(PointF(2 * border + item, 2 * border + item) + pos);
+		btns[2]->setOrigin(PointF(border, 2 * border + item) + m_pos);
+		btns[3]->setOrigin(PointF(2 * border + item, 2 * border + item) + m_pos);
 	}
 	virtual ~UIGridEntity()
 	{
@@ -67,9 +67,9 @@ public:
 			tool::safeDelete(tips[i]);
 		}
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
-		draw.DrawRect(GetRect(), Color::White());
+		draw.DrawRect(getRect(), Color::White());
 		for (int i = 0; i < 4; i++)
 		{
 			if (i == activeVisible)
@@ -78,12 +78,12 @@ public:
 			}
 			else
 			{
-				btns[i]->Draw(draw);
+				btns[i]->draw(draw);
 			}
 		}
 		for (int i = 0; i < 4; i++)
 		{
-			tips[i]->Draw(draw);
+			tips[i]->draw(draw);
 		}
 	}
 	void SetActiveType(MapObject::entityType et)
@@ -112,31 +112,31 @@ public:
 	{
 		return active;
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
 		for (auto& b : btns)
 		{
-			b->Register(gs);
+			b->registerMe(gs);
 		}
 		for (auto& b : tips)
 		{
-			b->Register(gs);
+			b->registerMe(gs);
 		}
 	}
-	virtual void Enable() override
+	virtual void enable() override
 	{
-		UIObject::Enable();
+		UIObject::enable();
 		for (int i = 0; i < 4; i++)
 		{
-			btns[i]->Enable();
+			btns[i]->enable();
 		}
 	}
-	virtual void Disable() override
+	virtual void disable() override
 	{
-		UIObject::Disable();
+		UIObject::disable();
 		for (int i = 0; i < 4; i++)
 		{
-			btns[i]->Disable();
+			btns[i]->disable();
 		}
 	}
 private:

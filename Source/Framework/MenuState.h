@@ -34,26 +34,26 @@ public:
 		if(bExtraUnlocked)
 			AddObject(&btnExtra);
 
-		PointF btnSize = btnSingle.GetMetrics();
+		PointF btnSize = btnSingle.getMetrics();
 		btnSize.x += 100.0f;
 
-		btnSingle.SetMetrics(btnSize);
-		btnMulti.SetMetrics(btnSize);
-		btnOption.SetMetrics(btnSize);
-		btnQuit.SetMetrics(btnSize);
+		btnSingle.setMetrics(btnSize);
+		btnMulti.setMetrics(btnSize);
+		btnOption.setMetrics(btnSize);
+		btnQuit.setMetrics(btnSize);
 
 		//positioning
-		//lblWelcome.CenterX(50);
+		//lblWelcome.centerX(50);
 		logo.CenterX(20.0f, 700);
-		btnSingle.CenterX(200);
-		btnMulti.CenterX(300);
-		btnOption.CenterX(400);
-		btnQuit.CenterX(500);
-		btnExtra.SetOrigin({ 965, 640 });
+		btnSingle.centerX(200);
+		btnMulti.centerX(300);
+		btnOption.centerX(400);
+		btnQuit.centerX(500);
+		btnExtra.setOrigin({ 965, 640 });
 
-		planRed.SetOrigin({ 1050.0f, 250.0f });
+		planRed.setOrigin({ 1050.0f, 250.0f });
 		AddObject(&planRed);
-		planBlue.SetOrigin({ 200.0f, 600.0f });
+		planBlue.setOrigin({ 200.0f, 600.0f });
 		AddObject(&planBlue);
 
 		score = Settings::GetMenuScore();
@@ -66,21 +66,21 @@ public:
 	{	
 		
 		//draw label
-		logo.Draw(draw);
+		logo.draw(draw);
 
 		//draw buttons
-		btnSingle.Draw(draw);
-		btnMulti.Draw(draw);
-		btnOption.Draw(draw);
-		btnQuit.Draw(draw);
+		btnSingle.draw(draw);
+		btnMulti.draw(draw);
+		btnOption.draw(draw);
+		btnQuit.draw(draw);
 		if(bExtraUnlocked)
-			btnExtra.Draw(draw);
+			btnExtra.draw(draw);
 		
 
 		//cool visual effects
 
-		planRed.Draw(draw);
-		planBlue.Draw(draw);
+		planRed.draw(draw);
+		planBlue.draw(draw);
 
 		planRed.DrawEntities(draw);
 		planBlue.DrawEntities(draw);

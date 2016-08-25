@@ -29,22 +29,22 @@ public:
 	}
 	void AdjustToFont()
 	{
-		dim.x = font.GetFontHeight() + 2 * border + 2 * padding;
-		dim.y = font.GetFontHeight() + 2 * border + 2 * padding;
+		m_dim.x = font.GetFontHeight() + 2 * border + 2 * padding;
+		m_dim.y = font.GetFontHeight() + 2 * border + 2 * padding;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (curState != state::ally)
-			draw.DrawBox(GetRect(), (float)border, Color::White(), Color::Black());
+			draw.DrawBox(getRect(), (float)border, Color::White(), Color::Black());
 
 		font.SetColor(Color::White());
-		PointF tpos = pos + PointF(border + padding + (font.GetFontHeight() - font.GetFontWidth()) / 2
+		PointF tpos = m_pos + PointF(border + padding + (font.GetFontHeight() - font.GetFontWidth()) / 2
 			, border + padding);
 
 		switch (curState)
 		{
 		case state::ally:
-			draw.DrawRect(GetRect(), Color::White());
+			draw.DrawRect(getRect(), Color::White());
 			break;
 		case state::awaitingResponse:
 			font.Text("A", tpos);

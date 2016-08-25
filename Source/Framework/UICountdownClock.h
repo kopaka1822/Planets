@@ -10,7 +10,7 @@ public:
 		:
 		UILabel("00",font)
 	{}
-	virtual void Draw(Drawing& draw)
+	virtual void draw(Drawing& draw)
 	{
 		float time = std::max(0.0f, tmax - timer.GetTimeSecond());
 		time = std::min(time, 98.9f);
@@ -20,7 +20,7 @@ public:
 		sprintf(buffer, "%02d", itime);
 		txt = buffer;
 
-		UILabel::Draw(draw);
+		UILabel::draw(draw);
 	}
 	void SetTimer(float maxTime)
 	{

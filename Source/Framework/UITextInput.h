@@ -27,24 +27,24 @@ public:
 		maxLen(maxLen),
 		font(font)
 	{
-		SetMetrics({ font.GetFontHeight(), font.GetFontWidth() * maxLen });
+		setMetrics({ font.GetFontHeight(), font.GetFontWidth() * maxLen });
 	}
 	void SetFlags(unsigned int f)
 	{
 		flags = f;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		font.SetColor(Color::White());
 
 		std::string s = GetTextDisplay();
 
 		
-		font.Text(s, pos);
+		font.Text(s, m_pos);
 	}
 	virtual void Event_MouseMove(const PointF& mpos) override
 	{
-		if (RectF(pos, pos + dim).PointInside(mpos))
+		if (RectF(m_pos, m_pos + m_dim).PointInside(mpos))
 		{
 			if (!bHover)
 			{
@@ -149,10 +149,10 @@ public:
 		bChanged = false;
 		return temp;
 	}
-	virtual void SetMetrics(const PointF& d) override
+	virtual void setMetrics(const PointF& d) override
 	{
 		maxDisp = (unsigned int)(d.x / font.GetFontWidth() - 1);
-		UIObject::SetMetrics(d);
+		UIObject::setMetrics(d);
 	}
 	float GetFontHeight() const
 	{

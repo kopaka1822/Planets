@@ -11,11 +11,11 @@ public:
 		lblTitle("Achievements",FONT_BIG),
 		btnBack("Back",FONT_MED)
 	{
-		lblTitle.CenterX(50.0f);
-		btnBack.SetOrigin({ 10, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
+		lblTitle.centerX(50.0f);
+		btnBack.setOrigin({ 10, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
 
-		list.SetMetrics({ 800, 500 });
-		list.CenterX(150.0f);
+		list.setMetrics({ 800, 500 });
+		list.centerX(150.0f);
 
 		list.LoadData();
 
@@ -24,9 +24,9 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblTitle.Draw(draw);
-		btnBack.Draw(draw);
-		list.Draw(draw);
+		lblTitle.draw(draw);
+		btnBack.draw(draw);
+		list.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{

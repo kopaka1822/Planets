@@ -18,11 +18,11 @@ public:
 		PointF met;
 		met.x = 4.0f * UIButtonLevel::GetWdith() + 3.0f * padding;
 		met.y = 3.0f * UIButtonLevel::GetHeight() + 2.0f * padding;
-		SetMetrics(met);
+		setMetrics(met);
 	}
 	virtual ~UISingleplayerGrid()
 	{}
-	virtual void SetOrigin(const PointF& o)
+	virtual void setOrigin(const PointF& o)
 	{
 		// Set Button Origins
 		float curY = o.y;
@@ -31,7 +31,7 @@ public:
 			float curX = o.x;
 			for (int x = 0; x < 4; x++)
 			{
-				btns[y * 4 + x]->SetOrigin({ curX, curY });
+				btns[y * 4 + x]->setOrigin({ curX, curY });
 
 				curX += padding + UIButtonLevel::GetWdith();
 			}
@@ -52,9 +52,9 @@ public:
 		{
 			btns[i]->SetStarFlag(starflags[i]);
 			if (prevLvlDone && nStars >= StarsToUnlock(i))
-				btns[i]->Enable();
+				btns[i]->enable();
 			else
-				btns[i]->Disable();
+				btns[i]->disable();
 
 			prevLvlDone = starflags[i] != 0;
 		}
@@ -71,17 +71,17 @@ public:
 
 		return false;
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		// draw buttons
 		for (auto& b : btns)
-			b->Draw(draw);
+			b->draw(draw);
 	}
-	virtual void Register(GameState& gs) override
+	virtual void registerMe(GameState& gs) override
 	{
-		UIObject::Register(gs);
+		UIObject::registerMe(gs);
 		for (auto& b : btns)
-			b->Register(gs);
+			b->registerMe(gs);
 	}
 private:
 	// lvl 0 - 11

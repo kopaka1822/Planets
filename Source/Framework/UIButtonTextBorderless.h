@@ -11,21 +11,21 @@ public:
 	{
 		AdjustToFont();
 	}
-	virtual void Draw(Drawing& draw) override
+	virtual void draw(Drawing& draw) override
 	{
 		if (bDown)
 		{
 			font.SetColor(Color::Black());
-			draw.DrawRect(GetRect(), Color::White());
+			draw.DrawRect(getRect(), Color::White());
 		}
 		else
 		{
 			font.SetColor(Color::White());
 			Color col = bActive ? Color::Blue() : Color::Black();
 			
-			draw.DrawRect(GetRect(), col);
+			draw.DrawRect(getRect(), col);
 		}
-		font.Text(txt, pos + PointF(padding, padding));
+		font.Text(txt, m_pos + PointF(padding, padding));
 	}
 	void SetActive(bool b)
 	{
@@ -38,7 +38,7 @@ public:
 private:
 	void AdjustToFont()
 	{
-		SetMetrics(PointF(txt.length() * font.GetFontWidth() + 2 * padding,
+		setMetrics(PointF(txt.length() * font.GetFontWidth() + 2 * padding,
 			font.GetFontHeight() + 2 * padding));
 	}
 private:

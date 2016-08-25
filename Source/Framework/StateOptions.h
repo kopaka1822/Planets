@@ -124,26 +124,26 @@ public:
 		grid.AddSection("Sound", &scrollSound);
 		grid.AddSection("Controls", &scrollControls);
 
-		grid.SetOrigin(PointF(10.0f, 100.0f));
-		grid.SetMetrics(PointF(Framework::STD_DRAW_X - 20, Framework::STD_DRAW_Y - 200.0f));
-		//grid.CenterX(100.0f);
+		grid.setOrigin(PointF(10.0f, 100.0f));
+		grid.setMetrics(PointF(Framework::STD_DRAW_X - 20, Framework::STD_DRAW_Y - 200.0f));
+		//grid.centerX(100.0f);
 
 		// add scroll items
 		float rw = 400.0f;
 
-		tInpName.SetMetrics({ rw, mFontHeight + 2 * UIButton::GetBorder() });
-		tInpClan.SetMetrics({ rw, mFontHeight + 2 * UIButton::GetBorder() });
+		tInpName.setMetrics({ rw, mFontHeight + 2 * UIButton::GetBorder() });
+		tInpClan.setMetrics({ rw, mFontHeight + 2 * UIButton::GetBorder() });
 
-		trackM.SetMetrics({ rw, mFontHeight });
-		trackS.SetMetrics({ rw, mFontHeight });
-		trackDetail.SetMetrics({ rw, mFontHeight });
+		trackM.setMetrics({ rw, mFontHeight });
+		trackS.setMetrics({ rw, mFontHeight });
+		trackDetail.setMetrics({ rw, mFontHeight });
 
-		trackFXAAMul.SetMetrics({ rw, mFontHeight });
-		trackFXAAShift.SetMetrics({ rw, mFontHeight });
-		trackFXAASpan.SetMetrics({ rw, mFontHeight });
-		trackPlanetGlow.SetMetrics({ rw, mFontHeight });
+		trackFXAAMul.setMetrics({ rw, mFontHeight });
+		trackFXAAShift.setMetrics({ rw, mFontHeight });
+		trackFXAASpan.setMetrics({ rw, mFontHeight });
+		trackPlanetGlow.setMetrics({ rw, mFontHeight });
 
-		btnDisableOnTarget.SetWidth(rw);
+		btnDisableOnTarget.setWidth(rw);
 		ctrlLeft.AdjustToFont(rw);
 		ctrlSel.AdjustToFont(rw);
 		ctrlDesel.AdjustToFont(rw);
@@ -214,13 +214,13 @@ public:
 		//itmScroll.OrderItems();
 		grid.OrderItems();
 
-		btnBack.SetOrigin({ 10, Framework::STD_DRAW_Y - btnBack.GetMetrics().y - 10 });
+		btnBack.setOrigin({ 10, Framework::STD_DRAW_Y - btnBack.getMetrics().y - 10 });
 
 	
 		AddObject(&btnBack);
-		grid.Register(*this);
+		grid.registerMe(*this);
 
-		lblOptions.CenterX(10);
+		lblOptions.centerX(10);
 
 		trackM.SetValue(Settings::GetVolMusic());
 		trackS.SetValue(Settings::GetVolSound());
@@ -243,14 +243,14 @@ public:
 		tInpClan.SetFlags(UITextInput::FLAGS(flags));
 
 		lblRestart.SetColor(Color::Red());
-		lblRestart.CenterX(btnBack.GetOrigin().y);
-		lblRestart.Disable();
+		lblRestart.centerX(btnBack.getOrigin().y);
+		lblRestart.disable();
 
 		if (!btnShaderFXAA.isEnabled())
 		{
-			trackFXAASpan.Disable();
-			trackFXAAMul.Disable();
-			trackFXAAShift.Disable();
+			trackFXAASpan.disable();
+			trackFXAAMul.disable();
+			trackFXAAShift.disable();
 		}
 	}
 	virtual ~StateOptions()
@@ -289,15 +289,15 @@ public:
 	}
 	virtual void ComposeFrame(Drawing& draw) override
 	{
-		lblOptions.Draw(draw);
+		lblOptions.draw(draw);
 		
-		//itmScroll.Draw(draw);
-		grid.Draw(draw);
+		//itmScroll.draw(draw);
+		grid.draw(draw);
 
-		btnBack.Draw(draw);
+		btnBack.draw(draw);
 
 		if (lblRestart.isEnabled())
-			lblRestart.Draw(draw);
+			lblRestart.draw(draw);
 	}
 	virtual void ExecuteCode(float dt) override
 	{
@@ -351,15 +351,15 @@ public:
 
 			if (btnShaderFXAA.isEnabled())
 			{
-				trackFXAASpan.Enable();
-				trackFXAAMul.Enable();
-				trackFXAAShift.Enable();
+				trackFXAASpan.enable();
+				trackFXAAMul.enable();
+				trackFXAAShift.enable();
 			}
 			else
 			{
-				trackFXAASpan.Disable();
-				trackFXAAMul.Disable();
-				trackFXAAShift.Disable();
+				trackFXAASpan.disable();
+				trackFXAAMul.disable();
+				trackFXAAShift.disable();
 			}
 		}
 		if (btnShaderStory.Pushed())
