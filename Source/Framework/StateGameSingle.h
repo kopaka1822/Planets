@@ -3,12 +3,14 @@
 
 class StateGameSingle : public StateGame
 {
+	const float TURBO_VEL = 5.0f;
 public:
 	StateGameSingle()
 		:
 		StateGame(1, Database::GetGameStruct().nTeams)
 	{
 		Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
+		btnFastForward.Enable();
 	}
 	virtual ~StateGameSingle()
 	{}
@@ -18,6 +20,16 @@ public:
 	}
 	virtual void ExecuteCode(float dt) override
 	{
+		if(btnFastForward.GetState())
+		{
+			bTurbo = true;
+			turboFac = TURBO_VEL;
+		}
+		else
+		{
+			bTurbo = false;
+		}
+
 		if (bTurbo)
 			dt *= turboFac;
 
@@ -26,24 +38,20 @@ public:
 	}
 	virtual void Event_KeyDown(SDL_Scancode code)override
 	{
-		if (code == SDL_SCANCODE_T)
-		{
-			bTurbo = true;
-			turboFac = 10.0f;
-		}
-
 		if (bTurbo && !gs.lvlPackLevel)
 		{
 			if (code == SDL_SCANCODE_RIGHTBRACKET)
-				turboFac += 10.0f;
+				turboFac += TURBO_VEL;
 		}
 	}
 	virtual void Event_KeyUp(SDL_Scancode code) override
 	{
 		if (code == SDL_SCANCODE_T)
-			bTurbo = false;
+		{
+			btnFastForward.SetState(!btnFastForward.GetState());
+		}
 	}
 private:
 	bool bTurbo = false;
-	float turboFac = 10.0f;
+	float turboFac = TURBO_VEL;
 };

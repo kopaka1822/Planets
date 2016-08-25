@@ -252,6 +252,7 @@
     <ClInclude Include="..\Source\Framework\UIUnitFall.h" />
     <ClInclude Include="..\Source\Framework\UIWaiting.h" />
     <ClInclude Include="..\Source\Framework\UIYNButton.h" />
+    <ClInclude Include="..\Source\Framework\UIYNButtonPlay.h" />
     <ClInclude Include="..\Source\Framework\WaveFile.h" />
     <ClInclude Include="..\Source\Framework\Window.h" />
     <ClInclude Include="..\Source\Game\BomberHuntTask.h" />

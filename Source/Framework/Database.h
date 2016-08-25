@@ -71,6 +71,8 @@ public:
 		selector,
 
 		StarField,
+		Play,
+		FastForward,
 		// add here
 
 		SIZE

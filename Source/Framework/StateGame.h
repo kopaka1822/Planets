@@ -11,6 +11,7 @@
 #include "UIIngamePlayerList.h"
 #include "UIButtonTextureBorder.h"
 #include "UIButtonText.h"
+#include "UIYNButtonPlay.h"
 
 
 extern float MAP_AI;
@@ -153,6 +154,7 @@ protected:
 		btnFilterSabo,
 		btnDefPlanets;
 
+	UIYNButtonPlay btnFastForward;
 
 	RectF ctrlBar;
 	const byte myTeam;

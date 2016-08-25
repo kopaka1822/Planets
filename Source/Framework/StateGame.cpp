@@ -25,6 +25,8 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	btnFilterSpeed(Database::GetTexture(Database::ParticleTank)),
 	btnDefPlanets(Database::GetTexture(Database::Shield)),
 
+	btnFastForward(false),
+
 	tipEnt(btnFilterEnt, FONT_SMALL),
 	tipBomb(btnFilterBomb, FONT_SMALL),
 	tipSpeed(btnFilterSpeed, FONT_SMALL),
@@ -74,6 +76,8 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	AddObject(&btnFilterSpeed);
 	AddObject(&btnDefPlanets);
 
+	AddObject(&btnFastForward);
+
 	AddObject(&tipSA);
 	AddObject(&tipSN);
 	AddObject(&tipChat);
@@ -101,6 +105,8 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	tipDefPlan.AddLine("Set all planets on defense");
 
 	btnChat.Disable();
+	btnFastForward.Disable();
+	btnFastForward.SetMetrics(btnPause.GetMetrics());
 
 	pMapDraw->GetEntitySpawnSelect()->Register(*this);
 
@@ -258,10 +264,11 @@ void StateGame::Event_Resize(const PointF& ul, const PointF& dim)
 
 	ctrlBar = RectF(pMapDraw->GetRect().BottomLeft(), ul + dim);
 
+	// TODO make this smarter
 	AlignButtons(ctrlBar.TopLeft() + PointF(10.0f, 10.0f),
 	{ ctrlBar.getHeight() - 20.0f, ctrlBar.getHeight() - 20.0f }, 10.0f,
 	std::initializer_list < UIObject* > {
-		&btnPause, &btnSA, &btnSN, &btnPlayer, &btnFilterEnt, &btnFilterBomb, &btnFilterSpeed, 
+		&btnPause, &btnFastForward, &btnSA, &btnSN, &btnPlayer, &btnFilterEnt, &btnFilterBomb, &btnFilterSpeed, 
 			&btnFilterSabo, &btnDefPlanets, &btnChat
 	});
 
@@ -389,6 +396,10 @@ void StateGame::DrawMap(Drawing& draw)
 	draw.DrawRect(ctrlBar, Color::GetTeamColor(gs.myTeam).mix(Color::Black()));
 
 	btnPause.Draw(draw);
+
+	if (btnFastForward.isEnabled())
+		btnFastForward.Draw(draw);
+
 	btnSA.Draw(draw);
 	btnSN.Draw(draw);
 

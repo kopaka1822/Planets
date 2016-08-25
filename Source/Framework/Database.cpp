@@ -52,6 +52,8 @@ bool Database::Initialize(Drawing& draw)
 	textures[GameTex::selector] = draw.MakeTexture("data//pic//selector.bmp");
 
 	textures[GameTex::StarField] = draw.MakeTexture("data//pic//star.bmp");
+	textures[GameTex::Play] = draw.MakeTexture("data//pic//play.bmp");
+	textures[GameTex::FastForward] = draw.MakeTexture("data//pic//fastforward.bmp");
 
 	levelstruct.curLevelpack = 0;
 	levelstruct.curLvl = 0;

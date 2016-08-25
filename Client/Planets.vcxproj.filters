@@ -840,6 +840,9 @@
     <ClInclude Include="..\Source\Framework\ShaderStarfield.h">
       <Filter>Source Files\Framework\Engine\Graphics\OpenGL\Shader</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Framework\UIYNButtonPlay.h">
+      <Filter>Source Files\Framework\Game\Interface\Button</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shader\disk.fs">
