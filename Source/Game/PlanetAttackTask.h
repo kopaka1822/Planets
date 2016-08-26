@@ -27,6 +27,6 @@ public:
 private:
 	class PlayerAI& ai;
 	MapPlanet& plan;
-	const int gid; // group id
+	const int gid; // m_group id
 	size_t groupsize = 0;
 };

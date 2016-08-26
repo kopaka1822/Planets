@@ -106,7 +106,7 @@ protected:
 			if (okay)
 				continue;
 
-			// team does not exist
+			// m_team does not exist
 			for (auto& p : infos)
 			{
 				if (p.bConnected)
@@ -220,7 +220,7 @@ public:
 	}
 	void HandleSurrender(int id, std::list< std::string > args)
 	{
-		// HandleSurrender infos[id - 1] team
+		// HandleSurrender infos[id - 1] m_team
 		// chat -> Team %d surrenderd
 		if (pMap && pMap->GameStart())
 		{
@@ -260,7 +260,7 @@ public:
 		}
 
 		// send help
-		SendServerMessage(id, "count:\nm - own units\na - all units\no [number] - units of team [number]");
+		SendServerMessage(id, "count:\nm - own units\na - all units\no [number] - units of m_team [number]");
 	}
 protected:
 	void SendServerMessage(int id, const char* txt, byte color = 0)

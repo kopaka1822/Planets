@@ -37,16 +37,16 @@ void LocalMap::LoadMapComponents(const std::vector<MapLoader::MapPlanet>& planet
 		//Later
 		for (int i = 0; i < s.nUnits; i++)
 		{
-			if (TryEntitySpawn(PointF{ s.x, s.y }, s.team, 0, MapObject::targetType::tgInvalid, PointF(), -1, false, 800.0f,(MapObject::entityType)s.type))
+			if (TryEntitySpawn(PointF{ s.x, s.y }, s.team, 0, MapObject::TargetType::tgInvalid, PointF(), -1, false, 800.0f,(MapObject::EntityType)s.type))
 			{
-				grid.AddEntity(&(*(ents[s.team - 1].back())), ents[s.team - 1].back()->GetPos());
+				grid.AddEntity(&(*(ents[s.team - 1].back())), ents[s.team - 1].back()->getPos());
 			}
 		}
 	}
 
 	srand((unsigned int)time(nullptr)); //different seed for ingame action
 }
-bool LocalMap::FilterEntityType(byte team, MapObject::entityType et)
+bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
 {
 	bool bAnySelect = false;
 	bool bEntSelect = false;
@@ -56,7 +56,7 @@ bool LocalMap::FilterEntityType(byte team, MapObject::entityType et)
 		if (e.selected())
 		{
 			bAnySelect = true;
-			if (e.GetEntityType() == et)
+			if (e.getEntityType() == et)
 			{
 				// entities can be selected
 				bEntSelect = true;
@@ -69,12 +69,12 @@ bool LocalMap::FilterEntityType(byte team, MapObject::entityType et)
 	{
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
 				if (p->selected())
 				{
 					bAnySelect = true;
-					if (p->GetEntityType() == et)
+					if (p->getEntityType() == et)
 					{
 						bEntSelect = true;
 						break;
@@ -94,7 +94,7 @@ bool LocalMap::FilterEntityType(byte team, MapObject::entityType et)
 	{
 		if (e.selected())
 		{
-			if (e.GetEntityType() == et)
+			if (e.getEntityType() == et)
 				e.forceSelect();
 			else
 				e.deselect();
@@ -102,11 +102,11 @@ bool LocalMap::FilterEntityType(byte team, MapObject::entityType et)
 	}
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
 			if (p->selected())
 			{
-				if (p->GetEntityType() == et)
+				if (p->getEntityType() == et)
 					p->forceSelect();
 				else
 					p->deselect();
@@ -123,7 +123,7 @@ bool LocalMap::Select(PointF center, float r2, byte team)
 		//there is something to select
 		for (auto& e : ents[team - 1])
 		{
-			float er2 = (e.GetPos() - center).lengthSq();
+			float er2 = (e.getPos() - center).lengthSq();
 
 			if (er2 <= r2)
 			{
@@ -136,9 +136,9 @@ bool LocalMap::Select(PointF center, float r2, byte team)
 		}
 		for (auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
-				float pr2 = (p->GetPos() - center).lengthSq();
+				float pr2 = (p->getPos() - center).lengthSq();
 
 				if (pr2 <= r2)
 				{
@@ -162,13 +162,13 @@ bool LocalMap::Click(PointF pt, byte team)
 	//determine target type
 	bool planetTargeted = false;
 
-	MapEntity::targetType t = MapEntity::tgPoint;
+	MapEntity::TargetType t = MapEntity::tgPoint;
 	const MapPlanet* obj = GetColPlan(pt);
 	if (obj != nullptr)
 	{
-		pt.x = obj->GetID();
+		pt.x = obj->getID();
 		planetTargeted = true;
-		if (obj->GetTeam() == team)
+		if (obj->getTeam() == team)
 		{
 			t = MapObject::tgPlanetDefend;
 		}
@@ -191,7 +191,7 @@ bool LocalMap::Click(PointF pt, byte team)
 
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
 			if (p->selected())
 			{
@@ -218,7 +218,7 @@ bool LocalMap::Click(PointF pt, byte team)
 
 byte LocalMap::GameEnd() const
 {
-	// find first surviving team
+	// find first surviving m_team
 	size_t surv = 0;
 	for (; surv < nPlayers; surv++)
 	{
@@ -227,7 +227,7 @@ byte LocalMap::GameEnd() const
 
 		// search planet
 		for (size_t i = 0; i < nPlans; i++)
-			if (plans[i]->GetTeam() == surv + 1)
+			if (plans[i]->getTeam() == surv + 1)
 				goto end; // exit both loops
 	}
 end:
@@ -245,15 +245,15 @@ end:
 			return 0;
 
 		for (size_t i = 0; i < nPlans; i++)
-			if (plans[i]->GetTeam() == other + 1)
+			if (plans[i]->getTeam() == other + 1)
 				return 0;
 	}
 	return surv + 1; // only he and his allies are alive
 }
 LocalMap::~LocalMap()
 {}
-bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::targetType ttype,
-	const PointF& target, int group, bool isSelected, float maxR, MapObject::entityType entType)
+bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
+	const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType)
 {
 	PointF d;
 	const int randHalf = RAND_MAX / 2;
@@ -340,15 +340,15 @@ void LocalMap::UpdateEnts(const float dt)
 	{
 		for (auto i = ents[index].begin(), end = ents[index].end(); i != end; ++i)
 		{
-			if (i->GetHP() <= 0)
+			if (i->getHP() <= 0)
 			{
 				Map::Event_EntityKilled(*i);
 
-				float exprad = i->GetExplosionRadius();
+				float exprad = i->getExplosionRadius();
 				if (exprad > 0.0f)
 				{
 					// nearby ents are going to die
-					KillEnts(i->GetPos(), exprad,i->GetExplosionDamage(),i->GetTeam());
+					KillEnts(i->getPos(), exprad,i->getExplosionDamage(),i->getTeam());
 				}
 
 				muEnts.Lock();
@@ -362,7 +362,7 @@ MapEntity* LocalMap::GetEnemyEnt(const PointF& pt, const byte team)
 {
 	for (auto& e : grid.GetEntities(pt))
 	{
-		if (!isAlly(team, e->GetTeam()))
+		if (!isAlly(team, e->getTeam()))
 		{
 			if (e->isNearby(pt))
 			{
@@ -374,54 +374,54 @@ MapEntity* LocalMap::GetEnemyEnt(const PointF& pt, const byte team)
 }
 void LocalMap::AttackNearby(MapEntity& curEnt)
 {
-	if (!curEnt.HasDamage())
+	if (!curEnt.hasDamage())
 		return;
 
-	if (curEnt.AttacksEntities())
+	if (curEnt.attacksEntities())
 	{
-		MapEntity* obj = GetEnemyEnt(curEnt.GetPos(), curEnt.GetTeam());
+		MapEntity* obj = GetEnemyEnt(curEnt.getPos(), curEnt.getTeam());
 		if (obj != nullptr)
 		{
-			obj->TakeDamage(curEnt.GetDamage());
+			obj->takeDamage(curEnt.getDamage());
 			return;
 		}
 	}
 
-	if (curEnt.AttacksPlanets())
+	if (curEnt.attacksPlanets())
 	{
 		for (auto& p : plans)
 		{
-			if (p->isNearby(curEnt.GetPos()))
+			if (p->isNearby(curEnt.getPos()))
 			{
-				const byte pTeam = p->GetTeam();
-				if (!isAlly(curEnt.GetTeam(),pTeam))
+				const byte pTeam = p->getTeam();
+				if (!isAlly(curEnt.getTeam(),pTeam))
 				{
 					bool capture = false;
-					if (curEnt.GetEntityType() == MapObject::etSaboteur)
+					if (curEnt.getEntityType() == MapObject::etSaboteur)
 					{
-						p->Sabotage(curEnt.GetTeam());
-						curEnt.SetHP(0);
+						p->sabotage(curEnt.getTeam());
+						curEnt.setHP(0);
 						capture = true;
 					}
 					else
 					{
-						byte atkTeam = curEnt.GetTeam();
-						if (isAlly(p->GetSubteam(), atkTeam))
+						byte atkTeam = curEnt.getTeam();
+						if (isAlly(p->getSubteam(), atkTeam))
 						{
 							/// push ally
-							atkTeam = p->GetSubteam();
+							atkTeam = p->getSubteam();
 						}
-						capture = p->TakeDamage(curEnt.GetDamage(), atkTeam);
+						capture = p->takeDamage(curEnt.getDamage(), atkTeam);
 					}
 
 					if (capture)
 					{
-						Event_PlanetCaptured(p->GetID(), p->GetTeam(), pTeam, &curEnt);
+						Event_PlanetCaptured(p->getID(), p->getTeam(), pTeam, &curEnt);
 						return;
 					}
 					else
 					{
-						Map::Event_PlanetAttacked(p->GetID(), curEnt);
+						Map::Event_PlanetAttacked(p->getID(), curEnt);
 						return;
 					}
 				}
@@ -462,9 +462,9 @@ void LocalMap::KillEnts(const PointF& center, float radius, int damage, byte tea
 	{
 		for (auto& e : ents[i])
 		{
-			if (r2 >= (e.GetPos() - center).lengthSq())
+			if (r2 >= (e.getPos() - center).lengthSq())
 			{
-				e.TakeDamage(damage);
+				e.takeDamage(damage);
 			}
 		}
 	}
@@ -474,10 +474,10 @@ void LocalMap::KillEnts(const PointF& center, float radius, int damage, byte tea
 	{
 		if (p->isNearby(center))
 		{
-			byte pTeam = p->GetTeam();
-			if (p->TakeDamage(damage, team))
+			byte pTeam = p->getTeam();
+			if (p->takeDamage(damage, team))
 			{
-				Event_PlanetCaptured(p->GetID(), p->GetTeam(), pTeam, nullptr);
+				Event_PlanetCaptured(p->getID(), p->getTeam(), pTeam, nullptr);
 			}
 		}
 	}

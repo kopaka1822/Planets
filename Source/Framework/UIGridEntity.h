@@ -86,7 +86,7 @@ public:
 			tips[i]->draw(draw);
 		}
 	}
-	void SetActiveType(MapObject::entityType et)
+	void SetActiveType(MapObject::EntityType et)
 	{
 		active = et;
 		activeVisible = et;
@@ -103,12 +103,12 @@ public:
 		}
 		if (nActive != active)
 		{
-			active = (MapObject::entityType)nActive;
+			active = (MapObject::EntityType)nActive;
 			return true;
 		}
 		return false;
 	}
-	MapObject::entityType GetCurType() const
+	MapObject::EntityType GetCurType() const
 	{
 		return active;
 	}
@@ -146,7 +146,7 @@ private:
 	static const int border = 6;
 	static const int item = 50;
 
-	MapObject::entityType active;
-	MapObject::entityType activeVisible;
+	MapObject::EntityType active;
+	MapObject::EntityType activeVisible;
 	const Color teamCol;
 };

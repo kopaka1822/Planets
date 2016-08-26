@@ -43,20 +43,20 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 		float posx
 		float posy
 		float radius
-		byte team
-		int HP
+		byte m_team
+		int m_hp
 		float sUnit
 		*/
 		int curPlanet = 0;
 		while (curPlanet != nPlans)
 		{
 			w.writeChar(true);
-			w.writeFloat(plans[curPlanet]->GetPos().x);
-			w.writeFloat(plans[curPlanet]->GetPos().y);
-			w.writeFloat(plans[curPlanet]->GetRadius());
-			w.writeByte(plans[curPlanet]->GetTeam());
-			w.writeInt(plans[curPlanet]->GetMaxHP());
-			w.writeFloat(plans[curPlanet]->GetsUnit());
+			w.writeFloat(plans[curPlanet]->getPos().x);
+			w.writeFloat(plans[curPlanet]->getPos().y);
+			w.writeFloat(plans[curPlanet]->getRadius());
+			w.writeByte(plans[curPlanet]->getTeam());
+			w.writeInt(plans[curPlanet]->getMaxHP());
+			w.writeFloat(plans[curPlanet]->getsUnit());
 
 			curPlanet++;
 
@@ -82,7 +82,7 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 				w.writeByte((byte)(curTeam + 1));
 				/*
 				Message Format:
-				byte team (once)
+				byte m_team (once)
 
 				- bool
 				true : (next is entity)
@@ -95,9 +95,9 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 				while (curEnt != ents[curTeam].end())
 				{
 					w.writeChar(true);
-					w.writeFloat(curEnt->GetPos().x);
-					w.writeFloat(curEnt->GetPos().y);
-					w.writeByte((byte)curEnt->GetEntityType());
+					w.writeFloat(curEnt->getPos().x);
+					w.writeFloat(curEnt->getPos().y);
+					w.writeByte((byte)curEnt->getEntityType());
 
 					++curEnt;
 				}
@@ -157,13 +157,13 @@ bool LocalMapServer::Click(PointF pt, byte team)
 	//determine target type
 	bool planetTargeted = false;
 
-	MapEntity::targetType t = MapEntity::tgPoint;
+	MapEntity::TargetType t = MapEntity::tgPoint;
 	const MapPlanet* obj = GetColPlan(pt);
 	if (obj != nullptr)
 	{
-		pt.x = obj->GetID();
+		pt.x = obj->getID();
 		planetTargeted = true;
-		if (obj->GetTeam() == team)
+		if (obj->getTeam() == team)
 		{
 			t = MapObject::tgPlanetDefend; //own planet == defend
 		}
@@ -197,7 +197,7 @@ bool LocalMapServer::Click(PointF pt, byte team)
 
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
 			if (p->selected())
 			{
@@ -286,7 +286,7 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 		if (start == end)
 			return;
 
-		//byte team = start->GetTeam();
+		//byte m_team = start->GetTeam();
 
 		for (auto i = start; i != end; ++i)
 		{
@@ -317,7 +317,7 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 		//send position updates
 		if (lastTeamUpdate == 0)
 		{
-			lastTeamUpdate = 1; // send pos updates for team 1
+			lastTeamUpdate = 1; // send pos updates for m_team 1
 		}
 
 		moveTime = 0.0f;
@@ -339,14 +339,14 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 
 					w.writeShort((short)PacketType::GamePositions);
 					w.writeFloat(curTime);
-					w.writeByte(index + 1); //team
+					w.writeByte(index + 1); //m_team
 
 					do
 					{
 						w.writeInt(e.GetID());
-						w.writeFloat(e->GetPos().x);
-						w.writeFloat(e->GetPos().y);
-						w.writeByte(e->GetMood());
+						w.writeFloat(e->getPos().x);
+						w.writeFloat(e->getPos().y);
+						w.writeByte(e->getMood());
 
 						++e;
 					} while (e != end && c.length() < MAX_PACKSIZE);
@@ -356,7 +356,7 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 					serv.SendContainerAllUnreliable(std::move(c));
 				} while (e != end);
 			}
-			// team updates done
+			// m_team updates done
 			lastTeamUpdate += 1;
 			if (lastTeamUpdate > nPlayers)
 			{
@@ -379,13 +379,13 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 				DataContainer c = serv.GetConUnrel();
 				ContainerWriter w(c);
 				w.writeShort((short)PacketType::GamePlanetHealth);
-				w.writeByte((byte)(*p)->GetID()); //  start planet
+				w.writeByte((byte)(*p)->getID()); //  start planet
 
 				while (c.length() < MAX_PACKSIZE && p != end)
 				{
-					w.writeByte((*p)->GetTeam());
-					w.writeByte((*p)->GetSubteam());
-					w.writeInt((*p)->GetHP());
+					w.writeByte((*p)->getTeam());
+					w.writeByte((*p)->getSubteam());
+					w.writeInt((*p)->getHP());
 
 					p++;
 				}
@@ -413,50 +413,50 @@ float LocalMapServer::CalcMoveResendTime() const
 }
 void LocalMapServer::AttackNearby(MapEntity& curEnt)
 {
-	if (!curEnt.HasDamage())
+	if (!curEnt.hasDamage())
 		return;
 
-	if (curEnt.AttacksPlanets())
+	if (curEnt.attacksPlanets())
 	{
-		MapEntity* obj = GetEnemyEnt(curEnt.GetPos(), curEnt.GetTeam());
+		MapEntity* obj = GetEnemyEnt(curEnt.getPos(), curEnt.getTeam());
 		if (obj != nullptr)
 		{
-			obj->TakeDamage(curEnt.GetDamage());
+			obj->takeDamage(curEnt.getDamage());
 			return;
 		}
 	}
 
-	if (curEnt.AttacksPlanets())
+	if (curEnt.attacksPlanets())
 	{
 		for (auto& p : plans)
 		{
-			if (p->isNearby(curEnt.GetPos()))
+			if (p->isNearby(curEnt.getPos()))
 			{
-				const byte pTeam = p->GetTeam();
-				if (!isAlly(curEnt.GetTeam(), pTeam))
+				const byte pTeam = p->getTeam();
+				if (!isAlly(curEnt.getTeam(), pTeam))
 				{
 					bool capture = false;
 					//byte pTeam = p->GetTeam();
-					if (curEnt.GetEntityType() == MapObject::etSaboteur)
+					if (curEnt.getEntityType() == MapObject::etSaboteur)
 					{
-						p->Sabotage(curEnt.GetTeam());
-						curEnt.SetHP(0);
+						p->sabotage(curEnt.getTeam());
+						curEnt.setHP(0);
 						capture = true;
 					}
 					else
 					{
-						byte atkTeam = curEnt.GetTeam();
-						if (isAlly(p->GetSubteam(), atkTeam))
+						byte atkTeam = curEnt.getTeam();
+						if (isAlly(p->getSubteam(), atkTeam))
 						{
 							// push ally
-							atkTeam = p->GetSubteam();
+							atkTeam = p->getSubteam();
 						}
-						capture = p->TakeDamage(curEnt.GetDamage(), atkTeam);
+						capture = p->takeDamage(curEnt.getDamage(), atkTeam);
 					}
 
 					if (capture)
 					{
-						Event_PlanetCaptured(p->GetID(), p->GetTeam(), pTeam, &curEnt);
+						Event_PlanetCaptured(p->getID(), p->getTeam(), pTeam, &curEnt);
 					}
 					else
 					{
@@ -475,27 +475,27 @@ void LocalMapServer::UpdatePlanets(float dt)
 		PointF pos;
 		byte team;
 		PlanetID plan;
-		MapObject::entityType type;
+		MapObject::EntityType type;
 	};
 
 	FastVector< SpawnEvent > spEvnts;
 
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() != 0)
+		if (p->getTeam() != 0)
 		{
-			if (ents[p->GetTeam() - 1].length() < maxEntLen)
+			if (ents[p->getTeam() - 1].length() < maxEntLen)
 			{
-				if (p->Update(dt))
+				if (p->update(dt))
 				{
-					if (TryEntitySpawn(p->GetPos(), p->GetTeam(), p->GetRadius(), p->GetTargetType(), p->GetTarget(), p->GetGroup(),
-						p->selected(),p->GetDefenseRadius(),p->GetEntityType()))
+					if (TryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(),
+						p->selected(),p->getDefenseRadius(),p->getEntityType()))
 					{
 						SpawnEvent s;
-						s.team = p->GetTeam();
-						s.plan = p->GetID();
-						s.pos = ents[s.team - 1].back()->GetPos();
-						s.type = p->GetEntityType();
+						s.team = p->getTeam();
+						s.plan = p->getID();
+						s.pos = ents[s.team - 1].back()->getPos();
+						s.type = p->getEntityType();
 						spEvnts.push_back(s);
 
 						grid.AddEntity(&(*(ents[s.team - 1].back())), s.pos);
@@ -535,7 +535,7 @@ void LocalMapServer::ReceiveData()
 			const int pid = r.readInt(); // player id
 			const byte team = GetPlayerTeam(pid);
 			if (team < 1 || team > nPlayers)
-				throw std::domain_error("team");
+				throw std::domain_error("m_team");
 
 			PacketType t = (PacketType)r.readShort();
 
@@ -580,10 +580,10 @@ void LocalMapServer::ReceiveData()
 				HandleClientSpawntype(r, team);
 				break;
 			case PacketType::ClientFilterEntityType:
-				FilterEntityType(team, (MapObject::entityType)r.readByte());
+				FilterEntityType(team, (MapObject::EntityType)r.readByte());
 				break;
 			case PacketType::ClientAllEntityType:
-				SelectAllEntityType(team, (MapObject::entityType)r.readByte());
+				SelectAllEntityType(team, (MapObject::EntityType)r.readByte());
 				break;
 			case PacketType::ClientPlanDefense:
 				HandleClientPlanDefense(r, team);
@@ -625,7 +625,7 @@ void LocalMapServer::HandleClientSelect(ContainerReader& r, byte team)
 	//select entities
 	for (auto& e : ents[team - 1])
 	{
-		float er2 = (e.GetPos() - center).lengthSq();
+		float er2 = (e.getPos() - center).lengthSq();
 		if (er2 <= r2)
 		{
 			e.forceSelect();
@@ -655,9 +655,9 @@ void LocalMapServer::HandleClientSelect(ContainerReader& r, byte team)
 	//Select Planet
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
-			float pr2 = (p->GetPos() - center).lengthSq();
+			float pr2 = (p->getPos() - center).lengthSq();
 
 			if (pr2 <= r2)
 			{
@@ -685,13 +685,13 @@ void LocalMapServer::UpdateDeath()
 		d.team = (byte)(index + 1);
 		for (auto i = ents[index].begin(), end = ents[index].end(); i != end; ++i)
 		{
-			if (i->GetHP() <= 0)
+			if (i->getHP() <= 0)
 			{
 				d.id = i.GetID();
-				const float exprad = i->GetExplosionRadius();
+				const float exprad = i->getExplosionRadius();
 				if (exprad > 0.0f)
 				{
-					KillEnts(i->GetPos(), exprad, i->GetExplosionDamage(), i->GetTeam());
+					KillEnts(i->getPos(), exprad, i->getExplosionDamage(), i->getTeam());
 				}
 				i.remove();
 				dEv.push_back(d);
@@ -726,8 +726,8 @@ void LocalMapServer::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTe
 	if (culprit)
 	{
 		w.writeByte(1);
-		w.writeByte(culprit->GetTeam());
-		w.writeInt(culprit->GetID());
+		w.writeByte(culprit->getTeam());
+		w.writeInt(culprit->getID());
 	}
 	else
 	{
@@ -758,7 +758,7 @@ bool LocalMapServer::isAlive(byte team) const
 	//check planet
 	for (const auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 			return true;
 	}
 	return false;
@@ -840,7 +840,7 @@ bool LocalMapServer::HandleSurrender(byte team)
 		// cheack plantes
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
 				bValid = true;
 				break;
@@ -870,10 +870,10 @@ bool LocalMapServer::HandleSurrender(byte team)
 	// free planets
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
-			p->TakeOver(0);
-			Event_PlanetCaptured(p->GetID(), 0, team, nullptr);
+			p->takeOver(0);
+			Event_PlanetCaptured(p->getID(), 0, team, nullptr);
 		}
 	}
 	return true;
@@ -985,7 +985,7 @@ void LocalMapServer::SendClanUpdate(byte t1, byte t2)
 
 void LocalMapServer::HandleClientSpawntype(ContainerReader& r, byte team)
 {
-	MapObject::entityType et = (MapObject::entityType)r.readByte();
+	MapObject::EntityType et = (MapObject::EntityType)r.readByte();
 	if (et > MapObject::etSaboteur)
 		throw std::domain_error("HandleClientSpawntype");
 
@@ -1001,7 +1001,7 @@ void LocalMapServer::HandleClientSpawntype(ContainerReader& r, byte team)
 	Map::SetPlanetSpawnType(team, et);
 }
 
-bool LocalMapServer::FilterEntityType(byte team, MapObject::entityType et)
+bool LocalMapServer::FilterEntityType(byte team, MapObject::EntityType et)
 {
 	if ((unsigned)et >= MapObject::etNone)
 		return false;
@@ -1014,7 +1014,7 @@ bool LocalMapServer::FilterEntityType(byte team, MapObject::entityType et)
 	{
 		if (e.selected())
 		{
-			if (e.GetEntityType() == et)
+			if (e.getEntityType() == et)
 			{
 				// entities can be selected
 				bEntSelect = true;
@@ -1027,11 +1027,11 @@ bool LocalMapServer::FilterEntityType(byte team, MapObject::entityType et)
 	{
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
 				if (p->selected())
 				{
-					if (p->GetEntityType() == et)
+					if (p->getEntityType() == et)
 					{
 						bEntSelect = true;
 						break;
@@ -1056,7 +1056,7 @@ bool LocalMapServer::FilterEntityType(byte team, MapObject::entityType et)
 
 	return LocalMap::FilterEntityType(team,et);
 }
-void LocalMapServer::SelectAllEntityType(byte team, MapObject::entityType et)
+void LocalMapServer::SelectAllEntityType(byte team, MapObject::EntityType et)
 {
 	if ((unsigned)et >= MapObject::etNone)
 		return;

@@ -39,14 +39,14 @@ void LocalMapSingleplayer::Update(float dt)
 
 	for (auto& p : plans)
 	{
-		if (p->Update(dt))
+		if (p->update(dt))
 		{
 			//spawn entity
-			if (TryEntitySpawn(p->GetPos(), p->GetTeam(), p->GetRadius(), p->GetTargetType(), p->GetTarget(), p->GetGroup(), p->selected(), p->GetDefenseRadius(), p->GetEntityType()))
+			if (TryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(), p->selected(), p->getDefenseRadius(), p->getEntityType()))
 			{
-				byte t = p->GetTeam();
-				Map::Event_EntitySpawn(p->GetID(), *ents[t - 1].back());
-				grid.AddEntity(&(*(ents[t - 1].back())), ents[t - 1].back()->GetPos());
+				byte t = p->getTeam();
+				Map::Event_EntitySpawn(p->getID(), *ents[t - 1].back());
+				grid.AddEntity(&(*(ents[t - 1].back())), ents[t - 1].back()->getPos());
 			}
 		}
 	}

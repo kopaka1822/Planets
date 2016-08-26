@@ -4,29 +4,29 @@
 class LocalEntityBomber : public LocalEntity
 {
 public:
-	LocalEntityBomber(const PointF& p, byte team, MapObject::targetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
+	LocalEntityBomber(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
 		:
 		LocalEntity(p,team,ttype,tar,group,selec,id, drawpos)
 	{
-		SetHP(1);
+		setHP(1);
 	}
-	virtual entityType GetEntityType() const override final
+	virtual EntityType getEntityType() const override final
 	{
 		return etBomber;
 	}
-	virtual bool AttacksPlanets() const
+	virtual bool attacksPlanets() const
 	{
 		return false;
 	}
-	virtual bool AttacksEntities() const
+	virtual bool attacksEntities() const
 	{
 		return false;
 	}
-	virtual bool HasDamage() const override
+	virtual bool hasDamage() const override
 	{
 		return false;
 	}
-	virtual float GetExplosionRadius() const
+	virtual float getExplosionRadius() const
 	{
 		return 50.0f;
 	}

@@ -14,10 +14,10 @@ public:
 	virtual bool Select(PointF center, float r2, byte team);
 	virtual bool Click(PointF pt, byte team) override;
 	virtual byte GameEnd() const override;
-	virtual bool FilterEntityType(byte team, MapObject::entityType et) override;
+	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
 protected:
-	bool TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::targetType ttype,
-		const PointF& target, int group, bool isSelected, float maxR, MapObject::entityType entType);
+	bool TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
+		const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType);
 	MapEntity* GetEnemyEnt(const PointF& pt, const byte team);
 	//initialization
 	void LoadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns);

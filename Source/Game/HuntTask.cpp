@@ -4,9 +4,9 @@
 HuntTask::HuntTask(PlayerAI& ai, MapEntity& startUnit)
 	:
 	ai(ai),
-	id(ID_START + startUnit.GetID()),
+	id(ID_START + startUnit.getID()),
 	pTarget(nullptr),
-	curPos(startUnit.GetPos()),
+	curPos(startUnit.getPos()),
 	groupSize(1)
 {
 	startUnit.groupAssign(id);
@@ -15,7 +15,7 @@ void HuntTask::DoTask(float dt)
 {
 	if (pTarget)
 	{
-		curPos = pTarget->GetPos();
+		curPos = pTarget->getPos();
 		ai.map.SelectGroup(ai.team, id);
 		ai.map.Click(curPos, ai.team);
 	}
@@ -44,5 +44,5 @@ void HuntTask::SetTarget(const MapEntity* target)
 {
 	pTarget = target;
 	if (pTarget)
-		curPos = pTarget->GetPos();
+		curPos = pTarget->getPos();
 }

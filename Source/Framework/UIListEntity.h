@@ -16,7 +16,7 @@ public:
 		lblY("y:", FONT_SMALL),
 		numX(0, 0, 10000, 1, FONT_SMALL),
 		numY(0, 0, 10000, 1, FONT_SMALL),
-		lblTeam("team:", FONT_SMALL),
+		lblTeam("m_team:", FONT_SMALL),
 		numTeam(1, 1, 25, 1, FONT_SMALL),
 		lblUnits("Units:", FONT_SMALL),
 		numUnits(10, 1, 200, 5,FONT_SMALL),

@@ -13,7 +13,7 @@ PlayerAI::PlayerAI(byte team, Map& map)
 
 	for (size_t i = 0; i < map.nPlans; i++)
 	{
-		if (map.plans[i]->GetTeam() == team)
+		if (map.plans[i]->getTeam() == team)
 		{
 			planTask[i] = new PlanetTask(*this, i);
 			nPlanets++;
@@ -27,12 +27,12 @@ PlayerAI::PlayerAI(byte team, Map& map)
 
 	for (size_t i = 0; i < map.nPlans; i++)
 	{
-		const PointF& cen = map.getPlan(i).GetPos();
+		const PointF& cen = map.getPlan(i).getPos();
 		for (size_t j = 0; j < map.nPlans; j++)
 		{
 			if (i != j)
 			{
-				if ((map.getPlan(j).GetPos() - cen).lengthSq() < near2)
+				if ((map.getPlan(j).getPos() - cen).lengthSq() < near2)
 				{
 					nearbyPlanets[i].push_back(j);
 				}
@@ -43,7 +43,7 @@ PlayerAI::PlayerAI(byte team, Map& map)
 	{
 		for (auto& ent : map.ents[team - 1])
 		{
-			PlanetID pid = GetAttackPlan(ent.GetPos());
+			PlanetID pid = GetAttackPlan(ent.getPos());
 			ent.groupAssign(-2);
 			AttackPlanet(-2, 1, pid);
 
@@ -125,7 +125,7 @@ size_t PlayerAI::GroupTransfer(int from, int to, size_t num)
 	size_t is = 0;
 	for (auto& e : map.ents[team - 1])
 	{
-		if (e.GetGroup() == from)
+		if (e.getGroup() == from)
 		{
 			is++;
 			e.groupAssign(to);
@@ -137,16 +137,16 @@ size_t PlayerAI::GroupTransfer(int from, int to, size_t num)
 }
 MapEntity* PlayerAI::GetBomberTarget(const MapEntity& bomber)
 {
-	assert(bomber.GetEntityType() == MapObject::etBomber);
+	assert(bomber.getEntityType() == MapObject::etBomber);
 
-	PointI huntPos = GetEnemyAccumulation(bomber.GetPos(), 250.0f, 10);
+	PointI huntPos = GetEnemyAccumulation(bomber.getPos(), 250.0f, 10);
 
 	if (huntPos != PointI(-1, -1))
 	{
 		// hunt an enemy in this box
 		for (const auto& e : map.grid.GetEntitiesRaw(huntPos))
 		{
-			if (!map.isAlly(e->GetTeam(), team))
+			if (!map.isAlly(e->getTeam(), team))
 				return e;
 		}
 	}
@@ -161,7 +161,7 @@ MapEntity* PlayerAI::GetHuntTarget(const PointF& center, float radius)
 	{
 		for (const auto& e : map.grid.GetEntitiesRaw(enemyPos))
 		{
-			if (!map.isAlly(e->GetTeam(), team))
+			if (!map.isAlly(e->getTeam(), team))
 				return e;
 		}
 	}
@@ -179,10 +179,10 @@ void PlayerAI::AddHunter(MapEntity& e)
 		float minDist = FLT_MAX;
 		for (const auto& t : huntTask)
 		{
-			//  only if group has a target
+			//  only if m_group has a target
 			if (t->GetTarget() != nullptr)
 			{
-				float dist = (e.GetPos() - t->GetPos()).lengthSq();
+				float dist = (e.getPos() - t->GetPos()).lengthSq();
 				if (minDist > dist)
 				{
 					minDist = dist;
@@ -201,49 +201,49 @@ void PlayerAI::AddHunter(MapEntity& e)
 }
 void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 {
-	if (e.GetTeam() == team && e.hasGroup())
+	if (e.getTeam() == team && e.hasGroup())
 	{
-		if (e.GetEntityType() == MapObject::etBomber)
+		if (e.getEntityType() == MapObject::etBomber)
 		{
 			bombHunters.push_back(std::unique_ptr< BomberHuntTask >(new BomberHuntTask(*this, e)));
 		}
-		else if (e.GetEntityType() == MapObject::etSpeeder)
+		else if (e.getEntityType() == MapObject::etSpeeder)
 		{
 			AddHunter(e);
 		}
-		else if (e.GetEntityType() == MapObject::etSaboteur)
+		else if (e.getEntityType() == MapObject::etSaboteur)
 		{
 			// enity should be from any planet...
-			assert(e.GetGroup() >= PlanetTask::ID_START && e.GetGroup() <= PlanetTask::ID_END);
-			assert(unsigned(e.GetGroup()) < map.nPlans);
-			assert(planTask[e.GetGroup()]);
+			assert(e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END);
+			assert(unsigned(e.getGroup()) < map.nPlans);
+			assert(planTask[e.getGroup()]);
 			// attack with whole planet
 
-			const auto group = e.GetGroup();
-			planTask[group]->IncGroupSize(e.GetEntityType());
-			int num = AttackPlanet(e.GetGroup(), planTask[group]->GetGroupSize(), GetWhitePlan(pID));
+			const auto group = e.getGroup();
+			planTask[group]->IncGroupSize(e.getEntityType());
+			int num = AttackPlanet(e.getGroup(), planTask[group]->GetGroupSize(), GetWhitePlan(pID));
 			planTask[group]->AddToGroup(-num);
 		}
 		else // no bomber and no saboteur
 		{
 			// enity should be from any planet...
-			assert(e.GetGroup() >= PlanetTask::ID_START && e.GetGroup() <= PlanetTask::ID_END);
-			if (e.GetGroup() >= PlanetTask::ID_START && e.GetGroup() <= PlanetTask::ID_END)
+			assert(e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END);
+			if (e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END)
 			{
-				if (unsigned(e.GetGroup()) < map.nPlans)
+				if (unsigned(e.getGroup()) < map.nPlans)
 				{
-					// planet group
-					assert(unsigned(e.GetGroup()) < planTask.size());
-					if (planTask[e.GetGroup()] != nullptr)
+					// planet m_group
+					assert(unsigned(e.getGroup()) < planTask.size());
+					if (planTask[e.getGroup()] != nullptr)
 					{
-						planTask[e.GetGroup()]->IncGroupSize(e.GetEntityType());
+						planTask[e.getGroup()]->IncGroupSize(e.getEntityType());
 					}
 				}
 			}
 			// is that even possible?
-			else if (e.GetGroup() >= PlanetAttackTask::ID_START && e.GetGroup() <= PlanetAttackTask::ID_END)
+			else if (e.getGroup() >= PlanetAttackTask::ID_START && e.getGroup() <= PlanetAttackTask::ID_END)
 			{
-				size_t tid = unsigned(e.GetGroup() - PlanetAttackTask::ID_START);
+				size_t tid = unsigned(e.getGroup() - PlanetAttackTask::ID_START);
 				if (tid < map.nPlans)
 				{
 					if (planAtkTask[tid] != nullptr)
@@ -257,24 +257,24 @@ void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 }
 void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 {
-	if (e.GetTeam() == team)
+	if (e.getTeam() == team)
 	{
-		if (e.GetGroup() >= PlanetTask::ID_START && e.GetGroup() <= PlanetTask::ID_END)
+		if (e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END)
 		{
-			if ((unsigned)e.GetGroup() < map.nPlans)
+			if ((unsigned)e.getGroup() < map.nPlans)
 			{
-				// planet group
-				assert(unsigned(e.GetGroup()) < planTask.size());
-				if (planTask[e.GetGroup()] != nullptr)
+				// planet m_group
+				assert(unsigned(e.getGroup()) < planTask.size());
+				if (planTask[e.getGroup()] != nullptr)
 				{
-					planTask[e.GetGroup()]->DecGroupSize();
+					planTask[e.getGroup()]->DecGroupSize();
 				}
 			}
 		}
-		else if (e.GetGroup() >= PlanetAttackTask::ID_START && e.GetGroup() <= PlanetAttackTask::ID_END)
+		else if (e.getGroup() >= PlanetAttackTask::ID_START && e.getGroup() <= PlanetAttackTask::ID_END)
 		{
 			// attack task
-			size_t tid = unsigned(e.GetGroup() - PlanetAttackTask::ID_START);
+			size_t tid = unsigned(e.getGroup() - PlanetAttackTask::ID_START);
 			if (tid < map.nPlans)
 			{
 				if (planAtkTask[tid] != nullptr)
@@ -287,13 +287,13 @@ void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 		{
 			// probably hunt task
 			bombHunters.remove_if([&e](const std::unique_ptr<BomberHuntTask>& task){
-				if (task->GetBomberID() == e.GetID())
+				if (task->GetBomberID() == e.getID())
 					return true;
 				else return false;
 			});
 
 			huntTask.remove_if([&e](std::unique_ptr<HuntTask>& task){
-				if (task->GetID() == e.GetID())
+				if (task->GetID() == e.getID())
 				{
 					task->DecGroupSize();
 					if (task->GetGroupSize() == 0)
@@ -311,7 +311,7 @@ void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 		{
 			if (t->GetTarget())
 			{
-				if (t->GetTarget()->GetTeam() == e.GetTeam() && t->GetTarget()->GetID() == e.GetID())
+				if (t->GetTarget()->getTeam() == e.getTeam() && t->GetTarget()->getID() == e.getID())
 				{
 					t->SetTarget(nullptr);
 				}
@@ -322,7 +322,7 @@ void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 		{
 			if (t->GetTarget())
 			{
-				if (t->GetTarget()->GetTeam() == e.GetTeam() && t->GetTarget()->GetID() == e.GetID())
+				if (t->GetTarget()->getTeam() == e.getTeam() && t->GetTarget()->getID() == e.getID())
 				{
 					t->SetTarget(nullptr);
 				}
@@ -361,7 +361,7 @@ void PlayerAI::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, co
 			else if (planAtkTask[pID]->GetGroupSize() > 0)
 			{
 				//  its you allies planet -> attack another one
-				PlanetID attack = GetAttackPlan(map.getPlan(pID).GetPos());
+				PlanetID attack = GetAttackPlan(map.getPlan(pID).getPos());
 				if (attack != pID)
 				{
 					AttackPlanet(planAtkTask[pID]->GetGroupID(), planAtkTask[pID]->GetGroupSize(), attack);
@@ -372,7 +372,7 @@ void PlayerAI::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, co
 					int gid = planAtkTask[pID]->GetGroupID();
 
 					for (auto& e : map.ents[team - 1])
-						if (e.GetGroup() == gid)
+						if (e.getGroup() == gid)
 							AddHunter(e);
 				}
 			}
@@ -406,9 +406,9 @@ PointF PlayerAI::GetMidPlanetPos(byte team)
 	byte i = 0;
 	for (const auto plan : map.plans)
 	{
-		if (plan->GetTeam() == team)
+		if (plan->getTeam() == team)
 		{
-			midPos += plan->GetPos();
+			midPos += plan->getPos();
 			i++;
 		}
 	}
@@ -426,9 +426,9 @@ PlanetID PlayerAI::GetWhitePlan(PlanetID own)
 
 	for (const auto& plan : nearbyPlanets[own])
 	{
-		if (map.getPlan(plan).GetTeam() == 0 && map.getPlan(plan).GetSubteam() == 0)
+		if (map.getPlan(plan).getTeam() == 0 && map.getPlan(plan).getSubteam() == 0)
 		{
-			float value = (map.getPlan(own).GetPos() - map.getPlan(plan).GetPos()).lengthSq() * (rand() % 2 + 1);
+			float value = (map.getPlan(own).getPos() - map.getPlan(plan).getPos()).lengthSq() * (rand() % 2 + 1);
 			if (value < bestValue)
 			{
 				bestValue = value;
@@ -453,7 +453,7 @@ PlanetID PlayerAI::GetWellDefendedNear(PlanetID own)
 
 	for (const auto& plan : nearbyPlanets[own])
 	{
-		if (GetEnemyEntsInDefR(map.getPlan(plan).GetID(), map.getPlan(own).GetTeam()) >= BOMBER_SEND_SIZE)
+		if (GetEnemyEntsInDefR(map.getPlan(plan).getID(), map.getPlan(own).getTeam()) >= BOMBER_SEND_SIZE)
 			return plan;
 	}
 	return own;
@@ -465,7 +465,7 @@ size_t PlayerAI::GetOwnEntsInDefR(PlanetID pID, byte team) const
 
 	if (unsigned(pID) >= map.nPlans)
 		return 1;
-	return std::max(size_t(1), map.grid.CountUnits(size_t(team), map.getPlan(pID).GetPos(), map.getPlan(pID).GetDefenseRadius()));
+	return std::max(size_t(1), map.grid.CountUnits(size_t(team), map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
 }
 size_t PlayerAI::GetAlliEntsInDefR(PlanetID pID, byte team) const
 {
@@ -474,7 +474,7 @@ size_t PlayerAI::GetAlliEntsInDefR(PlanetID pID, byte team) const
 
 	if (unsigned(pID) >= map.nPlans)
 		return 1;
-	return std::max(size_t(1), map.grid.CountAllyUnits(team, map.getPlan(pID).GetPos(), map.getPlan(pID).GetDefenseRadius()));
+	return std::max(size_t(1), map.grid.CountAllyUnits(team, map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
 }
 size_t PlayerAI::GetEnemyEntsInDefR(PlanetID pID, byte team) const
 {
@@ -483,7 +483,7 @@ size_t PlayerAI::GetEnemyEntsInDefR(PlanetID pID, byte team) const
 
 	if (unsigned(pID) >= map.nPlans)
 		return 1;
-	return std::max(size_t(1), map.grid.CountEnemyUnits(team, map.getPlan(pID).GetPos(), map.getPlan(pID).GetDefenseRadius()));
+	return std::max(size_t(1), map.grid.CountEnemyUnits(team, map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
 }
 size_t PlayerAI::GetOwnEntsInR(PointF pos, byte team, float r) const
 {
@@ -499,22 +499,22 @@ size_t PlayerAI::GetAlliEntsInR(PointF pos, byte team, float r) const
 }
 PlanetID PlayerAI::GetAttackPlan(PointF entPos) const
 {
-	PlanetID fav = map.plans[0]->GetID();
+	PlanetID fav = map.plans[0]->getID();
 
 	float lastDist = FLT_MAX;
 	for (const auto& p : map.plans)
 	{
-		if (!map.isAlly(p->GetTeam(), team))
+		if (!map.isAlly(p->getTeam(), team))
 		{
 			float d =
-				(entPos - p->GetPos()).lengthSq()
-				* GetEnemyEntsInDefR(p->GetID(), team);
+				(entPos - p->getPos()).lengthSq()
+				* GetEnemyEntsInDefR(p->getID(), team);
 
 
 			if (d < lastDist)
 			{
 				lastDist = d;
-				fav = p->GetID();
+				fav = p->getID();
 			}
 		}
 	}
@@ -533,11 +533,11 @@ float PlayerAI::CalcNearByDistance(int average)
 
 		for (auto& plan2 : map.plans)
 		{
-			if (plan->GetID() == plan2->GetID())
+			if (plan->getID() == plan2->getID())
 				continue;
 			for (int i = average - 1; i >= 0; i--)
 			{
-				float dist = (plan->GetPos() - plan2->GetPos()).length();
+				float dist = (plan->getPos() - plan2->getPos()).length();
 				if (dist < nearest[i] && i > 0)
 				{
 					nearest[i + 1] = nearest[i];

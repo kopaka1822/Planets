@@ -8,16 +8,16 @@ public:
 		:
 		MapPlanet(plan,ID)
 	{}
-	virtual float GetDrawPercentage() override
+	virtual float getDrawPercentage() override
 	{	
 		return lastHPPercent;
 	}
-	virtual void CalcDrawPercentage() override
+	virtual void calcDrawPercentage() override
 	{
-		lastHPPercent = GetPercentage() * 0.1f + lastHPPercent * 0.9f;
+		lastHPPercent = getPercentage() * 0.1f + lastHPPercent * 0.9f;
 	}
 	virtual ~RemotePlanet(){}
-	virtual float GetSpawnTimePercent() override
+	virtual float getSpawnTimePercent() override
 	{
 		float nw = GetSpawnPer();
 		if (nw > lastSpawnPercent)
@@ -29,20 +29,20 @@ public:
 
 		return lastSpawnPercent;
 	}
-	virtual bool Update(const float dt) override
+	virtual bool update(const float dt) override
 	{
 		sTimer += dt;
 
 		return false;
 	}
-	virtual void ResetSpawnTime() override
+	virtual void resetSpawnTime() override
 	{
 		sTimer = 0.0f;
 	}
 private:
 	float GetSpawnPer() const
 	{
-		float r = sTimer / (sUnit * GetSpawnFactor());
+		float r = sTimer / (m_sUnit * getSpawnFactor());
 		return r;
 	}
 private:

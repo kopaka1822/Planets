@@ -33,8 +33,8 @@ public:
 	virtual void SelectGroup(byte team, int group) override;
 	virtual void DeleteGroup(byte team, int group) override;
 	virtual void SelectAll(byte team) override;
-	virtual bool FilterEntityType(byte team, MapObject::entityType et) override;
-	virtual void SelectAllEntityType(byte team, MapObject::entityType et) override;
+	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
+	virtual void SelectAllEntityType(byte team, MapObject::EntityType et) override;
 
 	bool HandleSurrender(byte team);
 	float GetAvgUpdTime()

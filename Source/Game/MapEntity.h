@@ -30,199 +30,199 @@ public:
 	static const int FOV; //Field of vision
 	static const int FOV2;
 public:
-	enum states
+	enum States
 	{
 		sLazy,
 		sTarget,
 		sEvade
 	};
-	states GetState() const
+	States GetState() const
 	{
-		return curState;
+		return m_curState;
 	}
 
 
 public:
-	MapEntity(const PointF& p, byte team, MapObject::targetType ttype, const PointF& tar, int group, bool selec, unsigned int id)
+	MapEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id)
 		:
 		MapObject(p, team, MAX_HP, ttype, tar, group),
-		vel({ 0.0f, 0.0f }),
-		id(id)
+		m_vel({ 0.0f, 0.0f }),
+		m_id(id)
 	{
 		if (selec)
 			MapObject::forceSelect();
 
 		if (ttype == tgInvalid)
 		{
-			curState = sLazy;
+			m_curState = sLazy;
 		}
 		else
 		{
-			curState = sTarget;
+			m_curState = sTarget;
 		}
-		mood = false;
+		m_mood = false;
 	}
 	virtual ~MapEntity(){}
 
-	virtual void CalcDrawPos()
+	virtual void calcDrawPos()
 	{}
-	virtual const PointF GetDrawPos()
+	virtual const PointF & getDrawPos()
 	{
-		return GetPos();
+		return getPos();
 	}
-	const PointF& GetVel() const
+	const PointF& getVel() const
 	{
-		return vel;
+		return m_vel;
 	}
 
 	inline bool isColliding(const PointF& p) const
 	{
-		if (fabs(pos.x - p.x) < float(MIN_DIST))
-			if (fabs(pos.y - p.y) < float(MIN_DIST))
-				return ((pos - p).lengthSq() < float(MIN_DIST2)); //5px
+		if (fabs(m_pos.x - p.x) < float(MIN_DIST))
+			if (fabs(m_pos.y - p.y) < float(MIN_DIST))
+				return ((m_pos - p).lengthSq() < float(MIN_DIST2)); //5px
 		return false;
 		//return ((pos - p).lengthSq() < 25.0f); //5px
 	}
 	inline bool isNearby(const PointF& p) const
 	{
-		if (fabs(pos.x - p.x) < float(NEAR_DIST))
-			if (fabs(pos.y - p.y) < float(NEAR_DIST))
-				return ((pos - p).lengthSq() < float(NEAR_DIST2)); //5px
+		if (fabs(m_pos.x - p.x) < float(NEAR_DIST))
+			if (fabs(m_pos.y - p.y) < float(NEAR_DIST))
+				return ((m_pos - p).lengthSq() < float(NEAR_DIST2)); //5px
 		return false;
 		//return ((pos - p).lengthSq() < 225.0f); //15px
 	}
 
-	virtual void setTarget(const PointF& tg, targetType tt) override
+	virtual void setTarget(const PointF& tg, TargetType tt) override
 	{
 		MapObject::setTarget(tg, tt);
-		curState = sTarget;
-		bTarReach = false;
+		m_curState = sTarget;
+		m_bTarReach = false;
 	}
 	virtual void invalidateTarget() override
 	{
 		MapObject::invalidateTarget();
-		curState = sLazy;
+		m_curState = sLazy;
 	}
 
-	virtual void UpdatePosition(const float dt)
+	virtual void updatePosition(const float dt)
 	{
-		pos += vel;
+		m_pos += m_vel;
 
-		if (curState == sEvade || (curState == sTarget && bTarReach))
+		if (m_curState == sEvade || (m_curState == sTarget && m_bTarReach))
 		{
-			Tmr -= dt;
-			if (Tmr <= 0)
+			m_Tmr -= dt;
+			if (m_Tmr <= 0)
 			{
 				invalidateTarget();
-				Tmr = 0.0f;
+				m_Tmr = 0.0f;
 				return;
 			}
 			return;
 		}
 		return;
 	}
-	void SetVel(PointF nVel)
+	void setVel(PointF nVel)
 	{
-		vel = nVel;
+		m_vel = nVel;
 	}
-	void ZeroVelocity()
+	void zeroVelocity()
 	{
-		vel = { 0.0f, 0.0f };
+		m_vel = { 0.0f, 0.0f };
 	}
 
-	bool GetMood() const
+	bool getMood() const
 	{
-		return mood;
+		return m_mood;
 	}
-	void ChangeMood()
+	void changeMood()
 	{
-		mood = !mood;
-		if (curState == sEvade)//evading failed, evade in opposite direction
+		m_mood = !m_mood;
+		if (m_curState == sEvade)//evading failed, evade in opposite direction
 		{
-			target *= -1.0f;
+			m_target *= -1.0f;
 			return;
 		}
 		return;
 	}
 	void setEvade(PointF nTarget) //sets target + velocity
 	{
-		curState = sEvade;
-		Tmr = (float)EVADE_TIME;
-		target = nTarget.normalize();
-		vel = nTarget;
+		m_curState = sEvade;
+		m_Tmr = (float)EVADE_TIME;
+		m_target = nTarget.normalize();
+		m_vel = nTarget;
 	}
 	void keepEvading()
 	{
-		Tmr = (float)EVADE_TIME;
+		m_Tmr = (float)EVADE_TIME;
 	}
-	void TargetPointReached()
+	void targetPointReached()
 	{
-		if (!bTarReach)
+		if (!m_bTarReach)
 		{
-			Tmr = TARGET_TIME;
-			bTarReach = true;
+			m_Tmr = TARGET_TIME;
+			m_bTarReach = true;
 			return;
 		}
 		return;
 	}
-	inline void DisableVelCorrect()
+	inline void disableVelCorrect()
 	{
-		velCorrect = false;
+		m_velCorrect = false;
 	}
 	inline bool getVelCorrect()
 	{
-		bool t = velCorrect;
-		velCorrect = true;
+		bool t = m_velCorrect;
+		m_velCorrect = true;
 		return t;
 	}
-	virtual entityType GetEntityType() const = 0;
+	virtual EntityType getEntityType() const = 0;
 
 	//Remote
-	virtual void SetUpdateTime(float secon){}
-	virtual float GetUpdateTime() const { return 0.0f; }
+	virtual void setUpdateTime(float secon){}
+	virtual float getUpdateTime() const { return 0.0f; }
 	//Local
-	virtual int GetDamage(){ return 0; }
-	virtual bool HasDamage() const{ return false; }
-	inline unsigned int GetID() const
+	virtual int getDamage(){ return 0; }
+	virtual bool hasDamage() const{ return false; }
+	inline unsigned int getID() const
 	{
-		return id;
+		return m_id;
 	}
-	virtual float GetSpeedModifier() const
+	virtual float getSpeedModifier() const
 	{
 		return 1.0f;
 	}
-	virtual bool AttacksPlanets() const
+	virtual bool attacksPlanets() const
 	{
 		return true;
 	}
-	virtual bool AttacksEntities() const
+	virtual bool attacksEntities() const
 	{
 		return true;
 	}
 
 	// 0.0f -> no explosion on death
-	virtual float GetExplosionRadius() const
+	virtual float getExplosionRadius() const
 	{
 		return 0.0f;
 	}
-	virtual int GetExplosionDamage() const
+	virtual int getExplosionDamage() const
 	{
 		return MAX_HP;
 	}
 protected:
 
-	PointF vel;
+	PointF m_vel;
 
 	//PointF target;
 	//targetType tarTy = tgPlanet;
-	states curState = sLazy;
+	States m_curState = sLazy;
 
-	bool mood; //current mood of the entity, determines if it will evade to the left or right
-	bool bTarReach = false;
+	bool m_mood; //current mood of the entity, determines if it will evade to the left or right
+	bool m_bTarReach = false;
 
-	float Tmr = 0.0f;
+	float m_Tmr = 0.0f;
 
 
-	bool velCorrect = true;
-	const unsigned int id;
+	bool m_velCorrect = true;
+	const unsigned int m_id;
 };

@@ -4,7 +4,7 @@
 class RemoteEntity : public MapEntity
 {
 public:
-	RemoteEntity(const PointF& p, byte team, MapObject::targetType ttype, const PointF& tar, int group, bool selec,unsigned int id, entityType entty, const PointF& drawPos)
+	RemoteEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec,unsigned int id, EntityType entty, const PointF& drawPos)
 		:
 		MapEntity(p, team, ttype, tar, group, selec,id),
 		bDrawSel(selec),
@@ -13,11 +13,11 @@ public:
 		speedModi((entty == MapObject::etSpeeder)? 2.0f : 1.0f)
 	{}
 	virtual ~RemoteEntity(){}
-	virtual void SetUpdateTime(float secon) override
+	virtual void setUpdateTime(float secon) override
 	{
 		updTime = secon;
 	}
-	virtual float GetUpdateTime() const override
+	virtual float getUpdateTime() const override
 	{
 		return updTime;
 	}
@@ -44,24 +44,24 @@ public:
 		drawDeselect();
 		MapObject::deselect();
 	}
-	virtual void UpdatePosition(const float dt) override
+	virtual void updatePosition(const float dt) override
 	{
-		if (curState == MapEntity::states::sTarget)
-			MapEntity::UpdatePosition(dt);
+		if (m_curState == MapEntity::States::sTarget)
+			MapEntity::updatePosition(dt);
 	}
-	virtual void CalcDrawPos() override
+	virtual void calcDrawPos() override
 	{
-		oldPos = (oldPos * 0.90f + GetPos() * 0.10f);
+		oldPos = (oldPos * 0.90f + getPos() * 0.10f);
 	}
-	virtual const PointF GetDrawPos() override
+	virtual const PointF & getDrawPos() override
 	{
 		return oldPos;
 	}
-	virtual entityType GetEntityType() const override
+	virtual EntityType getEntityType() const override
 	{
 		return etType;
 	}
-	virtual float GetSpeedModifier() const override
+	virtual float getSpeedModifier() const override
 	{
 		return speedModi;
 	}
@@ -69,6 +69,6 @@ private:
 	float updTime = 0.0f;
 	bool bDrawSel;
 	PointF oldPos;
-	const entityType etType;
+	const EntityType etType;
 	const float speedModi;
 };

@@ -156,8 +156,8 @@ protected:
 		float posx
 		float posy
 		float radius
-		byte team
-		int HP
+		byte m_team
+		int m_hp
 		float sUnit
 		*/
 
@@ -178,7 +178,7 @@ protected:
 	{
 		/*
 		Message Format:
-		byte team (once)
+		byte m_team (once)
 
 		- bool
 		true : (next is entity)

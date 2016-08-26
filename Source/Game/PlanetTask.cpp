@@ -6,7 +6,7 @@ PlanetTask::PlanetTask(PlayerAI& ai, PlanetID pid)
 	ai(ai),
 	plan(ai.map.getPlan(pid))
 {
-	plan.groupAssign(pid); // 0 is a valid group
+	plan.groupAssign(pid); // 0 is a valid m_group
 }
 void PlanetTask::DoTask(float dt)
 {
@@ -17,59 +17,59 @@ void PlanetTask::DoTask(float dt)
 
 	sumTime = 0.0f;
 
-	bInTrouble = (plan.GetPercentage() < 0.95f && groupSize < 10) || (plan.GetPercentage() < 0.85f && groupSize < 20);
+	bInTrouble = (plan.getPercentage() < 0.95f && groupSize < 10) || (plan.getPercentage() < 0.85f && groupSize < 20);
 	if (!bInTrouble)
 	{
 		// not in trouble
-		unsigned int enemiesNear = ai.GetEnemyEntsInR(plan.GetPos(), ai.team, plan.GetDefenseRadius() * 4);
-		unsigned int ownEntsNear = ai.GetOwnEntsInR(plan.GetPos(), ai.team, plan.GetDefenseRadius() * 3);
+		unsigned int enemiesNear = ai.GetEnemyEntsInR(plan.getPos(), ai.team, plan.getDefenseRadius() * 4);
+		unsigned int ownEntsNear = ai.GetOwnEntsInR(plan.getPos(), ai.team, plan.getDefenseRadius() * 3);
 		if (enemiesNear < ownEntsNear)
 		{
 			// less enemies nearby
-			PlanetID help = ai.GetPlanetInTrouble(plan.GetGroup());
-			if (help != plan.GetID())
+			PlanetID help = ai.GetPlanetInTrouble(plan.getGroup());
+			if (help != plan.getID())
 			{
 				// other planet needs help
-				size_t num = ai.HelpPlanet(plan.GetGroup(), groupSize * 2 / 3, help);
+				size_t num = ai.HelpPlanet(plan.getGroup(), groupSize * 2 / 3, help);
 				groupSize -= num;
 			}
 			else
 			{
 				// no other planet needs help
 
-				if (ai.GetEnemyEntsInR(plan.GetPos(), ai.team, plan.GetDefenseRadius() * 3) <= 0 && ai.GetWhitePlan(plan.GetID()) != plan.GetID() && ai.GetEnemyEntsInR(ai.map.getPlan(ai.GetWhitePlan(plan.GetID())).GetPos(), ai.team, ai.map.getPlan(ai.GetWhitePlan(plan.GetID())).GetDefenseRadius() * 2) <= 0)
+				if (ai.GetEnemyEntsInR(plan.getPos(), ai.team, plan.getDefenseRadius() * 3) <= 0 && ai.GetWhitePlan(plan.getID()) != plan.getID() && ai.GetEnemyEntsInR(ai.map.getPlan(ai.GetWhitePlan(plan.getID())).getPos(), ai.team, ai.map.getPlan(ai.GetWhitePlan(plan.getID())).getDefenseRadius() * 2) <= 0)
 				{
-					plan.SetEntityType(MapObject::etSaboteur);
+					plan.setEntityType(MapObject::etSaboteur);
 					PointF tar;
-					tar.x = (float)plan.GetID();
+					tar.x = (float)plan.getID();
 					plan.setTarget(tar, MapObject::tgPlanetDefend);
 				}
 				else
 				{
 					PlanetID pid = GetAttackPlan();
 
-					if (pid != plan.GetID())
+					if (pid != plan.getID())
 					{
 						size_t attacksize = GetAttackSize(pid);
 						if (attacksize <= groupSize)
 						{
 							// attack plan
-							auto num = ai.AttackPlanet(plan.GetGroup(), attacksize, pid);
+							auto num = ai.AttackPlanet(plan.getGroup(), attacksize, pid);
 							groupSize -= num;
 						}
 						else
 						{
 							// wait for more unist
-							plan.SetEntityType(MapObject::etNormal);
+							plan.setEntityType(MapObject::etNormal);
 							PointF tar;
-							tar.x = (float)plan.GetID();
+							tar.x = (float)plan.getID();
 							plan.setTarget(tar, MapObject::tgPlanetDefend);
 						}
 					}
 					else
 					{
 						// you have all planets ->  hunt down remaining
-						plan.SetEntityType(MapObject::etSpeeder);
+						plan.setEntityType(MapObject::etSpeeder);
 					}
 
 				}
@@ -78,27 +78,27 @@ void PlanetTask::DoTask(float dt)
 		else
 		{
 			// many enemies nearby
-			if (ai.GetEnemyAccumulation(plan.GetPos(), 250.0f, 8) != PointI(-1, -1))
+			if (ai.GetEnemyAccumulation(plan.getPos(), 250.0f, 8) != PointI(-1, -1))
 			{
 				// enemy accumulation nearby
-				plan.SetEntityType(MapObject::etBomber);
+				plan.setEntityType(MapObject::etBomber);
 				PointF tar;
-				tar.x = (float)plan.GetID();
+				tar.x = (float)plan.getID();
 				plan.setTarget(tar, MapObject::tgPlanetDefend);
 			}
 			else
 			{
 				// no enemy accumulation nearby
-				plan.SetEntityType(MapObject::etNormal);
+				plan.setEntityType(MapObject::etNormal);
 				PointF tar;
-				tar.x = (float)plan.GetID();
+				tar.x = (float)plan.getID();
 				plan.setTarget(tar, MapObject::tgPlanetDefend);
-				if (ai.GetAlliEntsInDefR(plan.GetID(), ai.team) > MAX_DEF_SIZE)
+				if (ai.GetAlliEntsInDefR(plan.getID(), ai.team) > MAX_DEF_SIZE)
 				{
 					PlanetID pid = GetAttackPlan();
 					size_t attacksize = GetAttackSize(pid);
-					if (attacksize * 2 <= groupSize && pid != plan.GetID())
-						ai.AttackPlanet(plan.GetGroup(), attacksize, pid);
+					if (attacksize * 2 <= groupSize && pid != plan.getID())
+						ai.AttackPlanet(plan.getGroup(), attacksize, pid);
 				}
 			}
 		}
@@ -107,13 +107,13 @@ void PlanetTask::DoTask(float dt)
 	else
 	{
 		// in trouble
-		if (ai.GetEnemyEntsInDefR(plan.GetID(), ai.team) > 10)
-			plan.SetEntityType(MapObject::etBomber);
+		if (ai.GetEnemyEntsInDefR(plan.getID(), ai.team) > 10)
+			plan.setEntityType(MapObject::etBomber);
 		else
-			plan.SetEntityType(MapObject::etNormal);
+			plan.setEntityType(MapObject::etNormal);
 
 		PointF tar;
-		tar.x = (float)plan.GetID();
+		tar.x = (float)plan.getID();
 		plan.setTarget(tar, MapObject::tgPlanetDefend);
 	}
 
@@ -122,32 +122,32 @@ void PlanetTask::DoTask(float dt)
 }
 void PlanetTask::Destroy()
 {
-	//ai.map.DeleteGroup(ai.team, plan.GetID());
+	//ai.map.DeleteGroup(ai.m_team, plan.GetID());
 	// Attack Planet to get it back
-	ai.AttackPlanet(plan.GetID(), groupSize, plan.GetID());
+	ai.AttackPlanet(plan.getID(), groupSize, plan.getID());
 }
 PlanetID PlanetTask::GetAttackPlan() const
 {
-	PlanetID fav = plan.GetID();
+	PlanetID fav = plan.getID();
 
 	float lastDist = std::numeric_limits<float>::infinity();
 	for (const auto& p : ai.map.plans)
 	{
-		if (!ai.map.isAlly(p->GetTeam(), ai.team))
+		if (!ai.map.isAlly(p->getTeam(), ai.team))
 		{
-			if (ai.GetAlliEntsInDefR(p->GetID(), ai.team) > 30 && ai.GetEnemyEntsInDefR(p->GetID(), ai.team) < 5)
+			if (ai.GetAlliEntsInDefR(p->getID(), ai.team) > 30 && ai.GetEnemyEntsInDefR(p->getID(), ai.team) < 5)
 				continue;
-			p->GetSpawnTimePercent();
-			float perc = p->GetPercentage();
+			p->getSpawnTimePercent();
+			float perc = p->getPercentage();
 			float y = 0.9f * perc * perc + 0.1f;
 			float d =
-				(plan.GetPos() - p->GetPos()).lengthSq()
-				* (ai.GetEnemyEntsInDefR(p->GetID(), ai.team) + y * 10)
+				(plan.getPos() - p->getPos()).lengthSq()
+				* (ai.GetEnemyEntsInDefR(p->getID(), ai.team) + y * 10)
 				+ rand() % 10;
 			if (d < lastDist)
 			{
 				lastDist = d;
-				fav = p->GetID();
+				fav = p->getID();
 			}
 		}
 	}
@@ -161,13 +161,13 @@ PlanetID PlanetTask::GetNearestFreePlan() const
 	float lastDist = std::numeric_limits<float>::infinity();
 	for (const auto& p : ai.map.plans)
 	{
-		if (!ai.map.isAlly(p->GetTeam(), ai.team))
+		if (!ai.map.isAlly(p->getTeam(), ai.team))
 		{
-			float d = (plan.GetPos() - p->GetPos()).lengthSq();
+			float d = (plan.getPos() - p->getPos()).lengthSq();
 			if (d < lastDist)
 			{
 				lastDist = d;
-				fav = p->GetID();
+				fav = p->getID();
 			}
 		}
 	}
@@ -176,8 +176,8 @@ PlanetID PlanetTask::GetNearestFreePlan() const
 }
 void PlanetTask::Update()
 {
-	ai.map.SelectGroup(ai.team, plan.GetID());
-	ai.map.Click(plan.GetPos(), ai.team);
+	ai.map.SelectGroup(ai.team, plan.getID());
+	ai.map.Click(plan.getPos(), ai.team);
 }
 size_t PlanetTask::GetSplitSize() const
 {

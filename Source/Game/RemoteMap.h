@@ -28,9 +28,9 @@ public:
 	virtual void AddToGroup(byte team, int group) override;
 	virtual void MakeGroup(byte team, int group) override;
 	virtual void SelectAll(byte team) override;
-	virtual void SetPlanetSpawnType(byte team, MapObject::entityType t) override;
-	virtual bool FilterEntityType(byte team, MapObject::entityType et) override;
-	virtual void SelectAllEntityType(byte team, MapObject::entityType et) override;
+	virtual void SetPlanetSpawnType(byte team, MapObject::EntityType t) override;
+	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
+	virtual void SelectAllEntityType(byte team, MapObject::EntityType et) override;
 	virtual void AddPacket(DataContainer&& con) override;
 private:
 	Client& serv;
@@ -42,16 +42,16 @@ private:
 private:
 	void SetEntPositionRemote(MapEntity& curEnt, const float dt)
 	{
-		const PointF& pos = curEnt.GetPos();
-		const VectorF& vel = curEnt.GetVel();
+		const PointF& pos = curEnt.getPos();
+		const VectorF& vel = curEnt.getVel();
 
-		if (GetColEnt(pos, curEnt.GetID(),curEnt.GetTeam()) != nullptr)
+		if (GetColEnt(pos, curEnt.getID(),curEnt.getTeam()) != nullptr)
 		{
 			// probably due to network bug
 			// force set to new position
 			if (GetColPlan(pos + vel) == nullptr)
 			{
-				curEnt.UpdatePosition(dt);
+				curEnt.updatePosition(dt);
 				return;
 			}
 		}

@@ -118,7 +118,7 @@
 #   define HAVE_DIRECT_H
 # elif defined(__apollo)                       /* Apollo */
 #   define HAVE_SYS_DIR_H
-# elif defined(__hpux)                         /* HP-UX */
+# elif defined(__hpux)                         /* m_hp-UX */
 #   define HAVE_DIRENT_H
 # elif defined(__alpha) || defined(__alpha__)  /* Alpha OSF1 */
 #   error "not implemented"

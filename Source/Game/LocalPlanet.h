@@ -9,63 +9,63 @@ public:
 		:
 		MapPlanet(plan,ID),
 		// (radius / 10.0f) * Entity Damage per Second
-		healRate((int)float(this->radius / 10.0f * (float(MapEntity::DAMAGE) / float(MapEntity::DAMAGE_INTV))))
+		m_healRate(static_cast<int>(float(this->m_radius / 10.0f * (float(MapEntity::DAMAGE) / float(MapEntity::DAMAGE_INTV)))))
 	{}
 	virtual ~LocalPlanet(){}
-	virtual float GetsUnit() const override
+	virtual float getsUnit() const override
 	{
-		return sUnit;
+		return m_sUnit;
 	}
 
 	//returns true if entity shall be spawned
-	virtual bool Update(const float dt) override
+	virtual bool update(const float dt) override
 	{
-		if (team == 0)
+		if (m_team == 0)
 			return false;
 
-		if (HP < MaxHP)
+		if (m_hp < m_maxHP)
 		{
-			hTimer += dt;
-			if (hTimer > 1.0f) // 1 sec
+			m_hTimer += dt;
+			if (m_hTimer > 1.0f) // 1 sec
 			{
-				HP = std::min(MaxHP, HP + healRate);
-				hTimer -= 1.0f;
+				m_hp = std::min(m_maxHP, m_hp + m_healRate);
+				m_hTimer -= 1.0f;
 			}
 		}
 
-		sTimer += dt;
-		const float sTime = (sUnit * GetSpawnFactor());
-		if (sTimer > sTime)
+		m_sTimer += dt;
+		const float sTime = (m_sUnit * getSpawnFactor());
+		if (m_sTimer > sTime)
 		{
-			sTimer -= sTime;
+			m_sTimer -= sTime;
 			return true;
 		}
 		return false;
 	}
-	virtual void TakeOver(byte team) override
+	virtual void takeOver(byte team) override
 	{
-		MapPlanet::TakeOver(team);
-		sTimer = 0.0f;
-		hTimer = 0.0f;
+		MapPlanet::takeOver(team);
+		m_sTimer = 0.0f;
+		m_hTimer = 0.0f;
 	}
 
-	virtual float GetDrawPercentage() override
+	virtual float getDrawPercentage() override
 	{
-		return lastPercentage;
+		return m_lastPercentage;
 	}
-	virtual void CalcDrawPercentage() override
+	virtual void calcDrawPercentage() override
 	{
-		lastPercentage = GetPercentage() * 0.3f + lastPercentage * 0.7f;
+		m_lastPercentage = getPercentage() * 0.3f + m_lastPercentage * 0.7f;
 	}
-	virtual float GetSpawnTimePercent() override
+	virtual float getSpawnTimePercent() override
 	{
-		float r = sTimer / (sUnit * GetSpawnFactor());
+		float r = m_sTimer / (m_sUnit * getSpawnFactor());
 		return std::min(1.0f, r);
 	}
 private:
-	float sTimer = 0.0f; // spawn timer
-	float hTimer = 0.0f; // heal timer
+	float m_sTimer = 0.0f; // spawn timer
+	float m_hTimer = 0.0f; // heal timer
 
-	const int healRate;
-	float lastPercentage = 1.0f;
+	const int m_healRate;
+	float m_lastPercentage = 1.0f;
 };

@@ -58,8 +58,8 @@ void UniformGrid::AddEntity(MapEntity* itm, const PointI& pos)
 
 	size_t index = aY * width + aX;
 
-	assert(unsigned(itm->GetTeam() - 1) < unsigned(nTeams));
-	field[index]->teamsz[itm->GetTeam() - 1]++;
+	assert(unsigned(itm->getTeam() - 1) < unsigned(nTeams));
+	field[index]->teamsz[itm->getTeam() - 1]++;
 }
 FastVector<MapEntity*>& UniformGrid::GetEntities(PointI pos)
 {
@@ -75,7 +75,7 @@ int UniformGrid::GetBoxSize() const
 {
 	return boxsz;
 }
-// own team
+// own m_team
 size_t UniformGrid::CountUnits(byte team, PointF pos, float radius)
 {
 	byte t = team - 1;
@@ -109,7 +109,7 @@ size_t UniformGrid::CountUnits(byte team, PointF pos, float radius)
 
 	return count;
 }
-// own team + ally
+// own m_team + ally
 size_t UniformGrid::CountAllyUnits(byte team, PointF pos, float radius)
 {
 	byte t = team - 1;

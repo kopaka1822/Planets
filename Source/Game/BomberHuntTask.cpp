@@ -6,7 +6,7 @@ BomberHuntTask::BomberHuntTask(PlayerAI& ai, MapEntity& bomber)
 	bomber(bomber),
 	pTarget(nullptr),
 	ai(ai),
-	group(ID_START + bomber.GetID())
+	group(ID_START + bomber.getID())
 {
 	bomber.groupAssign(group);
 }
@@ -15,7 +15,7 @@ void BomberHuntTask::DoTask(float dt)
 	if (pTarget)
 	{
 		ai.map.SelectGroup(ai.team, group);
-		ai.map.Click(pTarget->GetPos(), ai.team);
+		ai.map.Click(pTarget->getPos(), ai.team);
 	}
 	else
 	{
@@ -37,7 +37,7 @@ void BomberHuntTask::SetTarget(const MapEntity* target)
 }
 int BomberHuntTask::GetBomberID() const
 {
-	return bomber.GetID();
+	return bomber.getID();
 }
 const MapEntity* BomberHuntTask::GetTarget() const
 {

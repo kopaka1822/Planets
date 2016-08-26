@@ -26,10 +26,10 @@ public:
 
 	// AI access
 
-	// own team
+	// own m_team
 	size_t CountUnits(byte team, PointF pos, float radius);
 
-	// own team + ally
+	// own m_team + ally
 	size_t CountAllyUnits(byte team, PointF pos, float radius);
 
 	// enemies (no allies)

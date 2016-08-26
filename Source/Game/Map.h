@@ -37,7 +37,7 @@ public:
 	enum class GameType
 	{
 		AllvAll,
-		UnholyAlliance, // you can form a team with one person
+		UnholyAlliance, // you can form a m_team with one person
 		Allicance, // teams specified in map
 		NONE = 0xFF
 	};
@@ -47,9 +47,9 @@ public:
 
 	virtual bool Select(PointF center, float r2, byte team);
 	virtual void SelectAll(byte team);
-	//tries to add units to an existing group
+	//tries to add units to an existing m_group
 	virtual void AddToGroup(byte team, int group);
-	//tries to make a new group with selected units
+	//tries to make a new m_group with selected units
 	virtual void MakeGroup(byte team, int group);
 	virtual void SelectGroup(byte team, int group);
 	virtual void DeleteGroup(byte team, int group);
@@ -59,7 +59,7 @@ public:
 	virtual void Update(float dt) = 0;
 	virtual void SetAllPlanetsOnDefense(byte team);
 	// returns true if anything was selected
-	virtual bool FilterEntityType(byte team, MapObject::entityType)
+	virtual bool FilterEntityType(byte team, MapObject::EntityType)
 	{
 		for (const auto& e : ents[team - 1])
 		{
@@ -71,7 +71,7 @@ public:
 
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
 				if (p->selected())
 				{
@@ -82,11 +82,11 @@ public:
 
 		return false;
 	}
-	virtual void SelectAllEntityType(byte team, MapObject::entityType et)
+	virtual void SelectAllEntityType(byte team, MapObject::EntityType et)
 	{
 		for (auto& e : ents[team - 1])
 		{
-			if (e.GetEntityType() == et)
+			if (e.getEntityType() == et)
 			{
 				e.forceSelect();
 			}
@@ -98,16 +98,16 @@ public:
 
 		for (auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
-				if (p->GetEntityType() == et)
+				if (p->getEntityType() == et)
 					p->forceSelect();
 				else
 					p->deselect();
 			}
 		}
 	}
-	virtual byte GameEnd() const = 0;//returns winner team
+	virtual byte GameEnd() const = 0;//returns winner m_team
 	virtual bool GameStart() const
 	{
 		return true;
@@ -129,7 +129,7 @@ public:
 		int n = 0;
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 				++n;
 		}
 		return n;
@@ -142,7 +142,7 @@ public:
 	{
 		return nPlayers;
 	}
-	virtual void SetPlanetSpawnType(byte team, MapObject::entityType t);
+	virtual void SetPlanetSpawnType(byte team, MapObject::EntityType t);
 	// multiplayer
 	virtual void AddPacket(DataContainer&&){}
 	int CountAllyPlanets(byte team)
@@ -153,7 +153,7 @@ public:
 		int c = 0;
 		for (const auto& p : plans)
 		{
-			if (isAlly(team, p->GetTeam()))
+			if (isAlly(team, p->getTeam()))
 				c++;
 		}
 		return c;
@@ -287,7 +287,7 @@ public:
 		unsigned int c = 0;
 		for (const auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 				c++;
 		}
 		return c;
@@ -301,9 +301,9 @@ private:
 	{
 		while (start != end) //end is always the same
 		{
-			if (isAlly((*start)->GetTeam(), myTeam))
+			if (isAlly((*start)->getTeam(), myTeam))
 			{
-				const PointF dist = (*start)->GetPos() - vP;
+				const PointF dist = (*start)->getPos() - vP;
 
 				if (dist.lengthSq() < (float)MapEntity::FOV2)
 				{
@@ -394,7 +394,7 @@ private:
 			return 0;
 		}
 	private:
-		//const byte team;
+		//const byte m_team;
 		std::function<void(EntIterator, EntIterator)>& updFunc;
 		LinkedIDList<MapEntity>& ents;
 	};

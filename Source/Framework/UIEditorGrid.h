@@ -599,7 +599,7 @@ public:
 				teamCount++;
 		}
 
-		//check for errors (e.g. team 1-3 and 5 exist, but team 4 not...)
+		//check for errors (e.g. m_team 1-3 and 5 exist, but m_team 4 not...)
 		int count2 = -1; // skip the first one
 		for (const auto& t : teams)
 		{
@@ -625,7 +625,7 @@ public:
 			return false;
 		}
 
-		// all in same team?
+		// all in same m_team?
 		byte startTeam = itm.teams[0];
 		bool bDiffTeams = false;
 		for (int i = 1; i < teamCount; i++)
@@ -639,7 +639,7 @@ public:
 
 		if (!bDiffTeams)
 		{
-			*dstError = "all players in same team";
+			*dstError = "all players in same m_team";
 			return false;
 		}
 		

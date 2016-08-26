@@ -11,39 +11,39 @@ public:
 	MapPlanet(const MapLoader::MapPlanet& plan, unsigned int ID)
 		:
 		MapObject({ plan.x, plan.y }, plan.team, plan.HP,MapObject::tgPlanetDefend,PointF(ID,0.0f),-1),
-        sUnit(plan.sUnit),
-		radius(plan.radius),
-		colRect(RectF(plan.x - plan.radius, plan.y - plan.radius, plan.x + plan.radius, plan.y + plan.radius)),
-		r2(radius * radius),
-		nearR(radius + PLAN_NEAR),
-		nearR2( nearR * nearR),
-		defR(radius + float(PLAN_DEFENSE)),
-		defR2(defR * defR),
-		MaxHP(plan.HP),
-        ID(ID),
-        curEntType(etNormal)
+        m_sUnit(plan.sUnit),
+		m_radius(plan.radius),
+		m_colRect(RectF(plan.x - plan.radius, plan.y - plan.radius, plan.x + plan.radius, plan.y + plan.radius)),
+		m_r2(m_radius * m_radius),
+		m_nearR(m_radius + PLAN_NEAR),
+		m_nearR2( m_nearR * m_nearR),
+		m_defR(m_radius + float(PLAN_DEFENSE)),
+		m_defR2(m_defR * m_defR),
+		m_maxHP(plan.HP),
+        m_ID(ID),
+        m_curEntType(etNormal)
 	{
 	}
 	virtual ~MapPlanet(){}
 
-	float GetRadius() const
+	float getRadius() const
 	{
-		return radius;
+		return m_radius;
 	}
-	float GetDefenseRadius() const
+	float getDefenseRadius() const
 	{
-		return defR;
+		return m_defR;
 	}
-	virtual bool Update(const float dt) = 0;
+	virtual bool update(const float dt) = 0;
 	inline bool isColliding(const PointF& p) const
 	{
 		/*if (fabs(p.x - pos.x) <= radius)
 			if (fabs(p.y - pos.y) <= radius)
 				if ((p - pos).lengthSq() <= r2)
 					return true;*/
-		if (colRect.PointInside(p))
+		if (m_colRect.PointInside(p))
 		{
-			if ((p - pos).lengthSq() <= r2)
+			if ((p - m_pos).lengthSq() <= m_r2)
 			{
 				return true;
 			}
@@ -52,9 +52,9 @@ public:
 	}
 	inline bool isNearby(const PointF& p) const
 	{
-		if (fabs(p.x - pos.x) <= nearR)
-			if (fabs(p.y - pos.y) <= nearR)
-				if ((p - pos).lengthSq() <= nearR2)
+		if (fabs(p.x - m_pos.x) <= m_nearR)
+			if (fabs(p.y - m_pos.y) <= m_nearR)
+				if ((p - m_pos).lengthSq() <= m_nearR2)
 					return true;
 
 		return false;
@@ -62,176 +62,176 @@ public:
 	//inside defense radius
 	inline bool isInDefend(const PointF& p) const
 	{
-		if (fabs(p.x - pos.x) <= defR)
-			if (fabs(p.y - pos.y) <= defR)
-				if ((p - pos).lengthSq() <= defR2)
+		if (fabs(p.x - m_pos.x) <= m_defR)
+			if (fabs(p.y - m_pos.y) <= m_defR)
+				if ((p - m_pos).lengthSq() <= m_defR2)
 					return true;
 
 		return false;
 	}
-	bool TakeDamage(int amount, byte team) //returns true if captured
+	bool takeDamage(int amount, byte team) //returns true if captured
 	{
-		//if (this->team != team)
+		//if (this->m_team != m_team)
 		//{
-			if (this->team != 0) // someone owns this planet
+			if (this->m_team != 0) // someone owns this planet
 			{
-				HP -= amount;
-				if (HP <= 0)
+				m_hp -= amount;
+				if (m_hp <= 0)
 				{
-					TakeOver(team);
+					takeOver(team);
 					return true;
 				}
 			}
 			else
 			{//noone owns this planet
-				if (HP == MaxHP)
+				if (m_hp == m_maxHP)
 				{
-					subteam = team;
+					m_subteam = team;
 				}
 
-				if (subteam == team)
+				if (m_subteam == team)
 				{
-					HP -= amount;
-					if (HP <= 0)
+					m_hp -= amount;
+					if (m_hp <= 0)
 					{
-						TakeOver(team);
+						takeOver(team);
 						return true;
 					}
 				}
-				else  //subteam != team
+				else  //subteam != m_team
 				{
-					HP += amount;
-					if (HP >= MaxHP)
+					m_hp += amount;
+					if (m_hp >= m_maxHP)
 					{
-						HP = MaxHP;
-						subteam = 0;
+						m_hp = m_maxHP;
+						m_subteam = 0;
 					}
 				}
 			}
 		//}
 		return false;
 	}
-	int GetMaxHP() const
+	int getMaxHP() const
 	{
-		return MaxHP;
+		return m_maxHP;
 	}
-	float GetPercentage() const
+	float getPercentage() const
 	{
-		return float(HP) / float(MaxHP);
+		return float(m_hp) / float(m_maxHP);
 	}
-	virtual float GetDrawPercentage()
+	virtual float getDrawPercentage()
 	{
-		return GetDrawPercentage();
+		return getDrawPercentage();
 	}
-	virtual void CalcDrawPercentage()
+	virtual void calcDrawPercentage()
 	{}
-	short GetID() const //-1 = invalid
+	short getID() const //-1 = invalid
 	{
-		return ID;
+		return m_ID;
 	}
-	virtual void TakeOver(byte team)
+	virtual void takeOver(byte team)
 	{
-		HP = MaxHP;
-		if (this->team == 0)
+		m_hp = m_maxHP;
+		if (this->m_team == 0)
 		{
-			this->team = team;
+			this->m_team = team;
 		}
 		else
 		{
-			this->team = 0;
+			this->m_team = 0;
 		}
-		subteam = 0;
+		m_subteam = 0;
 		//reset some things..
 		MapObject::deselect();
-		MapObject::group = -1;
-		MapObject::setTarget({ ID, 0.0f }, tgPlanetDefend);
-		curEntType = etNormal;
+		MapObject::m_group = -1;
+		MapObject::setTarget({ m_ID, 0.0f }, tgPlanetDefend);
+		m_curEntType = etNormal;
 	}
-	virtual void Sabotage(byte tea)
+	virtual void sabotage(byte tea)
 	{
-		if (this->team == tea)
+		if (this->m_team == tea)
 			return;
 
-		if (this->team != 0)
+		if (this->m_team != 0)
 		{
-			TakeOver(0);
+			takeOver(0);
 		}
 		else
 		{
-			TakeOver(tea);
+			takeOver(tea);
 		}
 	}
-	void SetEntityType(entityType t)
+	void setEntityType(EntityType t)
 	{
-		curEntType = t;
+		m_curEntType = t;
 	}
-	entityType GetEntityType() const
+	EntityType getEntityType() const
 	{
-		return curEntType;
+		return m_curEntType;
 	}
 	//Local
-	virtual float GetsUnit() const
+	virtual float getsUnit() const
 	{
 		return 0.0f;
 	}
-	byte GetSubteam() const
+	byte getSubteam() const
 	{
-		return subteam;
+		return m_subteam;
 	}
-	int GetSubHP(byte ownTeam) const
+	int getSubHP(byte ownTeam) const
 	{
-		if (subteam)
+		if (m_subteam)
 		{
-			if (subteam == ownTeam)
+			if (m_subteam == ownTeam)
 			{
-				return HP;
+				return m_hp;
 			}
 			else
 			{
-				return 2 * MaxHP - HP;
+				return 2 * m_maxHP - m_hp;
 			}
 		}
 		else
 		{
-			return 2 * HP;
+			return 2 * m_hp;
 		}
 	}
-	void SetSubAndHP(byte sub, int HP)
+	void setSubAndHP(byte sub, int HP)
 	{
-		SetHP(HP);
-		subteam = sub;
+		setHP(HP);
+		m_subteam = sub;
 	}
 
-	virtual float GetSpawnTimePercent() = 0;
-	virtual void ResetSpawnTime(){}
+	virtual float getSpawnTimePercent() = 0;
+	virtual void resetSpawnTime(){}
 protected:
-	float GetSpawnFactor() const
+	float getSpawnFactor() const
 	{
 		//	              1
 		//  f(x) =  --------------
 		//			0.9 * x² + 0,1
-		float perc = GetPercentage();
+		float perc = getPercentage();
 		float y = 0.9f * perc * perc + 0.1f;
-		return 1.0f / y * GetEntSpawnFactor(GetEntityType());
+		return 1.0f / y * getEntSpawnFactor(getEntityType());
 	}
 protected:
-	const float sUnit;
-	const float radius;
-	const RectF colRect;
-	const float r2;
-	const float nearR;
-	const float nearR2;
+	const float m_sUnit;
+	const float m_radius;
+	const RectF m_colRect;
+	const float m_r2;
+	const float m_nearR;
+	const float m_nearR2;
 
-	const float defR;
-	const float defR2;
+	const float m_defR;
+	const float m_defR2;
 
-	const int MaxHP;
+	const int m_maxHP;
 
-	const short ID;
+	const short m_ID;
 
-	byte subteam = 0;
+	byte m_subteam = 0;
 
-	entityType curEntType;
+	EntityType m_curEntType;
 public:
 	static const int PLAN_DEFENSE = 20;
 	static const int PLAN_NEAR = 15;

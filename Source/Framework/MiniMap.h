@@ -19,7 +19,7 @@ public:
 
 		for (const auto& p : map.plans)
 		{
-			draw.DrawPlanet(fromModel(p->GetPos()), Color::GetTeamColor(p->GetTeam()), fromModel(p->GetRadius()));
+			draw.DrawPlanet(fromModel(p->getPos()), Color::GetTeamColor(p->getTeam()), fromModel(p->getRadius()));
 		}
 
 		//draw Cam Rect

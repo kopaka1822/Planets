@@ -290,7 +290,7 @@ void StateGame::Event_KeyDown(SDL_Scancode code)
 		byte group = code - SDL_SCANCODE_1 + 1;
 		if (bAddGroupDown)
 		{
-			//add to group
+			//add to m_group
 			gs.pMap->AddToGroup(gs.myTeam, group);
 			gs.pMap->SelectGroup(gs.myTeam, group);
 		}
@@ -300,7 +300,7 @@ void StateGame::Event_KeyDown(SDL_Scancode code)
 		}
 		else
 		{
-			//select group
+			//select m_group
 			gs.pMap->SelectGroup(gs.myTeam, group);
 		}
 	}
@@ -546,7 +546,7 @@ void StateGame::UpdateGameButtons()
 	{
 		if (entSel.isEnabled() && bMapInput)
 		{
-			if (entSel.Pushed() && entSel.GetCurType() != MapObject::entityType::etNone)
+			if (entSel.Pushed() && entSel.GetCurType() != MapObject::EntityType::etNone)
 			{
 				gs.pMap->SetPlanetSpawnType(myTeam, entSel.GetCurType());
 				Event_EntityTypeChanged();
@@ -685,15 +685,15 @@ void StateGame::SoundBox::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte 
 	{
 		bool setBlurring = false;
 
-		// new team == 0
-		// if previous team was you and the enemy send an saboteur, play sudden.wav
-		if (oldTeam == myTeam && culprit != nullptr && culprit->GetEntityType() == MapObject::entityType::etSaboteur)
+		// new m_team == 0
+		// if previous m_team was you and the enemy send an saboteur, play sudden.wav
+		if (oldTeam == myTeam && culprit != nullptr && culprit->getEntityType() == MapObject::EntityType::etSaboteur)
 		{
 			Sound::Effect(Sound::S_SUDDEN);
 			setBlurring = true;
 		}
-		// if previous team was an enemy and you captured with saboteur play horns
-		else if (culprit != nullptr && culprit->GetTeam() == myTeam && culprit->GetEntityType() == MapObject::entityType::etSaboteur)
+		// if previous m_team was an enemy and you captured with saboteur play horns
+		else if (culprit != nullptr && culprit->getTeam() == myTeam && culprit->getEntityType() == MapObject::EntityType::etSaboteur)
 		{
 			Sound::Effect(Sound::S_HORNS);
 			setBlurring = true;
@@ -752,11 +752,11 @@ StateGame::Scoreboard::Scoreboard(int maxTeams)
 }
 void StateGame::Scoreboard::Event_EntitySpawn(PlanetID pID, MapEntity& e) 
 {
-	entSpawned[e.GetTeam() - 1]++;
+	entSpawned[e.getTeam() - 1]++;
 }
 void StateGame::Scoreboard::Event_EntityKilled(MapEntity& e) 
 {
-	entLost[e.GetTeam() - 1]++;
+	entLost[e.getTeam() - 1]++;
 }
 //virtual void Event_PlanetAttacked(PlanetID pID, const EntityID& eID){};
 void StateGame::Scoreboard::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) 

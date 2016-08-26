@@ -16,5 +16,5 @@ void PlanetAttackTask::Destroy()
 void PlanetAttackTask::Update()
 {
 	ai.map.SelectGroup(ai.team, gid);
-	ai.map.Click(plan.GetPos(), ai.team);
+	ai.map.Click(plan.getPos(), ai.team);
 }

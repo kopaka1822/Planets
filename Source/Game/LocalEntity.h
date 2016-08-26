@@ -4,55 +4,55 @@
 class LocalEntity : public MapEntity
 {
 public:
-	LocalEntity(const PointF& p, byte team, MapObject::targetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
+	LocalEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
 		:
 		MapEntity(p,team,ttype,tar,group,selec,id),
-		oldPos(drawpos)
+		m_oldPos(drawpos)
 	{}
 	virtual ~LocalEntity(){}
 
 	//Check Has Damage!!!!
-	virtual int GetDamage() override
+	virtual int getDamage() override
 	{
-		int d = charges * DAMAGE;
-		charges = 0;
+		int d = m_charges * DAMAGE;
+		m_charges = 0;
 		return d;
 	}
-	virtual bool HasDamage() const
+	virtual bool hasDamage() const override
 	{
-		return (charges != 0);
+		return (m_charges != 0);
 	}
-	virtual void UpdatePosition(const float dt) override
+	virtual void updatePosition(const float dt) override
 	{
-		DmgTmr -= dt;
+		m_DmgTmr -= dt;
 
-		if (!charges)
+		if (!m_charges)
 		{
-			while (DmgTmr < 0.0f)
+			while (m_DmgTmr < 0.0f)
 			{
-				DmgTmr += (float)DAMAGE_INTV;
-				charges = std::min(charges + 1, MAX_CHARGES);
+				m_DmgTmr += static_cast<float>(DAMAGE_INTV);
+				m_charges = std::min(m_charges + 1, MAX_CHARGES);
 			}
 		}
 
 
-		MapEntity::UpdatePosition(dt);
+		MapEntity::updatePosition(dt);
 	}
-	virtual void CalcDrawPos() override
+	virtual void calcDrawPos() override
 	{
-		oldPos = (oldPos * 0.70f + GetPos() * 0.30f);
+		m_oldPos = (m_oldPos * 0.70f + getPos() * 0.30f);
 	}
-	virtual const PointF GetDrawPos() override
+	virtual const PointF & getDrawPos() override
 	{
-		return oldPos;
+		return m_oldPos;
 	}
 
-	virtual entityType GetEntityType() const override
+	virtual EntityType getEntityType() const override
 	{
 		return etNormal;
 	}
 private:
-	float DmgTmr = 0.0f;
-	int charges = 0;
-	PointF oldPos;
+	float m_DmgTmr = 0.0f;
+	int m_charges = 0;
+	PointF m_oldPos;
 };

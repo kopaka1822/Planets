@@ -42,10 +42,10 @@ PointF WeakAI::GetTarget()
 	PointF mid;
 	for (const auto& p : map.plans)
 	{
-		if (p->GetTeam() == myTeam)
+		if (p->getTeam() == myTeam)
 		{
 			nPlans++;
-			mid += p->GetPos();
+			mid += p->getPos();
 		}
 	}
 
@@ -68,7 +68,7 @@ PointF WeakAI::GetTarget()
 		// we dont have planets -> attack first planet
 		if (map.nPlans)
 		{
-			return map.plans[0]->GetPos();
+			return map.plans[0]->getPos();
 		}
 		else
 		{
@@ -84,13 +84,13 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 
 	for (const auto& p : map.plans)
 	{
-		if (p->GetTeam() == 0)
+		if (p->getTeam() == 0)
 		{
-			float dist = (pos - p->GetPos()).lengthSq();
+			float dist = (pos - p->getPos()).lengthSq();
 			if (dist < lastDist)
 			{
 				lastDist = dist;
-				nearesPos = p->GetPos();
+				nearesPos = p->getPos();
 				bFoundWhite = true;
 			}
 		}
@@ -102,13 +102,13 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 
 	for (const auto& p : map.plans)
 	{
-		if (p->GetTeam() != myTeam)
+		if (p->getTeam() != myTeam)
 		{
-			float dist = (pos - p->GetPos()).lengthSq();
+			float dist = (pos - p->getPos()).lengthSq();
 			if (dist < lastDist)
 			{
 				lastDist = dist;
-				nearesPos = p->GetPos();
+				nearesPos = p->getPos();
 			}
 		}
 	}
@@ -123,7 +123,7 @@ PointF WeakAI::GetNearestEnt()
 		{
 			if (map.ents[i].length())
 			{
-				return map.ents[i].begin()->GetPos();
+				return map.ents[i].begin()->getPos();
 			}
 		}
 	}

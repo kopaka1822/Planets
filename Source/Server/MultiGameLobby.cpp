@@ -173,7 +173,7 @@ void MultiGameLobby::OrderMaps()
 			+ std::to_string(i) + std::string(" players (no teams)")).c_str());
 	}
 	
-	Console::WriteLine("loading team maps");
+	Console::WriteLine("loading m_team maps");
 	mapsTeams.clear();
 
 	for (const auto& m : maps)
@@ -348,7 +348,7 @@ void MultiGameLobby::HandleChat(ContainerReader& r, int id)
 		ContainerWriter w(con);
 
 		w.writeShort((short)PacketType::GameChat);
-		w.writeByte((id % 25) + 1); // team color
+		w.writeByte((id % 25) + 1); // m_team color
 		w.writeStringNoNull("[");
 		w.writeStringNoNull(players[id - 1].name.c_str());
 		w.writeStringNoNull("] ");

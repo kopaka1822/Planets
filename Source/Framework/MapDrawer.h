@@ -33,7 +33,7 @@ public:
 		entSelect.disable();
 		planColors.assign(map.nPlans, Color::White());
 		for (const auto& p : map.plans)
-			planColors[p->GetID()] = Color::GetTeamColor(p->GetTeam());
+			planColors[p->getID()] = Color::GetTeamColor(p->getTeam());
 
 		lastPlanSpawn.assign(map.nPlans, 1000.0f);
 		//Zoom(1.0f);
@@ -172,7 +172,7 @@ public:
 		auto p = map.getPlanP(pid);
 		if (p)
 		{
-			Drawing::GetDraw().SetBlur(fromModel(p->GetPos()));
+			Drawing::GetDraw().SetBlur(fromModel(p->getPos()));
 		}
 	}
 private:
@@ -181,8 +181,8 @@ private:
 		const PointF center = entSelect.getRect().GetMidpoint();
 		for (const auto& p : map.plans)
 		{
-			if (p->GetTeam() == myTeam && p->selected())
-				draw.DrawLine(center, fromModel(p->GetPos()), Color::White(), 3.0f);
+			if (p->getTeam() == myTeam && p->selected())
+				draw.DrawLine(center, fromModel(p->getPos()), Color::White(), 3.0f);
 		}
 	}
 	void DrawPlanetCircle()
@@ -192,18 +192,18 @@ private:
 		int numSel = 0;
 
 		bool bSameType = true;
-		MapObject::entityType curType = MapObject::entityType::etNormal;
+		MapObject::EntityType curType = MapObject::EntityType::etNormal;
 
 		for (const auto& p : map.plans)
 		{
-			if (p->selected() && p->GetTeam() == myTeam)
+			if (p->selected() && p->getTeam() == myTeam)
 			{
-				pid = p->GetID();
+				pid = p->getID();
 				if (numSel == 0)
 				{
-					curType = p->GetEntityType();
+					curType = p->getEntityType();
 				}
-				else if (curType != p->GetEntityType())
+				else if (curType != p->getEntityType())
 				{
 					bSameType = false;
 				}
@@ -215,9 +215,9 @@ private:
 		// entity selector
 		if (numSel >= 1)
 		{
-			const PointF p = map.getPlan(pid).GetPos();
+			const PointF p = map.getPlan(pid).getPos();
 
-			PointF off = PointF(fromModel(map.getPlan(pid).GetRadius()), fromModel(map.getPlan(pid).GetRadius()));
+			PointF off = PointF(fromModel(map.getPlan(pid).getRadius()), fromModel(map.getPlan(pid).getRadius()));
 			RectF colBox = RectF(fromModel(p) - off, fromModel(p) + off);
 
 			// exactly one planet is selected -> draw cricle
@@ -225,7 +225,7 @@ private:
 			const float xMin = Framework::DrawStart().x + 10.0f;
 			const float xMax = Framework::DrawStart().x + Framework::DrawWidth().x - 10.0f - entSelect.getMetrics().x;
 
-			float x = fromModel(map.getPlan(pid).GetPos()).x - entSelect.getMetrics().x / 2.0f;
+			float x = fromModel(map.getPlan(pid).getPos()).x - entSelect.getMetrics().x / 2.0f;
 			x = tool::clamp(x, xMin, xMax);
 
 			//entSelect.setOrigin({ x, Framework::DrawStart().y + 10.0f });
@@ -238,7 +238,7 @@ private:
 			}
 			else
 			{
-				entSelect.SetActiveType(MapObject::entityType::etNone);
+				entSelect.SetActiveType(MapObject::EntityType::etNone);
 			}
 			//entSelect.SetActiveType(map.getPlan(pid).GetEntityType(), pid);
 			entSelect.enable();
@@ -253,33 +253,33 @@ private:
 	{
 		for (const auto& p : map.plans)
 		{
-			p->CalcDrawPercentage();
+			p->calcDrawPercentage();
 			// update color
-			planColors[p->GetID()] = planColors[p->GetID()].mix(Color::GetTeamColor(p->GetTeam()), 0.92f);
+			planColors[p->getID()] = planColors[p->getID()].mix(Color::GetTeamColor(p->getTeam()), 0.92f);
 
 
 			//draw.DrawPlanet(fromModel(p->GetPos()), planColors[p->GetID()], fromModel(p->GetRadius()));
 
-			if (p->drawSelected() && p->GetTeam() == myTeam)
+			if (p->drawSelected() && p->getTeam() == myTeam)
 			{
 				//draw.DrawCircle(fromModel(p->GetPos()),fromModel( p->GetRadius() - 6.0f), Color::White(),2.0f);
-				draw.DrawCircle(fromModel(p->GetPos()), fromModel(p->GetDefenseRadius()), Color::Blue(), 2.0f);
+				draw.DrawCircle(fromModel(p->getPos()), fromModel(p->getDefenseRadius()), Color::Blue(), 2.0f);
 			}
 
-			float blend = float(p->GetHP()) / float(p->GetMaxHP());
-			Color c = Color::GetTeamColor(p->GetTeam()).mix(Color::GetTeamColor(p->GetSubteam()), blend);
+			float blend = float(p->getHP()) / float(p->getMaxHP());
+			Color c = Color::GetTeamColor(p->getTeam()).mix(Color::GetTeamColor(p->getSubteam()), blend);
 
-			float lastSpawn = lastPlanSpawn[p->GetID()];
-			if (p->GetTeam() == 0)
+			float lastSpawn = lastPlanSpawn[p->getID()];
+			if (p->getTeam() == 0)
 				lastSpawn = 1000.0f;
 
-			draw.DrawPlanet(fromModel(p->GetPos()), planColors[p->GetID()], c, fromModel(p->GetRadius()),lastSpawn / p->GetsUnit());
+			draw.DrawPlanet(fromModel(p->getPos()), planColors[p->getID()], c, fromModel(p->getRadius()),lastSpawn / p->getsUnit());
 			//draw.DrawSpriteColored(RectF::FromPoint(fromModel(p->GetPos()), fromModel(p->GetRadius())), Database::GetTexture(Database::PlanetDes));
 		}
 	}
 	void DrawEnts(Drawing& draw)
 	{
-		// draw each team
+		// draw each m_team
 
 		struct PartArr
 		{
@@ -353,30 +353,30 @@ private:
 				// special units
 				for (auto& e : map.ents[i])
 				{
-					e.CalcDrawPos();
+					e.calcDrawPos();
 
 					if (e.selected())
 					{
 						// white
-						switch (e.GetEntityType())
+						switch (e.getEntityType())
 						{
 						case MapObject::etNormal:
-							*normwh.cur = e.GetDrawPos();
+							*normwh.cur = e.getDrawPos();
 							normwh.cur++;
 							normwh.count++;
 							break;
 						case MapObject::etBomber:
-							*bombwh.cur = e.GetDrawPos();
+							*bombwh.cur = e.getDrawPos();
 							bombwh.cur++;
 							bombwh.count++;
 							break;
 						case MapObject::etSaboteur:
-							*saboWh.cur = e.GetDrawPos();
+							*saboWh.cur = e.getDrawPos();
 							saboWh.cur++;
 							saboWh.count++;
 							break;
 						case MapObject::etSpeeder:
-							*speedwh.cur = e.GetDrawPos();
+							*speedwh.cur = e.getDrawPos();
 							speedwh.cur++;
 							speedwh.count++;
 							break;
@@ -384,26 +384,26 @@ private:
 					}
 					else
 					{
-						// team color
-						switch (e.GetEntityType())
+						// m_team color
+						switch (e.getEntityType())
 						{
 						case MapObject::etNormal:
-							*norm.cur = e.GetDrawPos();
+							*norm.cur = e.getDrawPos();
 							norm.cur++;
 							norm.count++;
 							break;
 						case MapObject::etBomber:
-							*bomb.cur = e.GetDrawPos();
+							*bomb.cur = e.getDrawPos();
 							bomb.cur++;
 							bomb.count++;
 							break;
 						case MapObject::etSaboteur:
-							*sabo.cur = e.GetDrawPos();
+							*sabo.cur = e.getDrawPos();
 							sabo.cur++;
 							sabo.count++;
 							break;
 						case MapObject::etSpeeder:
-							*speed.cur = e.GetDrawPos();
+							*speed.cur = e.getDrawPos();
 							speed.cur++;
 							speed.count++;
 							break;
@@ -416,8 +416,8 @@ private:
 				// just normal in one color
 				for (auto& e : map.ents[i])
 				{
-					e.CalcDrawPos();
-					*norm.cur = e.GetDrawPos();
+					e.calcDrawPos();
+					*norm.cur = e.getDrawPos();
 					norm.cur++;
 					norm.count++;
 				}
@@ -473,8 +473,8 @@ private:
 		{
 			if (p->isNearby(ms))
 			{
-				DrawBar(draw, p->GetDrawPercentage(), fromModel(p->GetPos()), fromModel(p->GetRadius()),
-					Color::GetTeamColor(p->GetSubteam()),p->GetSpawnTimePercent(), p->GetTeam() == myTeam);
+				DrawBar(draw, p->getDrawPercentage(), fromModel(p->getPos()), fromModel(p->getRadius()),
+					Color::GetTeamColor(p->getSubteam()),p->getSpawnTimePercent(), p->getTeam() == myTeam);
 			}
 		}
 	}
@@ -540,19 +540,19 @@ private:
 			{
 				if (e.hasTarget())
 				{
-					switch (e.GetTargetType())
+					switch (e.getTargetType())
 					{
 					case MapObject::tgPlanet:
 					{
-						MapPlanet* t = map.getPlanP((PlanetID)e.GetTarget().x); //this is necessary!
+						MapPlanet* t = map.getPlanP((PlanetID)e.getTarget().x); //this is necessary!
 						if (t)
-							draw.DrawLine(fromModel(e.GetDrawPos()), fromModel(t->GetPos()), col, stroke);
+							draw.DrawLine(fromModel(e.getDrawPos()), fromModel(t->getPos()), col, stroke);
 					}
 						break;
 					case MapObject::tgPlanetDefend:
 						break;
 					default:
-						draw.DrawLine(fromModel(e.GetDrawPos()), fromModel(e.GetTarget()), col, stroke);
+						draw.DrawLine(fromModel(e.getDrawPos()), fromModel(e.getTarget()), col, stroke);
 					}
 				}
 			}
@@ -561,25 +561,25 @@ private:
 
 		for (const auto& p : map.plans)
 		{
-			if (p->GetTeam() == myTeam)
+			if (p->getTeam() == myTeam)
 			{
 				if (p->drawSelected())
 				{
 					if (p->hasTarget())
 					{
-						switch (p->GetTargetType())
+						switch (p->getTargetType())
 						{
 						case MapObject::tgPlanet:
 						{
-							MapPlanet* t = map.getPlanP((PlanetID)p->GetTarget().x); //this is necessary!
+							MapPlanet* t = map.getPlanP((PlanetID)p->getTarget().x); //this is necessary!
 							if (t)
-								draw.DrawLine(fromModel(p->GetPos()), fromModel(t->GetPos()), col, stroke);
+								draw.DrawLine(fromModel(p->getPos()), fromModel(t->getPos()), col, stroke);
 						}
 							break;
 						case MapObject::tgPlanetDefend:
 							break;
 						default:
-							draw.DrawLine(fromModel(p->GetPos()), fromModel(p->GetTarget()), col, stroke);
+							draw.DrawLine(fromModel(p->getPos()), fromModel(p->getTarget()), col, stroke);
 						}
 					}
 						//if (p->GetTargetType() != MapObject::tgPlanetDefend)
@@ -892,8 +892,8 @@ private:
 		numParts = (rand() % numParts) + 1;
 
 		explosionParticle p;
-		p.pos = e.GetPos();
-		p.col = Color::GetTeamColor(e.GetTeam());
+		p.pos = e.getPos();
+		p.col = Color::GetTeamColor(e.getTeam());
 		p.time = 0.0f;
 
 		muDieEnts.Lock();
@@ -916,8 +916,8 @@ private:
 
 		explosionParticle p;
 		MapPlanet& pl = map.getPlan(pID);
-		const PointF& center = pl.GetPos();
-		const float r2 = pl.GetRadius() / 2.0f;
+		const PointF& center = pl.getPos();
+		const float r2 = pl.getRadius() / 2.0f;
 		p.time = 0.0f;
 		p.col = Color::GetTeamColor(newTeam);
 

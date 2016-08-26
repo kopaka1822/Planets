@@ -18,7 +18,7 @@ Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const
 	clanInfo.assign(nPlayers, vec);
 	for (int i = 0; i < nPlayers; i++)
 	{
-		// team 1 is ally with himself
+		// m_team 1 is ally with himself
 		clanInfo[i][i] = ClanInfo::Ally;
 	}
 
@@ -58,7 +58,7 @@ bool Map::Select(PointF center, float r2, byte team)
 	{
 		for (auto& e : ents[team - 1])
 		{
-			float er2 = (e.GetPos() - center).lengthSq();
+			float er2 = (e.getPos() - center).lengthSq();
 
 			if (er2 <= r2)
 			{
@@ -68,9 +68,9 @@ bool Map::Select(PointF center, float r2, byte team)
 		//Planet Selected?
 		for (auto& p : plans)
 		{
-			if (p->GetTeam() == team)
+			if (p->getTeam() == team)
 			{
-				float pr2 = (p->GetPos() - center).lengthSq();
+				float pr2 = (p->getPos() - center).lengthSq();
 
 				if (pr2 <= r2)
 				{
@@ -92,7 +92,7 @@ void Map::SelectAll(byte team)
 	//Planet Selected?
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 			p->forceSelect();
 	}
 }
@@ -139,7 +139,7 @@ void Map::SelectGroup(byte team, int group)
 	}
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 			p->groupSelect(group);
 	}
 }
@@ -152,7 +152,7 @@ void Map::DeleteGroup(byte team, int group)
 	}
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 			p->groupDestroy(group);
 	}
 }
@@ -165,7 +165,7 @@ void Map::ClickRight(byte team)
 	}
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 			p->deselect();
 	}
 }
@@ -174,25 +174,25 @@ void Map::SetAllPlanetsOnDefense(byte team)
 {
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team)
+		if (p->getTeam() == team)
 		{
 			PointF tar;
-			tar.x = float(p->GetID());
+			tar.x = float(p->getID());
 			p->setTarget(tar, MapObject::tgPlanetDefend);
-			p->SetEntityType(MapObject::entityType::etNormal);
+			p->setEntityType(MapObject::EntityType::etNormal);
 		}
 	}
 }
 
-void Map::SetPlanetSpawnType(byte team, MapObject::entityType t)
+void Map::SetPlanetSpawnType(byte team, MapObject::EntityType t)
 {
-	assert(t != MapObject::entityType::etNone);
+	assert(t != MapObject::EntityType::etNone);
 
 	for (auto& p : plans)
 	{
-		if (p->GetTeam() == team && p->selected())
+		if (p->getTeam() == team && p->selected())
 		{
-			p->SetEntityType(t);
+			p->setEntityType(t);
 		}
 	}
 }
@@ -227,7 +227,7 @@ void Map::RefreshGrid()
 	{
 		for (auto& e : ents[i])
 		{
-			grid.AddEntity(&e, e.GetPos());
+			grid.AddEntity(&e, e.getPos());
 		}
 	}
 }
@@ -239,7 +239,7 @@ const MapEntity* Map::GetColEnt(PointF pt, unsigned int id, byte team)
 	{
 		if (e->isColliding(pt))
 		{
-			if (e->GetID() == id && e->GetTeam() == team)
+			if (e->getID() == id && e->getTeam() == team)
 				continue;
 
 			return e;
@@ -250,14 +250,14 @@ const MapEntity* Map::GetColEnt(PointF pt, unsigned int id, byte team)
 
 void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 {
-	ds *= curEnt.GetSpeedModifier();
-	VectorF vV = curEnt.GetVel();
+	ds *= curEnt.getSpeedModifier();
+	VectorF vV = curEnt.getVel();
 
 	if (vV == PointF{ 0.0f, 0.0f })
 		return;
 
-	const VectorF& vP = curEnt.GetPos();
-	const byte team = curEnt.GetTeam();
+	const VectorF& vP = curEnt.getPos();
+	const byte team = curEnt.getTeam();
 
 	FastVector< MapEntity* > nearby;
 	FastVector< MapEntity* >& gridlist = grid.GetEntities(vP);
@@ -286,11 +286,11 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 			case MapEntity::sLazy:
 			{
 				//would they collide?
-				PointF clPoint = route.closestPoint(en->GetPos());
+				PointF clPoint = route.closestPoint(en->getPos());
 
 				if (en->isColliding(clPoint))
 				{
-					if (route.whichSide(en->GetPos()) == LineF::right)
+					if (route.whichSide(en->getPos()) == LineF::right)
 					{
 						en->setEvade(vV.CW90()); //evade in this direction
 					}
@@ -303,11 +303,11 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 			break;
 
 			case MapEntity::sEvade:
-				if (route.vectorDir(en->GetPos(), en->GetVel()) == LineF::towardLine)
+				if (route.vectorDir(en->getPos(), en->getVel()) == LineF::towardLine)
 				{
 					en->keepEvading();
 
-					if (route.whichSide(en->GetPos()) == LineF::right)
+					if (route.whichSide(en->getPos()) == LineF::right)
 					{
 						vV = vV.CCW45();
 					}
@@ -321,13 +321,13 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 			case MapEntity::sTarget:
 			{
 				//which direction?
-				VectorF eV = en->GetVel();
+				VectorF eV = en->getVel();
 				float result = (route.vecNorm() + eV.normalize()).lengthSq();
 
 				if (result > 3.6f)//3.414f)
 				{
 					//same direction
-					VectorF vPE = en->GetPos() - vP;
+					VectorF vPE = en->getPos() - vP;
 					if (vPE.whichSideVec(vV) == PointF::left)
 					{
 						vV = vV.CCW45();
@@ -340,42 +340,42 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 				else
 				{
 					//~perpendicular
-					const PointF eP = en->GetPos();
+					const PointF eP = en->getPos();
 
 					std::function<void()> toClose = [&vP, ds, &eP, route, &en, &vV]()
 					{
 						VectorF vPE = (eP - vP).normalize() * ds;
 						if (route.whichSide(eP) == LineF::left)
 						{
-							en->SetVel(vPE.CW90());
+							en->setVel(vPE.CW90());
 							vV = vPE.CCW90();
 						}
 						else
 						{
-							en->SetVel(vPE.CCW90());
+							en->setVel(vPE.CCW90());
 							vV = vPE.CW90();
 						}
 					};
 
 
-					if (route.vectorDir(eP, en->GetVel()) == LineF::awayFromLine)
+					if (route.vectorDir(eP, en->getVel()) == LineF::awayFromLine)
 					{
 						continue;
 					}
 
 
-					if (vV * en->GetVel() < 0)
+					if (vV * en->getVel() < 0)
 					{
 						VectorF vPE = (eP - vP).normalize() * ds;
 						if (vPE.whichSideVec(vV) == PointF::right)
 						{
 							vV = vPE.CW90();
-							en->SetVel((-vPE).CW90());
+							en->setVel((-vPE).CW90());
 						}
 						else
 						{
 							vV = vPE.CCW90();
-							en->SetVel((-vPE).CCW90());
+							en->setVel((-vPE).CCW90());
 						}
 
 					}
@@ -386,11 +386,11 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 						{
 							if (route.whichSide(eP) == LineF::left)
 							{
-								vV = (en->GetPos() - vP).CCW45().normalize() * ds;
+								vV = (en->getPos() - vP).CCW45().normalize() * ds;
 							}
 							else
 							{
-								vV = (en->GetPos() - vP).CW45().normalize() * ds;
+								vV = (en->getPos() - vP).CW45().normalize() * ds;
 							}
 						}
 						else
@@ -418,13 +418,13 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 			{
 			case MapEntity::sLazy:
 			{	//would they collide?
-				if ((vP - en->GetPos()).lengthSq() < 2 * MapEntity::MIN_DIST2)
+				if ((vP - en->getPos()).lengthSq() < 2 * MapEntity::MIN_DIST2)
 				{
-					PointF clPoint = route.closestPoint(en->GetPos());
+					PointF clPoint = route.closestPoint(en->getPos());
 
 					if (en->isColliding(clPoint))
 					{
-						en->setEvade(curEnt.GetTarget() * ds); //evade in same direction
+						en->setEvade(curEnt.getTarget() * ds); //evade in same direction
 					}
 				}
 
@@ -437,7 +437,7 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 		break;
 	}
 
-	curEnt.SetVel(vV);
+	curEnt.setVel(vV);
 }
 
 PointF Map::GetEntDefend(PlanetID pID)
@@ -449,13 +449,13 @@ PointF Map::GetEntDefend(PlanetID pID)
 	if (result.x == 0.0f)
 	{
 		//not searched ->search next ent
-		const int r = (int)plans[pID]->GetRadius() + 50;
+		const int r = (int)plans[pID]->getRadius() + 50;
 		const int r2 = r * r;
 
-		const byte team = plans[pID]->GetTeam();
+		const byte team = plans[pID]->getTeam();
 		assert(team != 0);
 
-		const PointF& pos = plans[pID]->GetPos();
+		const PointF& pos = plans[pID]->getPos();
 
 		for (size_t i = 0; i < nPlayers; ++i)
 		{
@@ -464,16 +464,16 @@ PointF Map::GetEntDefend(PlanetID pID)
 
 			for (const auto& e : ents[i])
 			{
-				if ((e.GetPos() - pos).lengthSq() < r2)
+				if ((e.getPos() - pos).lengthSq() < r2)
 				{
-					result = e.GetPos();
+					result = e.getPos();
 					return result;
 				}
 			}
 		}
 
 		//nothing found -> return to planet
-		result = plans[pID]->GetPos();
+		result = plans[pID]->getPos();
 		return result;
 	}
 	else
@@ -491,7 +491,7 @@ void Map::SetTargetAvoidingPlanets(const PointF& vP, PointF& vT)
 	//collect planets with intersection
 	for (const auto& p : plans)
 	{
-		float scalar = route.intersectCircle(p->GetPos(), p->GetRadius());
+		float scalar = route.intersectCircle(p->getPos(), p->getRadius());
 		if (scalar > 0.0f)
 		{
 			//intersection
@@ -521,16 +521,16 @@ void Map::SetTargetAvoidingPlanets(const PointF& vP, PointF& vT)
 
 	//determine new target
 	//left or right dodging?
-	if (vT == plan->GetPos())
+	if (vT == plan->getPos())
 	{
 		//target reached
 		return;
 	}
-	VectorF vOP = vP - plan->GetPos(); //vector from planet midpoint to vP
-	float angle = acosf(plan->GetRadius() / vOP.length());
-	vOP = vOP.normalize() * plan->GetRadius();
+	VectorF vOP = vP - plan->getPos(); //vector from planet midpoint to vP
+	float angle = acosf(plan->getRadius() / vOP.length());
+	vOP = vOP.normalize() * plan->getRadius();
 
-	if (route.whichSide(plan->GetPos()) == _Line<float>::side::left)
+	if (route.whichSide(plan->getPos()) == _Line<float>::side::left)
 	{
 		//dodge right
 		vOP = vOP.rot(angle);
@@ -541,27 +541,27 @@ void Map::SetTargetAvoidingPlanets(const PointF& vP, PointF& vT)
 	}
 
 	//set new target
-	vT = vOP + plan->GetPos();
+	vT = vOP + plan->getPos();
 }
 
 void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 {
-	ds *= curEnt.GetSpeedModifier();
+	ds *= curEnt.getSpeedModifier();
 	switch (curEnt.GetState())
 	{
 	case MapEntity::sTarget:
 	{
 		PointF vT; //target
-		const PointF& vP = curEnt.GetPos();
+		const PointF& vP = curEnt.getPos();
 
-		if (curEnt.GetTargetType() == MapObject::tgPlanetDefend)
+		if (curEnt.getTargetType() == MapObject::tgPlanetDefend)
 		{
-			const PlanetID pID = (PlanetID)curEnt.GetTarget().x;
-			//check if planet belongs to the team
-			if (isAlly(plans[pID]->GetTeam(), curEnt.GetTeam()))
+			const PlanetID pID = (PlanetID)curEnt.getTarget().x;
+			//check if planet belongs to the m_team
+			if (isAlly(plans[pID]->getTeam(), curEnt.getTeam()))
 			{
 				vT = Map::GetEntDefend(pID);
-				if (vT == plans[pID]->GetPos())
+				if (vT == plans[pID]->getPos())
 				{
 					//spin around planet if near enough
 					if (plans[pID]->isInDefend(vP))
@@ -581,26 +581,26 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 		}
 		else //if targetType != PlanetDefend
 		{
-			vT = curEnt.GetTarget();
+			vT = curEnt.getTarget();
 		}
 
 
 		//see if point and target are already close enough
-		if (curEnt.GetTargetType() == MapEntity::tgPlanet)
+		if (curEnt.getTargetType() == MapEntity::tgPlanet)
 		{
 			PlanetID pID = (PlanetID)vT.x;
-			vT = plans[pID]->GetPos();
+			vT = plans[pID]->getPos();
 
-			if (plans[pID]->isNearby(vP) && curEnt.GetMood())
+			if (plans[pID]->isNearby(vP) && curEnt.getMood())
 			{
 				vT = vP + (vT - vP).CW90();
 			}
 		}
-		else if (curEnt.GetTargetType() == MapEntity::tgPoint)
+		else if (curEnt.getTargetType() == MapEntity::tgPoint)
 		{
 			if (vP.isClose(vT, 25))
 			{
-				curEnt.TargetPointReached();
+				curEnt.targetPointReached();
 			}
 		}
 
@@ -613,17 +613,17 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 			const MapPlanet* obj = GetColPlan(vP + vV);
 			if (obj != nullptr)
 			{//Colliding with planet!
-				if (obj->GetPos() == vT)
+				if (obj->getPos() == vT)
 				{
 					//this is the target planet
-					if (isAlly(curEnt.GetTeam(), obj->GetTeam()))
+					if (isAlly(curEnt.getTeam(), obj->getTeam()))
 					{
 						//Entity reached his goal
-						if (curEnt.GetTargetType() != MapObject::tgPlanetDefend)
+						if (curEnt.getTargetType() != MapObject::tgPlanetDefend)
 						{
-							vT.x = (float)obj->GetID();
+							vT.x = (float)obj->getID();
 							curEnt.setTarget(vT, MapObject::tgPlanetDefend);
-							curEnt.SetVel({ 0.0f, 0.0f });
+							curEnt.setVel({ 0.0f, 0.0f });
 							return;
 						}
 						return;
@@ -631,9 +631,9 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 					else
 					{
 						//Entity attacks planet
-						curEnt.DisableVelCorrect();
-						PointF vPOnorm = (obj->GetPos() - vP).normalize();
-						if (curEnt.GetMood())
+						curEnt.disableVelCorrect();
+						PointF vPOnorm = (obj->getPos() - vP).normalize();
+						if (curEnt.getMood())
 						{
 							//go right;
 							vV = vPOnorm.CW90() * ds;
@@ -648,7 +648,7 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 				else
 				{
 					//dodge left or right?
-					PointF vPOnorm = (obj->GetPos() - vP).normalize();
+					PointF vPOnorm = (obj->getPos() - vP).normalize();
 					if (vVnorm.cross(vPOnorm) > 0)
 					{
 						//go right;
@@ -663,16 +663,16 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 			}
 		}//Planet case closed
 
-		curEnt.SetVel(vV);
+		curEnt.setVel(vV);
 	}
 	break;
 
 	case MapEntity::sEvade:
-		curEnt.SetVel(curEnt.GetTarget() * ds);
+		curEnt.setVel(curEnt.getTarget() * ds);
 		break;
 
 	default: //dont move
-		curEnt.ZeroVelocity();
+		curEnt.zeroVelocity();
 		break;
 	}
 }
@@ -689,33 +689,33 @@ bool Map::col(const PointF& pt, unsigned int id, byte team)
 
 void Map::SetEntPosition(MapEntity& curEnt, const float dt)
 {
-	const PointF& pos = curEnt.GetPos();
-	const VectorF& vel = curEnt.GetVel();
+	const PointF& pos = curEnt.getPos();
+	const VectorF& vel = curEnt.getVel();
 
-	if (!col(pos + vel, curEnt.GetID(), curEnt.GetTeam()))
+	if (!col(pos + vel, curEnt.getID(), curEnt.getTeam()))
 	{
-		curEnt.UpdatePosition(dt);
+		curEnt.updatePosition(dt);
 		return;
 	}
 	else
 	{
-		curEnt.ChangeMood();
-		if (curEnt.GetMood())
+		curEnt.changeMood();
+		if (curEnt.getMood())
 		{
-			if (!col(pos + vel.CW90(), curEnt.GetID(), curEnt.GetTeam()))
+			if (!col(pos + vel.CW90(), curEnt.getID(), curEnt.getTeam()))
 			{
-				curEnt.SetVel(vel.CW90());
-				curEnt.UpdatePosition(dt);
+				curEnt.setVel(vel.CW90());
+				curEnt.updatePosition(dt);
 				return;
 			}
 			return;
 		}
 		else
 		{
-			if (!col(pos + vel.CCW90(), curEnt.GetID(), curEnt.GetTeam()))
+			if (!col(pos + vel.CCW90(), curEnt.getID(), curEnt.getTeam()))
 			{
-				curEnt.SetVel(vel.CCW90());
-				curEnt.UpdatePosition(dt);
+				curEnt.setVel(vel.CCW90());
+				curEnt.updatePosition(dt);
 				return;
 			}
 

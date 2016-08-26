@@ -7,13 +7,13 @@ public:
 	PlanetTask(class PlayerAI& ai, PlanetID pid);
 	PlanetTask& operator=(const PlanetTask&) = delete;
 	void DoTask(float dt);
-	void IncGroupSize(MapObject::entityType et)
+	void IncGroupSize(MapObject::EntityType et)
 	{
 		if (et != MapObject::etNormal)
 		{
-			plan.SetEntityType(MapObject::etNormal);
+			plan.setEntityType(MapObject::etNormal);
 			PointF tar;
-			tar.x = (float)plan.GetID();
+			tar.x = (float)plan.getID();
 			plan.setTarget(tar, MapObject::tgPlanetDefend);
 		}
 		groupSize++;

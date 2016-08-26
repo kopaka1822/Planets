@@ -15,13 +15,13 @@ public:
 		lblY("y:",FONT_SMALL),
 		numX(0,0,10000,1,FONT_SMALL),
 		numY(0, 0, 10000, 1, FONT_SMALL),
-		lblTeam("team:",FONT_SMALL),
+		lblTeam("m_team:",FONT_SMALL),
 		numTeam(0,0,25,1,FONT_SMALL),
 		lblRadius("radius:",FONT_SMALL),
 		numRadius(50,25,200,5,FONT_SMALL),
 		lblSPU("s/Unit:",FONT_SMALL),
 		numSPU(2.0f, 0.05f, 800.0f, 0.25f,FONT_SMALL),
-		lblHP("HP:",FONT_SMALL),
+		lblHP("m_hp:",FONT_SMALL),
 		numHP(10, 0, 999999, 10,FONT_SMALL)
 	{
 		float wi = FONT_SMALL.GetFontWidth() * 10.0f;

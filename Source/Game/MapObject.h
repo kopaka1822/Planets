@@ -7,14 +7,14 @@ using byte = unsigned char;
 class MapObject
 {
 public:
-	enum targetType
+	enum TargetType
 	{
 		tgPlanet,
 		tgPoint,
 		tgInvalid,
 		tgPlanetDefend
 	};
-	enum entityType
+	enum EntityType
 	{
 		etNormal,
 		etBomber,
@@ -23,63 +23,63 @@ public:
 		etNone
 	};
 protected:
-	static float GetEntSpawnFactor(entityType et)
+	static float getEntSpawnFactor(EntityType et)
 	{
 		static const float fac[] = { 1.0f, 3.0f, 1.5f, 12.0f };
 		assert(et < 4);
 		return fac[et];
 	}
 public:
-	MapObject(PointF position, byte Team, int startHP, targetType ttype, const PointF& tar, int group)
+	MapObject(PointF position, byte Team, int startHP, TargetType ttype, const PointF& tar, int group)
 		:
-		tarTy(ttype), target(tar),
-		pos(position),
-		team(Team),
-		HP(startHP),
-		group(group)
+		m_tarTy(ttype), m_target(tar),
+		m_pos(position),
+		m_team(Team),
+		m_hp(startHP),
+		m_group(group)
 	{}
     virtual ~MapObject(){}
 	//interface functions
 	//Target
 	virtual void invalidateTarget()
 	{
-		tarTy = tgInvalid;
+		m_tarTy = tgInvalid;
 	}
-	const PointF& GetTarget() const
+	const PointF& getTarget() const
 	{
-		return target;
+		return m_target;
 	}
-	virtual void setTarget(const PointF& tg, targetType tt)
+	virtual void setTarget(const PointF& tg, TargetType tt)
 	{
-		target = tg;
-		tarTy = tt;
+		m_target = tg;
+		m_tarTy = tt;
 	}
-	targetType GetTargetType() const
+	TargetType getTargetType() const
 	{
-		return tarTy;
+		return m_tarTy;
 	}
 	bool hasTarget() const
 	{
-		return tarTy != tgInvalid;
+		return m_tarTy != tgInvalid;
 	}
 
 	//Select
 
 	virtual void deselect()
 	{
-		isSelected = false;
+		m_isSelected = false;
 	}
 	bool selected() const
 	{
-		return isSelected;
+		return m_isSelected;
 	}
 	virtual void forceSelect()
 	{
-		isSelected = true;
+		m_isSelected = true;
 	}
 	inline void groupSelect(int selGroup)
 	{
-		if (group == selGroup)
+		if (m_group == selGroup)
 		{
 			forceSelect();
 		}
@@ -97,73 +97,73 @@ public:
 	virtual void drawDeselect()
 	{}
 
-	//group
+	//m_group
 	inline void groupAssign(int newGroup)
 	{
-		group = newGroup;
+		m_group = newGroup;
 	}
 	inline void groupDestroy(int destGroup)
 	{
-		if (group == destGroup)
+		if (m_group == destGroup)
 		{
-			group = -1;
+			m_group = -1;
 		}
 	}
 	inline bool hasGroup() const
 	{
-		return group != -1;
+		return m_group != -1;
 	}
-	inline int GetGroup() const
+	inline int getGroup() const
 	{
-		return group;
+		return m_group;
 	}
 
  	//Position + Team
 
-	inline const PointF& GetPos() const
+	inline const PointF& getPos() const
 	{
-		return pos;
+		return m_pos;
 	}
 
-	inline const byte GetTeam() const
+	inline byte getTeam() const
 	{
-		return team;
+		return m_team;
 	}
-	inline void SetPosition(const PointF& p)
+	inline void setPosition(const PointF& p)
 	{
-		pos = p;
+		m_pos = p;
 	}
 
 	//health
-	inline bool TakeDamage(int amount) //returns true if died
+	inline bool takeDamage(int amount) //returns true if died
 	{
-		HP -= amount;
-		return (HP <= 0);
+		m_hp -= amount;
+		return (m_hp <= 0);
 	}
 	inline bool isDead() const
 	{
-		return (HP <= 0);
+		return (m_hp <= 0);
 	}
-	inline int GetHP() const
+	inline int getHP() const
 	{
-		return HP;
+		return m_hp;
 	}
-	inline void SetHP(int n)
+	inline void setHP(int n)
 	{
-		HP = n;
+		m_hp = n;
 	}
 
 	//collision
 	//virtual bool isColliding(const PointF& p) const = 0;
 	//virtual bool isNearby(const PointF& p) const = 0;
 protected:
-	targetType tarTy;
-	PointF target;
+	TargetType m_tarTy;
+	PointF m_target;
 
-	PointF pos;
-	byte team;
-	int HP;
+	PointF m_pos;
+	byte m_team;
+	int m_hp;
 	//user
-	bool isSelected = false;
-	int group;
+	bool m_isSelected = false;
+	int m_group;
 };
