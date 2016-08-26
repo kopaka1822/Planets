@@ -4,7 +4,7 @@ StateGame::StateGame(byte myTeam, byte maxTeams)
 	:
 	btnMiniOnOff(true),
 	gs(Database::GetGameStruct()),
-	sBox(gs.pMap->GetNPlans(), gs.pMap->CountTeamPlans(1), gs.myTeam),
+	sBox(gs.pMap->getNPlans(), gs.pMap->countTeamPlans(1), gs.myTeam),
 	btnSA("A", FONT_MED),
 	btnSN("D", FONT_MED),
 	btnChat("C", FONT_MED),
@@ -149,7 +149,7 @@ void StateGame::Event_GameKeyDown(Input::GameKey k, const PointF& p)
 	switch (k)
 	{
 	case Input::GK_SELECTALL:
-		gs.pMap->SelectAll(gs.myTeam);
+		gs.pMap->selectAll(gs.myTeam);
 		break;
 
 	case Input::GK_SELECT:
@@ -167,30 +167,30 @@ void StateGame::Event_GameKeyDown(Input::GameKey k, const PointF& p)
 			break;
 	case Input::GK_DESELECT:
 		if (pMapDraw->GetRect().PointInside(p) && !pMiniMap->getRect().PointInside(p))
-			gs.pMap->ClickRight(gs.myTeam);
+			gs.pMap->deselectTarget(gs.myTeam);
 		break;
 	case Input::GK_FILTERENT:
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etNormal))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etNormal))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etNormal);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etNormal);
 		}
 		break;
 	case Input::GK_FILTERBOMB:
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etBomber))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etBomber))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etBomber);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etBomber);
 		}
 		break;
 	case Input::GK_FILTERSPEED:
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etSpeeder))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etSpeeder))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etSpeeder);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etSpeeder);
 		}
 		break;
 	case Input::GK_FILTERSABO:
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etSaboteur))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etSaboteur))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etSaboteur);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etSaboteur);
 		}
 		break;
 	case Input::GK_ADDGROUP:
@@ -200,7 +200,7 @@ void StateGame::Event_GameKeyDown(Input::GameKey k, const PointF& p)
 		bMakeGroupDown = true;
 		break;
 	case Input::GK_PLANDEFENSE:
-		gs.pMap->SetAllPlanetsOnDefense(myTeam);
+		gs.pMap->setAllPlanetsOnDefense(myTeam);
 		break;
 	}
 }
@@ -291,17 +291,17 @@ void StateGame::Event_KeyDown(SDL_Scancode code)
 		if (bAddGroupDown)
 		{
 			//add to m_group
-			gs.pMap->AddToGroup(gs.myTeam, group);
-			gs.pMap->SelectGroup(gs.myTeam, group);
+			gs.pMap->addToGroup(gs.myTeam, group);
+			gs.pMap->selectGroup(gs.myTeam, group);
 		}
 		else if (bMakeGroupDown)
 		{
-			gs.pMap->MakeGroup(gs.myTeam, group);
+			gs.pMap->makeGroup(gs.myTeam, group);
 		}
 		else
 		{
 			//select m_group
-			gs.pMap->SelectGroup(gs.myTeam, group);
+			gs.pMap->selectGroup(gs.myTeam, group);
 		}
 	}
 }
@@ -334,7 +334,7 @@ void StateGame::HandleMouseClick(bool bInside)
 		const PointF p = (msDown + msUp) / 2.0f;
 		float r2 = ((msDown - msUp) / 2.0f).lengthSq();
 
-		if (!gs.pMap->Select(p, r2, gs.myTeam))
+		if (!gs.pMap->select(p, r2, gs.myTeam))
 		{
 			//nothing was selected -> if bIns => Click && Select on same key
 			if (bInside)
@@ -361,16 +361,16 @@ void StateGame::SetTarget(const PointF& p)
 	{
 		if (!grid.getRect().PointInside(Input::GetMouseXY()))
 		{
-			planTargeted = gs.pMap->Click(p, gs.myTeam);
+			planTargeted = gs.pMap->setTarget(p, gs.myTeam);
 		}
 	}
 	else
 	{
-		planTargeted = gs.pMap->Click(p, gs.myTeam);
+		planTargeted = gs.pMap->setTarget(p, gs.myTeam);
 	}
 
 	if (planTargeted && Settings::DeselectOnTargetSelect())
-		gs.pMap->ClickRight(gs.myTeam);
+		gs.pMap->deselectTarget(gs.myTeam);
 }
 
   ////////////////////////////////////////////////////////////////
@@ -454,16 +454,16 @@ void StateGame::UpdateMap(float dt)
 {
 	sBox.Reset();
 
-	gs.pMap->Update(dt);
+	gs.pMap->update(dt);
 
 	pMapDraw->Update(dt);
 
-	sBox.Update(gs.pMap->CountAllyPlanets(myTeam));
+	sBox.Update(gs.pMap->countAllyPlanets(myTeam));
 
-	if(gs.pMap->GameStart())
+	if(gs.pMap->gameStart())
 		score.Update(dt, *gs.pMap);
 
-	byte winner = gs.pMap->GameEnd();
+	byte winner = gs.pMap->gameEnd();
 
 	if (winner != 0)
 	{
@@ -499,46 +499,46 @@ void StateGame::UpdateGameButtons()
 		SetMiniMap(btnMiniOnOff.GetState());
 
 	if (btnSA.Pushed() && bMapInput)
-		gs.pMap->SelectAll(gs.myTeam);
+		gs.pMap->selectAll(gs.myTeam);
 
 	if (btnSN.Pushed() && bMapInput)
-		gs.pMap->ClickRight(gs.myTeam);
+		gs.pMap->deselectTarget(gs.myTeam);
 
 	if (btnFilterEnt.Pushed() && bMapInput)
 	{
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etNormal))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etNormal))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etNormal);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etNormal);
 		}
 	}
 
 	if (btnFilterBomb.Pushed() && bMapInput)
 	{
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etBomber))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etBomber))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etBomber);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etBomber);
 		}
 	}
 
 	if (btnFilterSabo.Pushed() && bMapInput)
 	{
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etSaboteur))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etSaboteur))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etSaboteur);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etSaboteur);
 		}
 	}
 
 	if (btnFilterSpeed.Pushed() && bMapInput)
 	{
-		if (!gs.pMap->FilterEntityType(myTeam, MapObject::etSpeeder))
+		if (!gs.pMap->filterEntityType(myTeam, MapObject::etSpeeder))
 		{
-			gs.pMap->SelectAllEntityType(myTeam, MapObject::etSpeeder);
+			gs.pMap->selectAllEntityType(myTeam, MapObject::etSpeeder);
 		}
 	}
 
 	if (btnDefPlanets.Pushed() && bMapInput)
 	{
-		gs.pMap->SetAllPlanetsOnDefense(myTeam);
+		gs.pMap->setAllPlanetsOnDefense(myTeam);
 	}
 
 	UIGridEntity& entSel = *pMapDraw->GetEntitySpawnSelect();
@@ -548,7 +548,7 @@ void StateGame::UpdateGameButtons()
 		{
 			if (entSel.Pushed() && entSel.GetCurType() != MapObject::EntityType::etNone)
 			{
-				gs.pMap->SetPlanetSpawnType(myTeam, entSel.GetCurType());
+				gs.pMap->setPlanetSpawnType(myTeam, entSel.GetCurType());
 				Event_EntityTypeChanged();
 			}
 		}

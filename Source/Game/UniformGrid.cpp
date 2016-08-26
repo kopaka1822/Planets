@@ -3,96 +3,96 @@
 
 UniformGrid::UniformGrid(int mapX, int mapY, int boxSize, int boxTolerance, int nTeams, const class Map& map)
 	:
-	width(mapX),
-	height(mapY),
-	boxsz(boxSize),
-	toleran(boxTolerance),
-	nTeams(nTeams),
-	map(map)
+	m_width(mapX),
+	m_height(mapY),
+	m_boxsz(boxSize),
+	m_toleran(boxTolerance),
+	m_nTeams(nTeams),
+	m_map(map)
 {
 	// create Array
-	field = new Element*[width * height];
+	m_field = new Element*[m_width * m_height];
 
-	for (int i = 0; i < width * height; i++)
+	for (int i = 0; i < m_width * m_height; i++)
 	{
-		field[i] = new Element();
-		field[i]->ents.reserve(40); // reserve space
-		field[i]->teamsz.assign(nTeams, 0);
+		m_field[i] = new Element();
+		m_field[i]->ents.reserve(40); // reserve space
+		m_field[i]->teamsz.assign(nTeams, 0);
 	}
 }
 UniformGrid::~UniformGrid()
 {
-	for (int i = 0; i < width * height; i++)
+	for (int i = 0; i < m_width * m_height; i++)
 	{
-		tool::safeDelete(field[i]);
+		tool::safeDelete(m_field[i]);
 	}
-	tool::safeDeleteArray(field);
+	tool::safeDeleteArray(m_field);
 }
 void UniformGrid::clear()
 {
-	for (int i = 0; i < width * height; i++)
+	for (int i = 0; i < m_width * m_height; i++)
 	{
-		field[i]->ents.clear();
-		field[i]->teamsz.assign(nTeams, 0);
+		m_field[i]->ents.clear();
+		m_field[i]->teamsz.assign(m_nTeams, 0);
 	}
 }
-void UniformGrid::AddEntity(MapEntity* itm, const PointI& pos)
+void UniformGrid::addEntity(MapEntity* itm, const PointI& pos)
 {
 	// push in nearby fields
 
-	int xStart = std::max(0, ((pos.x - toleran)) / boxsz);
-	int xEnd = std::min(((pos.x + toleran)) / boxsz, width - 1);
-	int yStart = std::max(0, ((pos.y - toleran)) / boxsz);
-	int yEnd = std::min(((pos.y + toleran)) / boxsz, height - 1);
+	int xStart = std::max(0, ((pos.x - m_toleran)) / m_boxsz);
+	int xEnd = std::min(((pos.x + m_toleran)) / m_boxsz, m_width - 1);
+	int yStart = std::max(0, ((pos.y - m_toleran)) / m_boxsz);
+	int yEnd = std::min(((pos.y + m_toleran)) / m_boxsz, m_height - 1);
 
 	for (int x = xStart; x <= xEnd; x++)
 		for (int y = yStart; y <= yEnd; y++)
-			field[y * width + x]->ents.push_back(itm);
+			m_field[y * m_width + x]->ents.push_back(itm);
 
 	// actual pos for ai etc..
-	int aX = pos.x / boxsz;
-	int aY = pos.y / boxsz;
+	int aX = pos.x / m_boxsz;
+	int aY = pos.y / m_boxsz;
 
-	aX = tool::clamp(aX, 0, width - 1);
-	aY = tool::clamp(aY, 0, height - 1);
+	aX = tool::clamp(aX, 0, m_width - 1);
+	aY = tool::clamp(aY, 0, m_height - 1);
 
-	size_t index = aY * width + aX;
+	size_t index = aY * m_width + aX;
 
-	assert(unsigned(itm->getTeam() - 1) < unsigned(nTeams));
-	field[index]->teamsz[itm->getTeam() - 1]++;
+	assert(unsigned(itm->getTeam() - 1) < unsigned(m_nTeams));
+	m_field[index]->teamsz[itm->getTeam() - 1]++;
 }
-FastVector<MapEntity*>& UniformGrid::GetEntities(PointI pos)
+FastVector<MapEntity*>& UniformGrid::getEntities(PointI pos)
 {
-	pos.x /= boxsz;
-	pos.y /= boxsz;
+	pos.x /= m_boxsz;
+	pos.y /= m_boxsz;
 
-	pos.x = tool::clamp(pos.x, 0, width - 1);
-	pos.y = tool::clamp(pos.y, 0, height - 1);
+	pos.x = tool::clamp(pos.x, 0, m_width - 1);
+	pos.y = tool::clamp(pos.y, 0, m_height - 1);
 
-	return field[pos.y * width + pos.x]->ents;
+	return m_field[pos.y * m_width + pos.x]->ents;
 }
-int UniformGrid::GetBoxSize() const
+int UniformGrid::getBoxSize() const
 {
-	return boxsz;
+	return m_boxsz;
 }
 // own m_team
-size_t UniformGrid::CountUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countUnits(byte team, PointF pos, float radius)
 {
 	byte t = team - 1;
-	assert(t < nTeams);
+	assert(t < m_nTeams);
 
 	size_t count = 0;
-	int xStart = int(pos.x - radius) / boxsz;
-	int yStart = int(pos.y - radius) / boxsz;
-	int xEnd = int(pos.x + radius) / boxsz;
-	int yEnd = int(pos.y + radius) / boxsz;
+	int xStart = int(pos.x - radius) / m_boxsz;
+	int yStart = int(pos.y - radius) / m_boxsz;
+	int xEnd = int(pos.x + radius) / m_boxsz;
+	int yEnd = int(pos.y + radius) / m_boxsz;
 
-	xStart = tool::clamp(xStart, 0, width - 1);
-	xEnd = tool::clamp(xEnd, 0, width - 1);
-	yStart = tool::clamp(yStart, 0, height - 1);
-	yEnd = tool::clamp(yEnd, 0, height - 1);
+	xStart = tool::clamp(xStart, 0, m_width - 1);
+	xEnd = tool::clamp(xEnd, 0, m_width - 1);
+	yStart = tool::clamp(yStart, 0, m_height - 1);
+	yEnd = tool::clamp(yEnd, 0, m_height - 1);
 
-	const float tstrad = (radius + boxsz / 2);
+	const float tstrad = (radius + m_boxsz / 2);
 	const float tstrad2 = tstrad * tstrad;
 
 	for (int x = xStart; x <= xEnd; x++)
@@ -100,9 +100,9 @@ size_t UniformGrid::CountUnits(byte team, PointF pos, float radius)
 		for (int y = yStart; y <= yEnd; y++)
 		{
 			// is box in radius?
-			PointF mid = PointF(x * boxsz, y * boxsz);
+			PointF mid = PointF(x * m_boxsz, y * m_boxsz);
 			if ((mid - pos).lengthSq() < tstrad2)
-				count += field[y * width + x]->teamsz[t];
+				count += m_field[y * m_width + x]->teamsz[t];
 		}
 	}
 			
@@ -110,23 +110,23 @@ size_t UniformGrid::CountUnits(byte team, PointF pos, float radius)
 	return count;
 }
 // own m_team + ally
-size_t UniformGrid::CountAllyUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countAllyUnits(byte team, PointF pos, float radius)
 {
 	byte t = team - 1;
-	assert(t < nTeams);
+	assert(t < m_nTeams);
 
 	size_t count = 0;
-	int xStart = int(pos.x - radius) / boxsz;
-	int yStart = int(pos.y - radius) / boxsz;
-	int xEnd = int(pos.x + radius) / boxsz;
-	int yEnd = int(pos.y + radius) / boxsz;
+	int xStart = int(pos.x - radius) / m_boxsz;
+	int yStart = int(pos.y - radius) / m_boxsz;
+	int xEnd = int(pos.x + radius) / m_boxsz;
+	int yEnd = int(pos.y + radius) / m_boxsz;
 
-	xStart = tool::clamp(xStart, 0, width - 1);
-	xEnd = tool::clamp(xEnd, 0, width - 1);
-	yStart = tool::clamp(yStart, 0, height - 1);
-	yEnd = tool::clamp(yEnd, 0, height - 1);
+	xStart = tool::clamp(xStart, 0, m_width - 1);
+	xEnd = tool::clamp(xEnd, 0, m_width - 1);
+	yStart = tool::clamp(yStart, 0, m_height - 1);
+	yEnd = tool::clamp(yEnd, 0, m_height - 1);
 
-	const float tstrad = (radius + boxsz / 2);
+	const float tstrad = (radius + m_boxsz / 2);
 	const float tstrad2 = tstrad * tstrad;
 
 	for (int x = xStart; x <= xEnd; x++)
@@ -134,15 +134,15 @@ size_t UniformGrid::CountAllyUnits(byte team, PointF pos, float radius)
 		for (int y = yStart; y <= yEnd; y++)
 		{
 			// is box in radius?
-			PointF mid = PointF(x * boxsz, y * boxsz);
+			PointF mid = PointF(x * m_boxsz, y * m_boxsz);
 			if ((mid - pos).lengthSq() < tstrad2)
 			{
-				for (byte i = 0; i < nTeams; i++)
+				for (byte i = 0; i < m_nTeams; i++)
 				{
-					if (!map.isAlly(team, i + 1))
+					if (!m_map.isAlly(team, i + 1))
 						continue;
 					// count enemies
-					count += field[y * width + x]->teamsz[i];
+					count += m_field[y * m_width + x]->teamsz[i];
 				}
 			}
 		}
@@ -151,23 +151,23 @@ size_t UniformGrid::CountAllyUnits(byte team, PointF pos, float radius)
 	return count;
 }
 // enemies (no allies)
-size_t UniformGrid::CountEnemyUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countEnemyUnits(byte team, PointF pos, float radius)
 {
 	byte t = team - 1;
-	assert(t < nTeams);
+	assert(t < m_nTeams);
 
 	size_t count = 0;
-	int xStart = int(pos.x - radius) / boxsz;
-	int yStart = int(pos.y - radius) / boxsz;
-	int xEnd = int(pos.x + radius) / boxsz;
-	int yEnd = int(pos.y + radius) / boxsz;
+	int xStart = int(pos.x - radius) / m_boxsz;
+	int yStart = int(pos.y - radius) / m_boxsz;
+	int xEnd = int(pos.x + radius) / m_boxsz;
+	int yEnd = int(pos.y + radius) / m_boxsz;
 
-	xStart = tool::clamp(xStart, 0, width - 1);
-	xEnd = tool::clamp(xEnd, 0, width - 1);
-	yStart = tool::clamp(yStart, 0, height - 1);
-	yEnd = tool::clamp(yEnd, 0, height - 1);
+	xStart = tool::clamp(xStart, 0, m_width - 1);
+	xEnd = tool::clamp(xEnd, 0, m_width - 1);
+	yStart = tool::clamp(yStart, 0, m_height - 1);
+	yEnd = tool::clamp(yEnd, 0, m_height - 1);
 
-	const float tstrad = (radius + boxsz / 2);
+	const float tstrad = (radius + m_boxsz / 2);
 	const float tstrad2 = tstrad * tstrad;
 
 	for (int x = xStart; x <= xEnd; x++)
@@ -175,15 +175,15 @@ size_t UniformGrid::CountEnemyUnits(byte team, PointF pos, float radius)
 		for (int y = yStart; y <= yEnd; y++)
 		{
 			// is box in radius?
-			PointF mid = PointF(x * boxsz, y * boxsz);
+			PointF mid = PointF(x * m_boxsz, y * m_boxsz);
 			if ((mid - pos).lengthSq() < tstrad2)
 			{
-				for (byte i = 0; i < nTeams; i++)
+				for (byte i = 0; i < m_nTeams; i++)
 				{
-					if (map.isAlly(team, i + 1))
+					if (m_map.isAlly(team, i + 1))
 						continue;
 					// count enemies
-					count += field[y * width + x]->teamsz[i];
+					count += m_field[y * m_width + x]->teamsz[i];
 				}
 			}
 		}
@@ -192,22 +192,22 @@ size_t UniformGrid::CountEnemyUnits(byte team, PointF pos, float radius)
 	return count;
 }
 
-PointI UniformGrid::GetEnemyAccumulationPoint(byte team, const PointF& pos, float radius, size_t lowerLimit)
+PointI UniformGrid::getEnemyAccumulationPoint(byte team, const PointF& pos, float radius, size_t lowerLimit)
 {
 	byte t = team - 1;
-	assert(t < nTeams);
+	assert(t < m_nTeams);
 
-	int xStart = int(pos.x - radius) / boxsz;
-	int yStart = int(pos.y - radius) / boxsz;
-	int xEnd = int(pos.x + radius) / boxsz;
-	int yEnd = int(pos.y + radius) / boxsz;
+	int xStart = int(pos.x - radius) / m_boxsz;
+	int yStart = int(pos.y - radius) / m_boxsz;
+	int xEnd = int(pos.x + radius) / m_boxsz;
+	int yEnd = int(pos.y + radius) / m_boxsz;
 
-	xStart = tool::clamp(xStart, 0, width - 1);
-	xEnd = tool::clamp(xEnd, 0, width - 1);
-	yStart = tool::clamp(yStart, 0, height - 1);
-	yEnd = tool::clamp(yEnd, 0, height - 1);
+	xStart = tool::clamp(xStart, 0, m_width - 1);
+	xEnd = tool::clamp(xEnd, 0, m_width - 1);
+	yStart = tool::clamp(yStart, 0, m_height - 1);
+	yEnd = tool::clamp(yEnd, 0, m_height - 1);
 
-	const float tstrad = (radius + boxsz / 2);
+	const float tstrad = (radius + m_boxsz / 2);
 	const float tstrad2 = tstrad * tstrad;
 
 	size_t bestCount = lowerLimit - 1;
@@ -218,17 +218,17 @@ PointI UniformGrid::GetEnemyAccumulationPoint(byte team, const PointF& pos, floa
 		for (int y = yStart; y <= yEnd; y++)
 		{
 			// is box in radius?
-			PointF mid = PointF(x * boxsz, y * boxsz);
+			PointF mid = PointF(x * m_boxsz, y * m_boxsz);
 			if ((mid - pos).lengthSq() < tstrad2)
 			{
 				size_t count = 0;
 
-				for (byte i = 0; i < nTeams; i++)
+				for (byte i = 0; i < m_nTeams; i++)
 				{
-					if (map.isAlly(team, i + 1))
+					if (m_map.isAlly(team, i + 1))
 						continue;
 					// count enemies
-					count += field[y * width + x]->teamsz[i];
+					count += m_field[y * m_width + x]->teamsz[i];
 				}
 
 				if (count > bestCount)
@@ -243,31 +243,31 @@ PointI UniformGrid::GetEnemyAccumulationPoint(byte team, const PointF& pos, floa
 	return bestBox;
 }
 
-size_t UniformGrid::CountUnitsInBox(byte team, PointF pos)
+size_t UniformGrid::countUnitsInBox(byte team, PointF pos)
 {
-	assert(unsigned(team - 1) < unsigned(nTeams));
+	assert(unsigned(team - 1) < unsigned(m_nTeams));
 
-	int x = int(pos.x) / boxsz;
-	int y = int(pos.y) / boxsz;
+	int x = int(pos.x) / m_boxsz;
+	int y = int(pos.y) / m_boxsz;
 
-	x = tool::clamp(x, 0, width - 1);
-	y = tool::clamp(y, 0, height - 1);
+	x = tool::clamp(x, 0, m_width - 1);
+	y = tool::clamp(y, 0, m_height - 1);
 
-	return field[y * width + x]->teamsz[team - 1];
+	return m_field[y * m_width + x]->teamsz[team - 1];
 
 	
 }
-size_t UniformGrid::CountUnitsInBoxRaw(byte team, PointI posi)
+size_t UniformGrid::countUnitsInBoxRaw(byte team, PointI posi)
 {
-	assert(posi.x >= 0 && posi.x < width);
-	assert(posi.y >= 0 && posi.y < height);
-	assert(unsigned(team - 1) < unsigned(nTeams));
-	return field[posi.y * width + posi.x]->teamsz[team - 1];
+	assert(posi.x >= 0 && posi.x < m_width);
+	assert(posi.y >= 0 && posi.y < m_height);
+	assert(unsigned(team - 1) < unsigned(m_nTeams));
+	return m_field[posi.y * m_width + posi.x]->teamsz[team - 1];
 }
 
-FastVector<MapEntity*>& UniformGrid::GetEntitiesRaw(const PointI& box)
+FastVector<MapEntity*>& UniformGrid::getEntitiesRaw(const PointI& box)
 {
-	assert(box.x >= 0 && box.x < width);
-	assert(box.y >= 0 && box.y < height);
-	return field[box.y * width + box.x]->ents;
+	assert(box.x >= 0 && box.x < m_width);
+	assert(box.y >= 0 && box.y < m_height);
+	return m_field[box.y * m_width + box.x]->ents;
 }

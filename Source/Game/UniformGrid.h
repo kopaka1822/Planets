@@ -19,35 +19,35 @@ public:
 	UniformGrid& operator=(UniformGrid&) = delete;
 	~UniformGrid();
 	void clear();
-	void AddEntity(MapEntity* itm, const PointI& pos);
-	FastVector<MapEntity*>& GetEntities(PointI pos);
-	FastVector<MapEntity*>& GetEntitiesRaw(const PointI& box);
-	int GetBoxSize() const;
+	void addEntity(MapEntity* itm, const PointI& pos);
+	FastVector<MapEntity*>& getEntities(PointI pos);
+	FastVector<MapEntity*>& getEntitiesRaw(const PointI& box);
+	int getBoxSize() const;
 
 	// AI access
 
 	// own m_team
-	size_t CountUnits(byte team, PointF pos, float radius);
+	size_t countUnits(byte team, PointF pos, float radius);
 
 	// own m_team + ally
-	size_t CountAllyUnits(byte team, PointF pos, float radius);
+	size_t countAllyUnits(byte team, PointF pos, float radius);
 
 	// enemies (no allies)
-	size_t CountEnemyUnits(byte team, PointF pos, float radius);
+	size_t countEnemyUnits(byte team, PointF pos, float radius);
 
 	// own units (pos in map coord-system)
-	size_t CountUnitsInBox(byte team, PointF pos);
+	size_t countUnitsInBox(byte team, PointF pos);
 	// own units (pos in map grid-system)
-	size_t CountUnitsInBoxRaw(byte team, PointI posi);
+	size_t countUnitsInBoxRaw(byte team, PointI posi);
 
 	// return point of accumulation in map coordinates on success
 	// returns (-1,-1) if no nearby match was found
-	PointI GetEnemyAccumulationPoint(byte team, const PointF& pos, float radius, size_t lowerLimit);
+	PointI getEnemyAccumulationPoint(byte team, const PointF& pos, float radius, size_t lowerLimit);
 private:
-	const int width, height,
-		boxsz,// boxsize
-		toleran; // tolerance
-	Element** field;
-	const int nTeams;
-	const class Map& map;
+	const int m_width, m_height,
+		m_boxsz,// boxsize
+		m_toleran; // tolerance
+	Element** m_field;
+	const int m_nTeams;
+	const class Map& m_map;
 };

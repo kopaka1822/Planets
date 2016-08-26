@@ -9,74 +9,74 @@ public:
 	RemoteMap(Client& cl, int nPlay, const std::vector< MapLoader::MapPlanet >& planets, const std::vector< MapLoader::MapEntity >& entities,
 		float width, float height, float gameTime, Map::GameType ty, std::vector< byte > clns);
 	virtual ~RemoteMap();
-	virtual bool Select(PointF center, float r2, byte team) override;
-	virtual void SelectGroup(byte team, int group) override;
-	virtual void DeleteGroup(byte team, int group) override;
-	virtual bool Click(PointF pt, byte team) override;
-	virtual void ClickRight(byte team) override;
-	virtual void Update(float dt) override;
-	virtual byte GameEnd() const override;
-	virtual void SetAllPlanetsOnDefense(byte team) override;
-	virtual bool GameStart() const override
+	virtual bool select(PointF center, float r2, byte team) override;
+	virtual void selectGroup(byte team, int group) override;
+	virtual void deleteGroup(byte team, int group) override;
+	virtual bool setTarget(PointF pt, byte team) override;
+	virtual void deselectTarget(byte team) override;
+	virtual void update(float dt) override;
+	virtual byte gameEnd() const override;
+	virtual void setAllPlanetsOnDefense(byte team) override;
+	virtual bool gameStart() const override
 	{
-		return bGameStart;
+		return m_bGameStart;
 	}
-	virtual float GetGameTime() const override final
+	virtual float getGameTime() const override final
 	{
-		return clock.GetTimeSecond();
+		return m_clock.getTimeSecond();
 	}
-	virtual void AddToGroup(byte team, int group) override;
-	virtual void MakeGroup(byte team, int group) override;
-	virtual void SelectAll(byte team) override;
-	virtual void SetPlanetSpawnType(byte team, MapObject::EntityType t) override;
-	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
-	virtual void SelectAllEntityType(byte team, MapObject::EntityType et) override;
-	virtual void AddPacket(DataContainer&& con) override;
+	virtual void addToGroup(byte team, int group) override;
+	virtual void makeGroup(byte team, int group) override;
+	virtual void selectAll(byte team) override;
+	virtual void setPlanetSpawnType(byte team, MapObject::EntityType t) override;
+	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
+	virtual void selectAllEntityType(byte team, MapObject::EntityType et) override;
+	virtual void addPacket(DataContainer&& con) override;
 private:
-	Client& serv;
-	byte winner = 0;
-	NetClock clock;
-	bool bGameStart = false;
+	Client& m_serv;
+	byte m_winner = 0;
+	NetClock m_clock;
+	bool m_bGameStart = false;
 
 	
 private:
-	void SetEntPositionRemote(MapEntity& curEnt, const float dt)
+	void setEntPositionRemote(MapEntity& curEnt, const float dt)
 	{
 		const PointF& pos = curEnt.getPos();
 		const VectorF& vel = curEnt.getVel();
 
-		if (GetColEnt(pos, curEnt.getID(),curEnt.getTeam()) != nullptr)
+		if (getColEnt(pos, curEnt.getID(),curEnt.getTeam()) != nullptr)
 		{
 			// probably due to network bug
 			// force set to new position
-			if (GetColPlan(pos + vel) == nullptr)
+			if (getColPlan(pos + vel) == nullptr)
 			{
 				curEnt.updatePosition(dt);
 				return;
 			}
 		}
 
-		SetEntPosition(curEnt, dt);
+		setEntPosition(curEnt, dt);
 	}
-	void ReceiveData(bool& updatePositions);
-	void HandleSpawn(ContainerReader& r);
-	void HandleGameSelect(ContainerReader& r);
-	void HandleGameClick(ContainerReader& r);
-	void HandleEntPosUpdate(ContainerReader& r);
-	void UpdateMovement(float dt);
-	void HandleDie(ContainerReader& r);
-	void HandlePlanCap(ContainerReader& r);
-	void HandlePlanUpd(ContainerReader& r);
-	void HandleGameEnd(ContainerReader& r);
-	void HandleSynch(ContainerReader& r);
-	void ClearUpdateTime();
-	void UpdateMovementServer();
-	void HandleSurrender(ContainerReader& r);
-	void HandleClanChange(ContainerReader& r);
-	void HandlePlanetSpawntype(ContainerReader& r);
-	void HandleSelectAllEntityType(ContainerReader& r);
-	void HandleFilterEntityType(ContainerReader& r);
-	void HandlePlanDefend(ContainerReader& r);
+	void receiveData(bool& updatePositions);
+	void handleSpawn(ContainerReader& r);
+	void handleGameSelect(ContainerReader& r);
+	void handleGameClick(ContainerReader& r);
+	void handleEntPosUpdate(ContainerReader& r);
+	void updateMovement(float dt);
+	void handleDie(ContainerReader& r);
+	void handlePlanCap(ContainerReader& r);
+	void handlePlanUpd(ContainerReader& r);
+	void handleGameEnd(ContainerReader& r);
+	void handleSynch(ContainerReader& r);
+	void clearUpdateTime();
+	void updateMovementServer();
+	void handleSurrender(ContainerReader& r);
+	void handleClanChange(ContainerReader& r);
+	void handlePlanetSpawntype(ContainerReader& r);
+	void handleSelectAllEntityType(ContainerReader& r);
+	void handleFilterEntityType(ContainerReader& r);
+	void handlePlanDefend(ContainerReader& r);
 private:
-	std::vector< DataContainer > dataList;
+	std::vector< DataContainer > m_dataList;
 };

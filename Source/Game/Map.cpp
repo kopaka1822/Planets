@@ -1,25 +1,27 @@
 #include "Map.h"
+#include "../Utility/Line.h"
+#include "../Utility/Exception.h"
 
 Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector< byte >& pclans)
 	:
-	nPlayers(nPlayers),
-	nPlans(nPlans),
-	mWidth(width),
-	mHeight(height),
-	grid(int(width / 30.0f), int(height / 30.0f), 30, 20, nPlayers, *this),
-	gameType(ty)
+	m_nPlayers(nPlayers),
+	m_nPlans(nPlans),
+	m_mWidth(width),
+	m_mHeight(height),
+	m_grid(int(width / 30.0f), int(height / 30.0f), 30, 20, nPlayers, *this),
+	m_gameType(ty)
 {
-	ents.assign(nPlayers, LinkedIDList<MapEntity>());
+	m_ents.assign(nPlayers, LinkedIDList<MapEntity>());
 
 	// clans
 	std::vector< ClanInfo > vec;
 	vec.assign(nPlayers, ClanInfo::noAlly);
 
-	clanInfo.assign(nPlayers, vec);
+	m_clanInfo.assign(nPlayers, vec);
 	for (int i = 0; i < nPlayers; i++)
 	{
 		// m_team 1 is ally with himself
-		clanInfo[i][i] = ClanInfo::Ally;
+		m_clanInfo[i][i] = ClanInfo::Ally;
 	}
 
 	if (ty == GameType::Allicance)
@@ -35,7 +37,7 @@ Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const
 			for (int i = 0; i < nPlayers; i++)
 			{
 				if (pclans[i] == curClan)
-					clanInfo[curP][i] = ClanInfo::Ally;
+					m_clanInfo[curP][i] = ClanInfo::Ally;
 			}
 		}
 	}
@@ -43,7 +45,7 @@ Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const
 
 Map::~Map()
 {
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 		tool::safeDelete(p);
 }
 
@@ -51,12 +53,12 @@ Map::~Map()
 /////////////////////////// USER INPUT /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool Map::Select(PointF center, float r2, byte team)
+bool Map::select(PointF center, float r2, byte team)
 {
 	//check if anything was selected in the first place...
 	if (r2 < 6400.0f) //80 px squared
 	{
-		for (auto& e : ents[team - 1])
+		for (auto& e : m_ents[team - 1])
 		{
 			float er2 = (e.getPos() - center).lengthSq();
 
@@ -66,7 +68,7 @@ bool Map::Select(PointF center, float r2, byte team)
 			}
 		}
 		//Planet Selected?
-		for (auto& p : plans)
+		for (auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 			{
@@ -83,38 +85,38 @@ bool Map::Select(PointF center, float r2, byte team)
 	return true;
 }
 
-void Map::SelectAll(byte team)
+void Map::selectAll(byte team)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		e.forceSelect();
 	}
 	//Planet Selected?
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 			p->forceSelect();
 	}
 }
 
-void Map::AddToGroup(byte team, int group)
+void Map::addToGroup(byte team, int group)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		if (e.selected())
 			e.groupAssign(group);
 	}
 
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->selected())
 			p->groupAssign(group);
 	}
 }
 
-void Map::MakeGroup(byte team, int group)
+void Map::makeGroup(byte team, int group)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		if (e.selected())
 			e.groupAssign(group);
@@ -122,7 +124,7 @@ void Map::MakeGroup(byte team, int group)
 			e.groupDestroy(group);
 	}
 
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->selected())
 			p->groupAssign(group);
@@ -131,48 +133,48 @@ void Map::MakeGroup(byte team, int group)
 	}
 }
 
-void Map::SelectGroup(byte team, int group)
+void Map::selectGroup(byte team, int group)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		e.groupSelect(group);
 	}
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 			p->groupSelect(group);
 	}
 }
 
-void Map::DeleteGroup(byte team, int group)
+void Map::deleteGroup(byte team, int group)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		e.groupDestroy(group);
 	}
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 			p->groupDestroy(group);
 	}
 }
 
-void Map::ClickRight(byte team)
+void Map::deselectTarget(byte team)
 {
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		e.deselect();
 	}
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 			p->deselect();
 	}
 }
 
-void Map::SetAllPlanetsOnDefense(byte team)
+void Map::setAllPlanetsOnDefense(byte team)
 {
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 		{
@@ -184,11 +186,11 @@ void Map::SetAllPlanetsOnDefense(byte team)
 	}
 }
 
-void Map::SetPlanetSpawnType(byte team, MapObject::EntityType t)
+void Map::setPlanetSpawnType(byte team, MapObject::EntityType t)
 {
 	assert(t != MapObject::EntityType::etNone);
 
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team && p->selected())
 		{
@@ -204,14 +206,14 @@ void Map::SetPlanetSpawnType(byte team, MapObject::EntityType t)
 bool Map::borderCol(const PointF& p) const
 {
 	const float b = 5.0f; //border
-	if (p.x < b || p.x > mWidth - b || p.y < b || p.y > mHeight - b)
+	if (p.x < b || p.x > m_mWidth - b || p.y < b || p.y > m_mHeight - b)
 		return true;
 	return false;
 }
 
-const MapPlanet* Map::GetColPlan(const PointF& pt) const
+const MapPlanet* Map::getColPlan(const PointF& pt) const
 {
-	for (const auto& p : plans)
+	for (const auto& p : m_plans)
 	{
 		if (p->isColliding(pt))
 			return p;
@@ -219,22 +221,22 @@ const MapPlanet* Map::GetColPlan(const PointF& pt) const
 	return nullptr;
 }
 
-void Map::RefreshGrid()
+void Map::refreshGrid()
 {
-	grid.clear();
+	m_grid.clear();
 	// sort entities
-	for (size_t i = 0; i < nPlayers; i++)
+	for (size_t i = 0; i < m_nPlayers; i++)
 	{
-		for (auto& e : ents[i])
+		for (auto& e : m_ents[i])
 		{
-			grid.AddEntity(&e, e.getPos());
+			m_grid.addEntity(&e, e.getPos());
 		}
 	}
 }
 
-const MapEntity* Map::GetColEnt(PointF pt, unsigned int id, byte team)
+const MapEntity* Map::getColEnt(PointF pt, unsigned int id, byte team)
 {
-	auto& list = grid.GetEntities(pt);
+	auto& list = m_grid.getEntities(pt);
 	for (auto& e : list)
 	{
 		if (e->isColliding(pt))
@@ -248,7 +250,7 @@ const MapEntity* Map::GetColEnt(PointF pt, unsigned int id, byte team)
 	return nullptr;
 }
 
-void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
+void Map::setCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 {
 	ds *= curEnt.getSpeedModifier();
 	VectorF vV = curEnt.getVel();
@@ -260,14 +262,14 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 	const byte team = curEnt.getTeam();
 
 	FastVector< MapEntity* > nearby;
-	FastVector< MapEntity* >& gridlist = grid.GetEntities(vP);
+	FastVector< MapEntity* >& gridlist = m_grid.getEntities(vP);
 
-	MapEntity** ppe = GetNextFOVEnt(gridlist.begin(), gridlist.end(), team, vP, vV, &curEnt);
+	MapEntity** ppe = getNextFOVEnt(gridlist.begin(), gridlist.end(), team, vP, vV, &curEnt);
 
 	while (ppe != gridlist.end())
 	{
 		nearby.push_back(*ppe);
-		ppe = GetNextFOVEnt(++ppe, gridlist.end(), team, vP, vV, &curEnt);
+		ppe = getNextFOVEnt(++ppe, gridlist.end(), team, vP, vV, &curEnt);
 	}
 
 	if (nearby.length() == 0)
@@ -440,29 +442,29 @@ void Map::SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
 	curEnt.setVel(vV);
 }
 
-PointF Map::GetEntDefend(PlanetID pID)
+PointF Map::getEntDefend(PlanetID pID)
 {
 	assert(pID >= 0);
-	assert((unsigned)pID < nPlans);
-	PointF& result = plansDefend[pID];
+	assert((unsigned)pID < m_nPlans);
+	PointF& result = m_plansDefend[pID];
 
 	if (result.x == 0.0f)
 	{
 		//not searched ->search next ent
-		const int r = (int)plans[pID]->getRadius() + 50;
+		const int r = (int)m_plans[pID]->getRadius() + 50;
 		const int r2 = r * r;
 
-		const byte team = plans[pID]->getTeam();
+		const byte team = m_plans[pID]->getTeam();
 		assert(team != 0);
 
-		const PointF& pos = plans[pID]->getPos();
+		const PointF& pos = m_plans[pID]->getPos();
 
-		for (size_t i = 0; i < nPlayers; ++i)
+		for (size_t i = 0; i < m_nPlayers; ++i)
 		{
 			if (isAlly(i + 1, team))
 				continue;
 
-			for (const auto& e : ents[i])
+			for (const auto& e : m_ents[i])
 			{
 				if ((e.getPos() - pos).lengthSq() < r2)
 				{
@@ -473,7 +475,7 @@ PointF Map::GetEntDefend(PlanetID pID)
 		}
 
 		//nothing found -> return to planet
-		result = plans[pID]->getPos();
+		result = m_plans[pID]->getPos();
 		return result;
 	}
 	else
@@ -482,14 +484,14 @@ PointF Map::GetEntDefend(PlanetID pID)
 	}
 }
 
-void Map::SetTargetAvoidingPlanets(const PointF& vP, PointF& vT)
+void Map::setTargetAvoidingPlanets(const PointF& vP, PointF& vT)
 {
 	std::vector< std::pair< float, const MapPlanet*> > colPlans;
 
 	const LineFixedF route = LineFixedF(vP, vT);
 
 	//collect planets with intersection
-	for (const auto& p : plans)
+	for (const auto& p : m_plans)
 	{
 		float scalar = route.intersectCircle(p->getPos(), p->getRadius());
 		if (scalar > 0.0f)
@@ -544,7 +546,7 @@ void Map::SetTargetAvoidingPlanets(const PointF& vP, PointF& vT)
 	vT = vOP + plan->getPos();
 }
 
-void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
+void Map::setPrimaryEntVel(float ds, MapEntity& curEnt)
 {
 	ds *= curEnt.getSpeedModifier();
 	switch (curEnt.GetState())
@@ -558,13 +560,13 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 		{
 			const PlanetID pID = (PlanetID)curEnt.getTarget().x;
 			//check if planet belongs to the m_team
-			if (isAlly(plans[pID]->getTeam(), curEnt.getTeam()))
+			if (isAlly(m_plans[pID]->getTeam(), curEnt.getTeam()))
 			{
-				vT = Map::GetEntDefend(pID);
-				if (vT == plans[pID]->getPos())
+				vT = Map::getEntDefend(pID);
+				if (vT == m_plans[pID]->getPos())
 				{
 					//spin around planet if near enough
-					if (plans[pID]->isInDefend(vP))
+					if (m_plans[pID]->isInDefend(vP))
 					{
 						vT = vP + (vT - vP).CW90();
 					}
@@ -589,9 +591,9 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 		if (curEnt.getTargetType() == MapEntity::tgPlanet)
 		{
 			PlanetID pID = (PlanetID)vT.x;
-			vT = plans[pID]->getPos();
+			vT = m_plans[pID]->getPos();
 
-			if (plans[pID]->isNearby(vP) && curEnt.getMood())
+			if (m_plans[pID]->isNearby(vP) && curEnt.getMood())
 			{
 				vT = vP + (vT - vP).CW90();
 			}
@@ -604,13 +606,13 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 			}
 		}
 
-		SetTargetAvoidingPlanets(vP, vT);
+		setTargetAvoidingPlanets(vP, vT);
 
 		PointF vVnorm = (vT - vP).normalize();
 		PointF vV = vVnorm * ds;
 
 		{//Colliding with planet?
-			const MapPlanet* obj = GetColPlan(vP + vV);
+			const MapPlanet* obj = getColPlan(vP + vV);
 			if (obj != nullptr)
 			{//Colliding with planet!
 				if (obj->getPos() == vT)
@@ -678,16 +680,16 @@ void Map::SetPrimaryEntVel(float ds, MapEntity& curEnt)
 }
 bool Map::col(const PointF& pt, unsigned int id, byte team)
 {
-	if (GetColPlan(pt) != nullptr)
+	if (getColPlan(pt) != nullptr)
 		return true;
 
-	if (GetColEnt(pt, id, team) != nullptr)
+	if (getColEnt(pt, id, team) != nullptr)
 		return true;
 
 	return borderCol(pt);
 }
 
-void Map::SetEntPosition(MapEntity& curEnt, const float dt)
+void Map::setEntPosition(MapEntity& curEnt, const float dt)
 {
 	const PointF& pos = curEnt.getPos();
 	const VectorF& vel = curEnt.getVel();
@@ -727,11 +729,11 @@ void Map::SetEntPosition(MapEntity& curEnt, const float dt)
 
 bool Map::isAlly(byte team1, byte team2) const
 {
-	if (byte(team1 - 1) >= nPlayers || byte(team2 - 1) >= nPlayers)
+	if (byte(team1 - 1) >= m_nPlayers || byte(team2 - 1) >= m_nPlayers)
 		//if (team1 == 0 || team2 == 0 || team1 > nPlayers || team2 > nPlayers)
 		return false;
 
-	if (clanInfo[team1 - 1][team2 - 1] == ClanInfo::Ally)
+	if (m_clanInfo[team1 - 1][team2 - 1] == ClanInfo::Ally)
 		return true;
 	else
 		return false;

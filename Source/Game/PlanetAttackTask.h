@@ -6,27 +6,27 @@ class PlanetAttackTask
 public:
 	PlanetAttackTask(class PlayerAI& ai, PlanetID p);
 	PlanetAttackTask& operator=(const PlanetAttackTask&) = delete;
-	void Destroy();
-	int GetGroupID()
+	void destroy();
+	int getGroupID()
 	{
-		return gid;
+		return m_gid;
 	}
-	void Update(); // reselect
-	void AddToGroup(int size)
+	void update(); // reselect
+	void addToGroup(int size)
 	{
-		assert(-size <= (int)groupsize);
-		groupsize += size;
+		assert(-size <= (int)m_groupsize);
+		m_groupsize += size;
 	}
-	size_t GetGroupSize() const
+	size_t getGroupSize() const
 	{
-		return groupsize;
+		return m_groupsize;
 	}
 public:
 	static const int ID_START = 256;
 	static const int ID_END = 511;
 private:
-	class PlayerAI& ai;
-	MapPlanet& plan;
-	const int gid; // m_group id
-	size_t groupsize = 0;
+	class PlayerAI& m_ai;
+	MapPlanet& m_plan;
+	const int m_gid; // m_group id
+	size_t m_groupsize = 0;
 };

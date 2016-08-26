@@ -26,16 +26,16 @@ public:
 		camDes(0.0f, 0.0f),
 		scalar(4.0f), // animation from upper left
 		scalarDes(4.0f),
-		mWidth(map.GetWidth()), mHeight(map.GetHeight()),
+		mWidth(map.getWidth()), mHeight(map.getHeight()),
 		entSelect(team)
 	{
 		map.addEventReciever(this);
 		entSelect.disable();
-		planColors.assign(map.nPlans, Color::White());
-		for (const auto& p : map.plans)
+		planColors.assign(map.m_nPlans, Color::White());
+		for (const auto& p : map.m_plans)
 			planColors[p->getID()] = Color::GetTeamColor(p->getTeam());
 
-		lastPlanSpawn.assign(map.nPlans, 1000.0f);
+		lastPlanSpawn.assign(map.m_nPlans, 1000.0f);
 		//Zoom(1.0f);
 	}
 	void DisableEntSelect()
@@ -179,7 +179,7 @@ private:
 	void DrawLinesToEntSelect(Drawing& draw)
 	{
 		const PointF center = entSelect.getRect().GetMidpoint();
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			if (p->getTeam() == myTeam && p->selected())
 				draw.DrawLine(center, fromModel(p->getPos()), Color::White(), 3.0f);
@@ -194,7 +194,7 @@ private:
 		bool bSameType = true;
 		MapObject::EntityType curType = MapObject::EntityType::etNormal;
 
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			if (p->selected() && p->getTeam() == myTeam)
 			{
@@ -251,7 +251,7 @@ private:
 	}
 	void DrawPlanets(Drawing& draw)
 	{
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			p->calcDrawPercentage();
 			// update color
@@ -300,7 +300,7 @@ private:
 		PartArr sabo;
 		PartArr saboWh;
 
-		for (size_t i = 0; i < map.nPlayers; i++)
+		for (size_t i = 0; i < map.m_nPlayers; i++)
 		{
 			tool::zeroStruct(&norm);
 
@@ -315,9 +315,9 @@ private:
 				tool::zeroStruct(&saboWh);
 			}
 
-			LockGuard guard(map.muEnts);
+			LockGuard guard(map.m_muEnts);
 
-			size_t len = map.ents[i].length();
+			size_t len = map.m_ents[i].length();
 			if (len == 0)
 				continue;
 
@@ -351,7 +351,7 @@ private:
 			if (i + 1 == myTeam)
 			{
 				// special units
-				for (auto& e : map.ents[i])
+				for (auto& e : map.m_ents[i])
 				{
 					e.calcDrawPos();
 
@@ -414,7 +414,7 @@ private:
 			else
 			{
 				// just normal in one color
-				for (auto& e : map.ents[i])
+				for (auto& e : map.m_ents[i])
 				{
 					e.calcDrawPos();
 					*norm.cur = e.getDrawPos();
@@ -469,7 +469,7 @@ private:
 	}
 	void DrawPlanetBar(Drawing& draw, const PointI& ms)
 	{
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			if (p->isNearby(ms))
 			{
@@ -533,8 +533,8 @@ private:
 		const Color col = Color(0.3f, 0.3f, 0.3f, 0.5f);
 		const float stroke = 1.5f;
 
-		map.muEnts.Lock();
-		for (auto& e : map.ents[myTeam - 1])
+		map.m_muEnts.Lock();
+		for (auto& e : map.m_ents[myTeam - 1])
 		{
 			if (e.drawSelected())
 			{
@@ -557,9 +557,9 @@ private:
 				}
 			}
 		}
-		map.muEnts.Unlock();
+		map.m_muEnts.Unlock();
 
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			if (p->getTeam() == myTeam)
 			{

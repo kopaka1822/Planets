@@ -16,25 +16,25 @@ public:
 
 	std::vector< DataContainer > GetStartData();
 
-	virtual void Update(float dt) override;
-	virtual void ClickRight(byte team) override;
-	virtual bool Click(PointF pt, byte team) override;
-	virtual byte GameEnd() const override
+	virtual void update(float dt) override;
+	virtual void deselectTarget(byte team) override;
+	virtual bool setTarget(PointF pt, byte team) override;
+	virtual byte gameEnd() const override
 	{
 		return winner;
 	}
 	void SetStartClock(float startsec)
 	{
-		clock.SetStartTime(startsec);
+		clock.setStartTime(startsec);
 	}
 
-	virtual void AddToGroup(byte team, int group) override;
-	virtual void MakeGroup(byte team, int group) override;
-	virtual void SelectGroup(byte team, int group) override;
-	virtual void DeleteGroup(byte team, int group) override;
-	virtual void SelectAll(byte team) override;
-	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
-	virtual void SelectAllEntityType(byte team, MapObject::EntityType et) override;
+	virtual void addToGroup(byte team, int group) override;
+	virtual void makeGroup(byte team, int group) override;
+	virtual void selectGroup(byte team, int group) override;
+	virtual void deleteGroup(byte team, int group) override;
+	virtual void selectAll(byte team) override;
+	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
+	virtual void selectAllEntityType(byte team, MapObject::EntityType et) override;
 
 	bool HandleSurrender(byte team);
 	float GetAvgUpdTime()
@@ -44,23 +44,23 @@ public:
 		sumTime = 0.0f;
 		return avg;
 	}
-	virtual void AddPacket(DataContainer&& con) override
+	virtual void addPacket(DataContainer&& con) override
 	{
 		inData.push_back(std::move(con));
 	}
 
 	size_t CountUnits(byte team)
 	{
-		if (unsigned(team - 1) >= nPlayers)
+		if (unsigned(team - 1) >= m_nPlayers)
 			return 0;
 
-		return ents[team - 1].length();
+		return m_ents[team - 1].length();
 	}
 	byte GetNPlayers()
 	{
-		return nPlayers;
+		return m_nPlayers;
 	}
-	virtual bool GameStart() const override
+	virtual bool gameStart() const override
 	{
 		return bGameStart;
 	}
@@ -78,9 +78,9 @@ private: //functions
 	unsigned int nEntities() const
 	{
 		unsigned int c = 0;
-		for (size_t i = 0; i < nPlayers; ++i)
+		for (size_t i = 0; i < m_nPlayers; ++i)
 		{
-			c += ents[i].length();
+			c += m_ents[i].length();
 		}
 		return c;
 	}
@@ -123,7 +123,7 @@ private: //functions
 	int CountAllies(byte team) const
 	{
 		int count = 0;
-		for (const auto& e : clanInfo[team - 1])
+		for (const auto& e : m_clanInfo[team - 1])
 			if (e == ClanInfo::Ally) count++;
 
 		return count;

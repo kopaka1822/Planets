@@ -9,7 +9,7 @@ public:
 	{
 	public:
 		virtual ~AI(){}
-		virtual void DoTurn(float dt) = 0;
+		virtual void doTurn(float dt) = 0;
 	};
 public:
 	LocalMapSingleplayer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
@@ -17,7 +17,7 @@ public:
 	virtual ~LocalMapSingleplayer()
 	{}
 
-	virtual void Update(float dt) override;
+	virtual void update(float dt) override;
 	virtual std::unique_ptr<AI> SpawnAI(int team);
 protected:
 	void InitAI();

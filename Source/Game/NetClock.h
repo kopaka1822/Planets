@@ -8,40 +8,40 @@ public:
 	{}
 	NetClock(float startsec)
 	{
-		SetStartTime(startsec);
+		setStartTime(startsec);
 	}
-	void SetStartTime(float startsec)
+	void setStartTime(float startsec)
 	{
-		t.StartWatch();
-		startOffset = startsec;
+		m_t.StartWatch();
+		m_startOffset = startsec;
 	}
-	float GetTimeSecond() const
+	float getTimeSecond() const
 	{
-		return t.GetTimeSecond() + startOffset;
+		return m_t.GetTimeSecond() + m_startOffset;
 	}
-	float MakeLapSecond()
+	float makeLapSecond()
 	{
-		float total = GetTimeSecond();
-		float dt = total - lastLap;
-		lastLap = total;
+		float total = getTimeSecond();
+		float dt = total - m_lastLap;
+		m_lastLap = total;
 		return dt;
 	}
 	// curTime in seconds - ping in ms
-	void SynchClock(float curTime, float ping)
+	void synchClock(float curTime, float ping)
 	{
 		float updTime = curTime + ping / 1000.0f;
-		if (updTime > t.GetTimeSecond())
+		if (updTime > m_t.GetTimeSecond())
 		{
-			SetStartTime(updTime);
+			setStartTime(updTime);
 		}
 	}
-	float GetTimeDelta(float serverTime) const
+	float getTimeDelta(float serverTime) const
 	{
 		// client time  - server time
-		return lastLap - serverTime;
+		return m_lastLap - serverTime;
 	}
 private:
-	Timer t;
-	float lastLap = 0.0f;
-	float startOffset = 0.0f;
+	Timer m_t;
+	float m_lastLap = 0.0f;
+	float m_startOffset = 0.0f;
 };

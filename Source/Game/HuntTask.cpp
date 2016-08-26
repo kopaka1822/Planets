@@ -3,46 +3,46 @@
 
 HuntTask::HuntTask(PlayerAI& ai, MapEntity& startUnit)
 	:
-	ai(ai),
-	id(ID_START + startUnit.getID()),
-	pTarget(nullptr),
-	curPos(startUnit.getPos()),
-	groupSize(1)
+	m_ai(ai),
+	m_id(ID_START + startUnit.getID()),
+	m_pTarget(nullptr),
+	m_curPos(startUnit.getPos()),
+	m_groupSize(1)
 {
-	startUnit.groupAssign(id);
+	startUnit.groupAssign(m_id);
 }
-void HuntTask::DoTask(float dt)
+void HuntTask::doTask(float dt)
 {
-	if (pTarget)
+	if (m_pTarget)
 	{
-		curPos = pTarget->getPos();
-		ai.map.SelectGroup(ai.team, id);
-		ai.map.Click(curPos, ai.team);
+		m_curPos = m_pTarget->getPos();
+		m_ai.m_map.selectGroup(m_ai.m_team, m_id);
+		m_ai.m_map.setTarget(m_curPos, m_ai.m_team);
 	}
 	else
 	{
-		if (timeout <= 0.0f)
+		if (m_timeout <= 0.0f)
 		{
 			// search unit
-			pTarget = ai.GetHuntTarget(curPos, curRadius);
-			if (pTarget)
+			m_pTarget = m_ai.getHuntTarget(m_curPos, m_curRadius);
+			if (m_pTarget)
 			{
-				SetTarget(pTarget);
+				setTarget(m_pTarget);
 			}
 			else
 			{
-				curRadius += RAD_STEP;
+				m_curRadius += RAD_STEP;
 			}
-			timeout += 2.0f;
+			m_timeout += 2.0f;
 		}
 
-		timeout -= dt;
+		m_timeout -= dt;
 	}
 
 }
-void HuntTask::SetTarget(const MapEntity* target)
+void HuntTask::setTarget(const MapEntity* target)
 {
-	pTarget = target;
-	if (pTarget)
-		curPos = pTarget->getPos();
+	m_pTarget = target;
+	if (m_pTarget)
+		m_curPos = m_pTarget->getPos();
 }

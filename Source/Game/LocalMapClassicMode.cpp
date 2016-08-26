@@ -16,23 +16,23 @@ std::unique_ptr<LocalMapSingleplayer::AI> LocalMapClassicMode::SpawnAI(int team)
 
 WeakAI::WeakAI(int team, Map& map)
 	:
-	myTeam(team),
-	map(map)
+	m_myTeam(team),
+	m_map(map)
 {
 
 }
 
-void WeakAI::DoTurn(float dt)
+void WeakAI::doTurn(float dt)
 {
-	sumTime += dt;
+	m_sumTime += dt;
 
-	if (sumTime > 3.0f)
+	if (m_sumTime > 3.0f)
 	{
-		sumTime = 0.0f;
+		m_sumTime = 0.0f;
 		// select all and send on nearest target
 		PointF tar = GetTarget();
-		map.SelectAll(myTeam);
-		map.Click(tar, myTeam);
+		m_map.selectAll(m_myTeam);
+		m_map.setTarget(tar, m_myTeam);
 	}
 }
 
@@ -40,9 +40,9 @@ PointF WeakAI::GetTarget()
 {
 	int nPlans = 0;
 	PointF mid;
-	for (const auto& p : map.plans)
+	for (const auto& p : m_map.m_plans)
 	{
-		if (p->getTeam() == myTeam)
+		if (p->getTeam() == m_myTeam)
 		{
 			nPlans++;
 			mid += p->getPos();
@@ -52,7 +52,7 @@ PointF WeakAI::GetTarget()
 	if (nPlans)
 	{
 		// we have planets
-		if (nPlans != map.nPlans)
+		if (nPlans != m_map.m_nPlans)
 		{
 			// a planet should be free
 			return GetNearestPlan(mid);
@@ -66,9 +66,9 @@ PointF WeakAI::GetTarget()
 	else
 	{
 		// we dont have planets -> attack first planet
-		if (map.nPlans)
+		if (m_map.m_nPlans)
 		{
-			return map.plans[0]->getPos();
+			return m_map.m_plans[0]->getPos();
 		}
 		else
 		{
@@ -82,7 +82,7 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 	float lastDist = FLT_MAX;
 	bool bFoundWhite = false;
 
-	for (const auto& p : map.plans)
+	for (const auto& p : m_map.m_plans)
 	{
 		if (p->getTeam() == 0)
 		{
@@ -100,9 +100,9 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 
 	lastDist = FLT_MAX;
 
-	for (const auto& p : map.plans)
+	for (const auto& p : m_map.m_plans)
 	{
-		if (p->getTeam() != myTeam)
+		if (p->getTeam() != m_myTeam)
 		{
 			float dist = (pos - p->getPos()).lengthSq();
 			if (dist < lastDist)
@@ -117,16 +117,16 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 }
 PointF WeakAI::GetNearestEnt()
 {
-	for (int i = 0; i < map.nPlayers; i++)
+	for (int i = 0; i < m_map.m_nPlayers; i++)
 	{
-		if (i != myTeam)
+		if (i != m_myTeam)
 		{
-			if (map.ents[i].length())
+			if (m_map.m_ents[i].length())
 			{
-				return map.ents[i].begin()->getPos();
+				return m_map.m_ents[i].begin()->getPos();
 			}
 		}
 	}
 
-	return PointF(map.mWidth, map.mHeight) * 0.5f;
+	return PointF(m_map.m_mWidth, m_map.m_mHeight) * 0.5f;
 }

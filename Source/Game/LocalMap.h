@@ -11,20 +11,20 @@ public:
 	LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<byte> clns);
 	virtual ~LocalMap();
 
-	virtual bool Select(PointF center, float r2, byte team);
-	virtual bool Click(PointF pt, byte team) override;
-	virtual byte GameEnd() const override;
-	virtual bool FilterEntityType(byte team, MapObject::EntityType et) override;
+	virtual bool select(PointF center, float r2, byte team);
+	virtual bool setTarget(PointF pt, byte team) override;
+	virtual byte gameEnd() const override;
+	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
 protected:
-	bool TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
+	bool tryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
 		const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType);
-	MapEntity* GetEnemyEnt(const PointF& pt, const byte team);
+	MapEntity* getEnemyEnt(const PointF& pt, const byte team);
 	//initialization
-	void LoadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns);
-	void KillEnts(const PointF& center, float radius, int damage, byte team);
+	void loadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns);
+	void killEnts(const PointF& center, float radius, int damage, byte team);
 
 protected:
 
-	void UpdateEnts(const float dt);
-	void AttackNearby(MapEntity& curEnt);
+	void updateEnts(const float dt);
+	void attackNearby(MapEntity& curEnt);
 };

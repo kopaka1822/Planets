@@ -7,48 +7,48 @@ class HuntTask
 {
 public:
 	HuntTask(class PlayerAI& ai, MapEntity& startUnit);
-	void DoTask(float dt);
-	void SetTarget(const MapEntity* target);
-	void AddToGroup(int s)
+	void doTask(float dt);
+	void setTarget(const MapEntity* target);
+	void addToGroup(int s)
 	{
-		groupSize += s;
+		m_groupSize += s;
 	}
-	void IncGroupSize()
+	void incGroupSize()
 	{
-		groupSize++;
+		m_groupSize++;
 	}
-	void DecGroupSize()
+	void decGroupSize()
 	{
-		groupSize--;
+		m_groupSize--;
 	}
-	int GetGroupSize() const
+	int getGroupSize() const
 	{
-		return groupSize;
+		return m_groupSize;
 	}
-	const PointF& GetPos() const
+	const PointF& getPos() const
 	{
-		return curPos;
+		return m_curPos;
 	}
-	int GetID() const
+	int getID() const
 	{
-		return id;
+		return m_id;
 	}
-	const MapEntity* GetTarget() const
+	const MapEntity* getTarget() const
 	{
-		return pTarget;
+		return m_pTarget;
 	}
 public:
 	static const int ID_START = 512;
 private:
-	class PlayerAI& ai;
-	const size_t id;
-	size_t groupSize;
-	const MapEntity* pTarget;
+	class PlayerAI& m_ai;
+	const size_t m_id;
+	size_t m_groupSize;
+	const MapEntity* m_pTarget;
 
-	float timeout = 0.0f;
+	float m_timeout = 0.0f;
 
-	PointF curPos; // probably the current center of all units
+	PointF m_curPos; // probably the current center of all units
 	const float RAD_MIN = 200.0f;
 	const float RAD_STEP = 100.0f;
-	float curRadius = RAD_MIN;
+	float m_curRadius = RAD_MIN;
 };

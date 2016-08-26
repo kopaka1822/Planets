@@ -3,43 +3,43 @@
 
 BomberHuntTask::BomberHuntTask(PlayerAI& ai, MapEntity& bomber)
 	:
-	bomber(bomber),
-	pTarget(nullptr),
-	ai(ai),
-	group(ID_START + bomber.getID())
+	m_bomber(bomber),
+	m_pTarget(nullptr),
+	m_ai(ai),
+	m_group(ID_START + bomber.getID())
 {
-	bomber.groupAssign(group);
+	bomber.groupAssign(m_group);
 }
-void BomberHuntTask::DoTask(float dt)
+void BomberHuntTask::doTask(float dt)
 {
-	if (pTarget)
+	if (m_pTarget)
 	{
-		ai.map.SelectGroup(ai.team, group);
-		ai.map.Click(pTarget->getPos(), ai.team);
+		m_ai.m_map.selectGroup(m_ai.m_team, m_group);
+		m_ai.m_map.setTarget(m_pTarget->getPos(), m_ai.m_team);
 	}
 	else
 	{
-		if (timeout <= 0.0f)
+		if (m_timeout <= 0.0f)
 		{
 			// search target
-			pTarget = ai.GetBomberTarget(bomber);
+			m_pTarget = m_ai.getBomberTarget(m_bomber);
 
 			// timeout to avoid to much searching
-			timeout = 2.0f;
+			m_timeout = 2.0f;
 		}
 
-		timeout -= dt;
+		m_timeout -= dt;
 	}
 }
-void BomberHuntTask::SetTarget(const MapEntity* target)
+void BomberHuntTask::setTarget(const MapEntity* target)
 {
-	pTarget = target;
+	m_pTarget = target;
 }
-int BomberHuntTask::GetBomberID() const
+int BomberHuntTask::getBomberID() const
 {
-	return bomber.getID();
+	return m_bomber.getID();
 }
-const MapEntity* BomberHuntTask::GetTarget() const
+const MapEntity* BomberHuntTask::getTarget() const
 {
-	return pTarget;
+	return m_pTarget;
 }

@@ -222,7 +222,7 @@ public:
 	{
 		// HandleSurrender infos[id - 1] m_team
 		// chat -> Team %d surrenderd
-		if (pMap && pMap->GameStart())
+		if (pMap && pMap->gameStart())
 		{
 			pMap->HandleSurrender(infos[id - 1].team);
 			SendServerMessage(0, (std::string("Team ") + std::to_string(infos[id - 1].team) + std::string(" surrendered")).c_str(), infos[id - 1].team);

@@ -51,7 +51,7 @@ GameServer::status GameServerNormal::UpdateGame(float dt)
 				ProcessChat(pid, r.readString());
 				break;
 			default:
-				pMap->AddPacket(std::move(c));
+				pMap->addPacket(std::move(c));
 			}
 		}
 		catch (const std::logic_error&)
@@ -60,9 +60,9 @@ GameServer::status GameServerNormal::UpdateGame(float dt)
 		}
 	}
 
-	pMap->Update(dt);
+	pMap->update(dt);
 
-	if (pMap->GameEnd() != 0)
+	if (pMap->gameEnd() != 0)
 		return status::Next;
 
 	for (const auto& e : pServer->GetEvents())

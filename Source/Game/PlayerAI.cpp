@@ -4,126 +4,126 @@
 
 PlayerAI::PlayerAI(byte team, Map& map)
 	:
-	team(team),
-	map(map),
-	nPlanets(0)
+	m_team(team),
+	m_map(map),
+	m_nPlanets(0)
 {
-	planTask.assign(map.nPlans, nullptr);
-	planAtkTask.assign(map.nPlans, nullptr);
+	m_planTask.assign(map.m_nPlans, nullptr);
+	m_planAtkTask.assign(map.m_nPlans, nullptr);
 
-	for (size_t i = 0; i < map.nPlans; i++)
+	for (size_t i = 0; i < map.m_nPlans; i++)
 	{
-		if (map.plans[i]->getTeam() == team)
+		if (map.m_plans[i]->getTeam() == team)
 		{
-			planTask[i] = new PlanetTask(*this, i);
-			nPlanets++;
+			m_planTask[i] = new PlanetTask(*this, i);
+			m_nPlanets++;
 		}
 	}
 
 	// init nearby planets ??
-	const float nearr = CalcNearByDistance(4); // in average 4 planets nearby
+	const float nearr = calcNearByDistance(4); // in average 4 planets nearby
 	const float near2 = nearr * nearr;
-	nearbyPlanets.assign(map.nPlans, std::vector<PlanetID>());
+	m_nearbyPlanets.assign(map.m_nPlans, std::vector<PlanetID>());
 
-	for (size_t i = 0; i < map.nPlans; i++)
+	for (size_t i = 0; i < map.m_nPlans; i++)
 	{
 		const PointF& cen = map.getPlan(i).getPos();
-		for (size_t j = 0; j < map.nPlans; j++)
+		for (size_t j = 0; j < map.m_nPlans; j++)
 		{
 			if (i != j)
 			{
 				if ((map.getPlan(j).getPos() - cen).lengthSq() < near2)
 				{
-					nearbyPlanets[i].push_back(j);
+					m_nearbyPlanets[i].push_back(j);
 				}
 			}
 		}
 	}
-	if (map.nPlans > 0)
+	if (map.m_nPlans > 0)
 	{
-		for (auto& ent : map.ents[team - 1])
+		for (auto& ent : map.m_ents[team - 1])
 		{
-			PlanetID pid = GetAttackPlan(ent.getPos());
+			PlanetID pid = getAttackPlan(ent.getPos());
 			ent.groupAssign(-2);
-			AttackPlanet(-2, 1, pid);
+			attackPlanet(-2, 1, pid);
 
 		}
 	}
 }
 PlayerAI::~PlayerAI()
 {
-	for (auto& t : planTask)
+	for (auto& t : m_planTask)
 	{
 		tool::safeDelete(t);
 	}
-	for (auto& t : planAtkTask)
+	for (auto& t : m_planAtkTask)
 	{
 		tool::safeDelete(t);
 	}
 }
-void PlayerAI::DoTurn(float dt)
+void PlayerAI::doTurn(float dt)
 {
-	for (auto& t : planTask)
+	for (auto& t : m_planTask)
 	{
 		if (t)
-			t->DoTask(dt);
+			t->doTask(dt);
 	}
-	for (auto& t : bombHunters)
+	for (auto& t : m_bombHunters)
 	{
 		if (t)
-			t->DoTask(dt);
+			t->doTask(dt);
 	}
-	for (auto& t : huntTask)
+	for (auto& t : m_huntTask)
 	{
 		if (t)
-			t->DoTask(dt);
+			t->doTask(dt);
 	}
 }
-PlanetID PlayerAI::GetPlanetInTrouble(PlanetID own)
+PlanetID PlayerAI::getPlanetInTrouble(PlanetID own)
 {
-	if (unsigned(own) >= planTask.size())
+	if (unsigned(own) >= m_planTask.size())
 		return own;
 
-	for (const auto& pid : nearbyPlanets[own])
+	for (const auto& pid : m_nearbyPlanets[own])
 	{
-		assert(unsigned(pid) < planTask.size());
-		if (planTask[pid] != nullptr)
+		assert(unsigned(pid) < m_planTask.size());
+		if (m_planTask[pid] != nullptr)
 		{
-			if (planTask[pid]->isInTrouble())
+			if (m_planTask[pid]->isInTrouble())
 				return pid;
 		}
 	}
 	return own; // no planet in trouble
 }
-size_t PlayerAI::AttackPlanet(int group, size_t num, PlanetID target)
+size_t PlayerAI::attackPlanet(int group, size_t num, PlanetID target)
 {
-	assert(unsigned(target) < planAtkTask.size());
-	if (planAtkTask[target] == nullptr)
+	assert(unsigned(target) < m_planAtkTask.size());
+	if (m_planAtkTask[target] == nullptr)
 	{
-		planAtkTask[target] = new PlanetAttackTask(*this, target);
+		m_planAtkTask[target] = new PlanetAttackTask(*this, target);
 	}
 
-	auto is = GroupTransfer(group, planAtkTask[target]->GetGroupID(), num);
-	planAtkTask[target]->AddToGroup(is);
-	planAtkTask[target]->Update();
+	auto is = groupTransfer(group, m_planAtkTask[target]->getGroupID(), num);
+	m_planAtkTask[target]->addToGroup(is);
+	m_planAtkTask[target]->update();
 	return is;
 }
-size_t PlayerAI::HelpPlanet(int group, size_t num, PlanetID target)
+size_t PlayerAI::helpPlanet(int group, size_t num, PlanetID target)
 {
-	assert(target < signed(planTask.size()));
-	assert(planTask[target] != nullptr);
-	if (planTask[target] == nullptr)
+	assert(target < signed(m_planTask.size()));
+	assert(m_planTask[target] != nullptr);
+	if (m_planTask[target] == nullptr)
 		return 0;
 
-	auto is = GroupTransfer(group, target, num);
-	planTask[target]->AddToGroup(is);
-	planTask[target]->Update();
+	auto is = groupTransfer(group, target, num);
+	m_planTask[target]->addToGroup(is);
+	m_planTask[target]->update();
 	return is;
 }
-size_t PlayerAI::GroupTransfer(int from, int to, size_t num)
+size_t PlayerAI::groupTransfer(int from, int to, size_t num)
 {
 	size_t is = 0;
-	for (auto& e : map.ents[team - 1])
+	for (auto& e : m_map.m_ents[m_team - 1])
 	{
 		if (e.getGroup() == from)
 		{
@@ -135,54 +135,54 @@ size_t PlayerAI::GroupTransfer(int from, int to, size_t num)
 	}
 	return is;
 }
-MapEntity* PlayerAI::GetBomberTarget(const MapEntity& bomber)
+MapEntity* PlayerAI::getBomberTarget(const MapEntity& bomber)
 {
 	assert(bomber.getEntityType() == MapObject::etBomber);
 
-	PointI huntPos = GetEnemyAccumulation(bomber.getPos(), 250.0f, 10);
+	PointI huntPos = getEnemyAccumulation(bomber.getPos(), 250.0f, 10);
 
 	if (huntPos != PointI(-1, -1))
 	{
 		// hunt an enemy in this box
-		for (const auto& e : map.grid.GetEntitiesRaw(huntPos))
+		for (const auto& e : m_map.m_grid.getEntitiesRaw(huntPos))
 		{
-			if (!map.isAlly(e->getTeam(), team))
+			if (!m_map.isAlly(e->getTeam(), m_team))
 				return e;
 		}
 	}
 
 	return nullptr;
 }
-MapEntity* PlayerAI::GetHuntTarget(const PointF& center, float radius)
+MapEntity* PlayerAI::getHuntTarget(const PointF& center, float radius)
 {
-	PointI enemyPos = GetEnemyAccumulation(center, radius, 1);
+	PointI enemyPos = getEnemyAccumulation(center, radius, 1);
 
 	if (enemyPos != PointI(-1, -1))
 	{
-		for (const auto& e : map.grid.GetEntitiesRaw(enemyPos))
+		for (const auto& e : m_map.m_grid.getEntitiesRaw(enemyPos))
 		{
-			if (!map.isAlly(e->getTeam(), team))
+			if (!m_map.isAlly(e->getTeam(), m_team))
 				return e;
 		}
 	}
 
 	return nullptr;
 }
-void PlayerAI::AddHunter(MapEntity& e)
+void PlayerAI::addHunter(MapEntity& e)
 {
 	static const int MAX_HUNTERS = 10;
 
-	if (huntTask.size() > MAX_HUNTERS)
+	if (m_huntTask.size() > MAX_HUNTERS)
 	{
 		// search nearest target
-		HuntTask* best = huntTask.front().get();
+		HuntTask* best = m_huntTask.front().get();
 		float minDist = FLT_MAX;
-		for (const auto& t : huntTask)
+		for (const auto& t : m_huntTask)
 		{
 			//  only if m_group has a target
-			if (t->GetTarget() != nullptr)
+			if (t->getTarget() != nullptr)
 			{
-				float dist = (e.getPos() - t->GetPos()).lengthSq();
+				float dist = (e.getPos() - t->getPos()).lengthSq();
 				if (minDist > dist)
 				{
 					minDist = dist;
@@ -191,38 +191,38 @@ void PlayerAI::AddHunter(MapEntity& e)
 			}
 		}
 
-		best->AddToGroup(1);
-		e.groupAssign(best->GetID());
+		best->addToGroup(1);
+		e.groupAssign(best->getID());
 	}
 	else
 	{
-		huntTask.push_back(std::unique_ptr< HuntTask >(new HuntTask(*this, e)));
+		m_huntTask.push_back(std::unique_ptr< HuntTask >(new HuntTask(*this, e)));
 	}
 }
 void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 {
-	if (e.getTeam() == team && e.hasGroup())
+	if (e.getTeam() == m_team && e.hasGroup())
 	{
 		if (e.getEntityType() == MapObject::etBomber)
 		{
-			bombHunters.push_back(std::unique_ptr< BomberHuntTask >(new BomberHuntTask(*this, e)));
+			m_bombHunters.push_back(std::unique_ptr< BomberHuntTask >(new BomberHuntTask(*this, e)));
 		}
 		else if (e.getEntityType() == MapObject::etSpeeder)
 		{
-			AddHunter(e);
+			addHunter(e);
 		}
 		else if (e.getEntityType() == MapObject::etSaboteur)
 		{
 			// enity should be from any planet...
 			assert(e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END);
-			assert(unsigned(e.getGroup()) < map.nPlans);
-			assert(planTask[e.getGroup()]);
+			assert(unsigned(e.getGroup()) < m_map.m_nPlans);
+			assert(m_planTask[e.getGroup()]);
 			// attack with whole planet
 
 			const auto group = e.getGroup();
-			planTask[group]->IncGroupSize(e.getEntityType());
-			int num = AttackPlanet(e.getGroup(), planTask[group]->GetGroupSize(), GetWhitePlan(pID));
-			planTask[group]->AddToGroup(-num);
+			m_planTask[group]->incGroupSize(e.getEntityType());
+			int num = attackPlanet(e.getGroup(), m_planTask[group]->getGroupSize(), getWhitePlan(pID));
+			m_planTask[group]->addToGroup(-num);
 		}
 		else // no bomber and no saboteur
 		{
@@ -230,13 +230,13 @@ void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 			assert(e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END);
 			if (e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END)
 			{
-				if (unsigned(e.getGroup()) < map.nPlans)
+				if (unsigned(e.getGroup()) < m_map.m_nPlans)
 				{
 					// planet m_group
-					assert(unsigned(e.getGroup()) < planTask.size());
-					if (planTask[e.getGroup()] != nullptr)
+					assert(unsigned(e.getGroup()) < m_planTask.size());
+					if (m_planTask[e.getGroup()] != nullptr)
 					{
-						planTask[e.getGroup()]->IncGroupSize(e.getEntityType());
+						m_planTask[e.getGroup()]->incGroupSize(e.getEntityType());
 					}
 				}
 			}
@@ -244,11 +244,11 @@ void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 			else if (e.getGroup() >= PlanetAttackTask::ID_START && e.getGroup() <= PlanetAttackTask::ID_END)
 			{
 				size_t tid = unsigned(e.getGroup() - PlanetAttackTask::ID_START);
-				if (tid < map.nPlans)
+				if (tid < m_map.m_nPlans)
 				{
-					if (planAtkTask[tid] != nullptr)
+					if (m_planAtkTask[tid] != nullptr)
 					{
-						planAtkTask[tid]->AddToGroup(1);
+						m_planAtkTask[tid]->addToGroup(1);
 					}
 				}
 			}
@@ -257,17 +257,17 @@ void PlayerAI::Event_EntitySpawn(PlanetID pID, MapEntity& e) // thread safe
 }
 void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 {
-	if (e.getTeam() == team)
+	if (e.getTeam() == m_team)
 	{
 		if (e.getGroup() >= PlanetTask::ID_START && e.getGroup() <= PlanetTask::ID_END)
 		{
-			if ((unsigned)e.getGroup() < map.nPlans)
+			if ((unsigned)e.getGroup() < m_map.m_nPlans)
 			{
 				// planet m_group
-				assert(unsigned(e.getGroup()) < planTask.size());
-				if (planTask[e.getGroup()] != nullptr)
+				assert(unsigned(e.getGroup()) < m_planTask.size());
+				if (m_planTask[e.getGroup()] != nullptr)
 				{
-					planTask[e.getGroup()]->DecGroupSize();
+					m_planTask[e.getGroup()]->decGroupSize();
 				}
 			}
 		}
@@ -275,28 +275,28 @@ void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 		{
 			// attack task
 			size_t tid = unsigned(e.getGroup() - PlanetAttackTask::ID_START);
-			if (tid < map.nPlans)
+			if (tid < m_map.m_nPlans)
 			{
-				if (planAtkTask[tid] != nullptr)
+				if (m_planAtkTask[tid] != nullptr)
 				{
-					planAtkTask[tid]->AddToGroup(-1);
+					m_planAtkTask[tid]->addToGroup(-1);
 				}
 			}
 		}
 		else
 		{
 			// probably hunt task
-			bombHunters.remove_if([&e](const std::unique_ptr<BomberHuntTask>& task){
-				if (task->GetBomberID() == e.getID())
+			m_bombHunters.remove_if([&e](const std::unique_ptr<BomberHuntTask>& task){
+				if (task->getBomberID() == e.getID())
 					return true;
 				else return false;
 			});
 
-			huntTask.remove_if([&e](std::unique_ptr<HuntTask>& task){
-				if (task->GetID() == e.getID())
+			m_huntTask.remove_if([&e](std::unique_ptr<HuntTask>& task){
+				if (task->getID() == e.getID())
 				{
-					task->DecGroupSize();
-					if (task->GetGroupSize() == 0)
+					task->decGroupSize();
+					if (task->getGroupSize() == 0)
 						return true;
 				}
 				return false;
@@ -307,24 +307,24 @@ void PlayerAI::Event_EntityKilled(MapEntity& e)  // thread safe
 	{
 		// a target from Hunt task was killed?
 
-		for (auto& t : bombHunters)
+		for (auto& t : m_bombHunters)
 		{
-			if (t->GetTarget())
+			if (t->getTarget())
 			{
-				if (t->GetTarget()->getTeam() == e.getTeam() && t->GetTarget()->getID() == e.getID())
+				if (t->getTarget()->getTeam() == e.getTeam() && t->getTarget()->getID() == e.getID())
 				{
-					t->SetTarget(nullptr);
+					t->setTarget(nullptr);
 				}
 			}
 		}
 
-		for (auto& t : huntTask)
+		for (auto& t : m_huntTask)
 		{
-			if (t->GetTarget())
+			if (t->getTarget())
 			{
-				if (t->GetTarget()->getTeam() == e.getTeam() && t->GetTarget()->getID() == e.getID())
+				if (t->getTarget()->getTeam() == e.getTeam() && t->getTarget()->getID() == e.getID())
 				{
-					t->SetTarget(nullptr);
+					t->setTarget(nullptr);
 				}
 			}
 		}
@@ -336,75 +336,75 @@ void PlayerAI::Event_PlanetAttacked(PlanetID pID, const MapEntity& e) // not thr
 }
 void PlayerAI::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity*) // not thread safe
 {
-	if (map.isAlly(newTeam, team))
+	if (m_map.isAlly(newTeam, m_team))
 	{
-		LockGuard g(muEvent);
+		LockGuard g(m_muEvent);
 
-		if (newTeam == team)
+		if (newTeam == m_team)
 		{
-			if (planTask[pID] == nullptr)
+			if (m_planTask[pID] == nullptr)
 			{
-				nPlanets++;
-				planTask[pID] = new PlanetTask(*this, pID);
+				m_nPlanets++;
+				m_planTask[pID] = new PlanetTask(*this, pID);
 			}
 		}
 
 		// resolve attack units
-		if (planAtkTask[pID] != nullptr)
+		if (m_planAtkTask[pID] != nullptr)
 		{
-			if (planTask[pID] != nullptr)
+			if (m_planTask[pID] != nullptr)
 			{
 				// transfer ALL units to new planet
-				auto num = GroupTransfer(planAtkTask[pID]->GetGroupID(), pID, -1);
-				planTask[pID]->AddToGroup(num);
+				auto num = groupTransfer(m_planAtkTask[pID]->getGroupID(), pID, -1);
+				m_planTask[pID]->addToGroup(num);
 			}
-			else if (planAtkTask[pID]->GetGroupSize() > 0)
+			else if (m_planAtkTask[pID]->getGroupSize() > 0)
 			{
 				//  its you allies planet -> attack another one
-				PlanetID attack = GetAttackPlan(map.getPlan(pID).getPos());
+				PlanetID attack = getAttackPlan(m_map.getPlan(pID).getPos());
 				if (attack != pID)
 				{
-					AttackPlanet(planAtkTask[pID]->GetGroupID(), planAtkTask[pID]->GetGroupSize(), attack);
+					attackPlanet(m_planAtkTask[pID]->getGroupID(), m_planAtkTask[pID]->getGroupSize(), attack);
 				}
 				else
 				{
 					// just hunt down random entities
-					int gid = planAtkTask[pID]->GetGroupID();
+					int gid = m_planAtkTask[pID]->getGroupID();
 
-					for (auto& e : map.ents[team - 1])
+					for (auto& e : m_map.m_ents[m_team - 1])
 						if (e.getGroup() == gid)
-							AddHunter(e);
+							addHunter(e);
 				}
 			}
 
-			planAtkTask[pID]->Destroy();
-			delete planAtkTask[pID];
-			planAtkTask[pID] = nullptr;
+			m_planAtkTask[pID]->destroy();
+			delete m_planAtkTask[pID];
+			m_planAtkTask[pID] = nullptr;
 		}
 		g.Unlock();
 	}
-	else if (oldTeam == team)
+	else if (oldTeam == m_team)
 	{
 		// Lost planet :/
-		LockGuard g(muEvent);
+		LockGuard g(m_muEvent);
 		// delete task
-		if (planTask[pID] != nullptr)
+		if (m_planTask[pID] != nullptr)
 		{
 			// destroy -> attack planet to get it back!
-			planTask[pID]->Destroy();
-			delete planTask[pID];
-			planTask[pID] = nullptr;
+			m_planTask[pID]->destroy();
+			delete m_planTask[pID];
+			m_planTask[pID] = nullptr;
 
 		}
 		g.Unlock();
-		nPlanets--;
+		m_nPlanets--;
 	}
 }
-PointF PlayerAI::GetMidPlanetPos(byte team)
+PointF PlayerAI::getMidPlanetPos(byte team)
 {
 	PointF midPos;
 	byte i = 0;
-	for (const auto plan : map.plans)
+	for (const auto plan : m_map.m_plans)
 	{
 		if (plan->getTeam() == team)
 		{
@@ -416,19 +416,19 @@ PointF PlayerAI::GetMidPlanetPos(byte team)
 		i = 1;
 	return midPos / i;
 }
-PlanetID PlayerAI::GetWhitePlan(PlanetID own)
+PlanetID PlayerAI::getWhitePlan(PlanetID own)
 {
-	if (unsigned(own) >= map.nPlans)
+	if (unsigned(own) >= m_map.m_nPlans)
 		return own;
 
 	PlanetID best = own;
 	float bestValue = FLT_MAX;
 
-	for (const auto& plan : nearbyPlanets[own])
+	for (const auto& plan : m_nearbyPlanets[own])
 	{
-		if (map.getPlan(plan).getTeam() == 0 && map.getPlan(plan).getSubteam() == 0)
+		if (m_map.getPlan(plan).getTeam() == 0 && m_map.getPlan(plan).getSubteam() == 0)
 		{
-			float value = (map.getPlan(own).getPos() - map.getPlan(plan).getPos()).lengthSq() * (rand() % 2 + 1);
+			float value = (m_map.getPlan(own).getPos() - m_map.getPlan(plan).getPos()).lengthSq() * (rand() % 2 + 1);
 			if (value < bestValue)
 			{
 				bestValue = value;
@@ -438,77 +438,77 @@ PlanetID PlayerAI::GetWhitePlan(PlanetID own)
 	}
 	return best;
 }
-PointI PlayerAI::GetEnemyAccumulation(const PointF& pos, float r, size_t lowerLimit)
+PointI PlayerAI::getEnemyAccumulation(const PointF& pos, float r, size_t lowerLimit)
 {
-	return map.grid.GetEnemyAccumulationPoint(team, pos, r, lowerLimit);
+	return m_map.m_grid.getEnemyAccumulationPoint(m_team, pos, r, lowerLimit);
 }
-const FastVector<MapEntity*>& PlayerAI::GetEntitiesGrid(PointF pos) const
+const FastVector<MapEntity*>& PlayerAI::getEntitiesGrid(PointF pos) const
 {
-	return map.grid.GetEntities(pos);
+	return m_map.m_grid.getEntities(pos);
 }
-PlanetID PlayerAI::GetWellDefendedNear(PlanetID own)
+PlanetID PlayerAI::getWellDefendedNear(PlanetID own)
 {
-	if (unsigned(own) >= map.nPlans)
+	if (unsigned(own) >= m_map.m_nPlans)
 		return own;
 
-	for (const auto& plan : nearbyPlanets[own])
+	for (const auto& plan : m_nearbyPlanets[own])
 	{
-		if (GetEnemyEntsInDefR(map.getPlan(plan).getID(), map.getPlan(own).getTeam()) >= BOMBER_SEND_SIZE)
+		if (getEnemyEntsInDefR(m_map.getPlan(plan).getID(), m_map.getPlan(own).getTeam()) >= BOMBER_SEND_SIZE)
 			return plan;
 	}
 	return own;
 }
-size_t PlayerAI::GetOwnEntsInDefR(PlanetID pID, byte team) const
+size_t PlayerAI::getOwnEntsInDefR(PlanetID pID, byte team) const
 {
-	if (team == 0 || team > map.nPlayers)
+	if (team == 0 || team > m_map.m_nPlayers)
 		return 1;
 
-	if (unsigned(pID) >= map.nPlans)
+	if (unsigned(pID) >= m_map.m_nPlans)
 		return 1;
-	return std::max(size_t(1), map.grid.CountUnits(size_t(team), map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
+	return std::max(size_t(1), m_map.m_grid.countUnits(size_t(team), m_map.getPlan(pID).getPos(), m_map.getPlan(pID).getDefenseRadius()));
 }
-size_t PlayerAI::GetAlliEntsInDefR(PlanetID pID, byte team) const
+size_t PlayerAI::getAlliEntsInDefR(PlanetID pID, byte team) const
 {
-	if (team == 0 || team > map.nPlayers)
-		return 1;
-
-	if (unsigned(pID) >= map.nPlans)
-		return 1;
-	return std::max(size_t(1), map.grid.CountAllyUnits(team, map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
-}
-size_t PlayerAI::GetEnemyEntsInDefR(PlanetID pID, byte team) const
-{
-	if (team == 0 || team > map.nPlayers)
+	if (team == 0 || team > m_map.m_nPlayers)
 		return 1;
 
-	if (unsigned(pID) >= map.nPlans)
+	if (unsigned(pID) >= m_map.m_nPlans)
 		return 1;
-	return std::max(size_t(1), map.grid.CountEnemyUnits(team, map.getPlan(pID).getPos(), map.getPlan(pID).getDefenseRadius()));
+	return std::max(size_t(1), m_map.m_grid.countAllyUnits(team, m_map.getPlan(pID).getPos(), m_map.getPlan(pID).getDefenseRadius()));
 }
-size_t PlayerAI::GetOwnEntsInR(PointF pos, byte team, float r) const
+size_t PlayerAI::getEnemyEntsInDefR(PlanetID pID, byte team) const
 {
-	return map.grid.CountUnits(team, pos, r);
+	if (team == 0 || team > m_map.m_nPlayers)
+		return 1;
+
+	if (unsigned(pID) >= m_map.m_nPlans)
+		return 1;
+	return std::max(size_t(1), m_map.m_grid.countEnemyUnits(team, m_map.getPlan(pID).getPos(), m_map.getPlan(pID).getDefenseRadius()));
 }
-size_t PlayerAI::GetEnemyEntsInR(PointF pos, byte team, float r) const
+size_t PlayerAI::getOwnEntsInR(PointF pos, byte team, float r) const
 {
-	return map.grid.CountEnemyUnits(team, pos, r);
+	return m_map.m_grid.countUnits(team, pos, r);
 }
-size_t PlayerAI::GetAlliEntsInR(PointF pos, byte team, float r) const
+size_t PlayerAI::getEnemyEntsInR(PointF pos, byte team, float r) const
 {
-	return map.grid.CountEnemyUnits(team, pos, r);
+	return m_map.m_grid.countEnemyUnits(team, pos, r);
 }
-PlanetID PlayerAI::GetAttackPlan(PointF entPos) const
+size_t PlayerAI::getAlliEntsInR(PointF pos, byte team, float r) const
 {
-	PlanetID fav = map.plans[0]->getID();
+	return m_map.m_grid.countEnemyUnits(team, pos, r);
+}
+PlanetID PlayerAI::getAttackPlan(PointF entPos) const
+{
+	PlanetID fav = m_map.m_plans[0]->getID();
 
 	float lastDist = FLT_MAX;
-	for (const auto& p : map.plans)
+	for (const auto& p : m_map.m_plans)
 	{
-		if (!map.isAlly(p->getTeam(), team))
+		if (!m_map.isAlly(p->getTeam(), m_team))
 		{
 			float d =
 				(entPos - p->getPos()).lengthSq()
-				* GetEnemyEntsInDefR(p->getID(), team);
+				* getEnemyEntsInDefR(p->getID(), m_team);
 
 
 			if (d < lastDist)
@@ -521,17 +521,17 @@ PlanetID PlayerAI::GetAttackPlan(PointF entPos) const
 
 	return fav;
 }
-float PlayerAI::CalcNearByDistance(int average)
+float PlayerAI::calcNearByDistance(int average)
 {
 	float* nearest = (float*)malloc((average + 1)*sizeof(float));
 
 	float avg = 0;
-	for (auto& plan : map.plans)
+	for (auto& plan : m_map.m_plans)
 	{
 		for (int i = average; i >= 0; i--)
 			nearest[i] = 99999999999.0f;
 
-		for (auto& plan2 : map.plans)
+		for (auto& plan2 : m_map.m_plans)
 		{
 			if (plan->getID() == plan2->getID())
 				continue;
@@ -552,5 +552,5 @@ float PlayerAI::CalcNearByDistance(int average)
 		avg += nearest[average - 1];
 	}
 	free(nearest);
-	return avg / map.nPlans;
+	return avg / m_map.m_nPlans;
 }

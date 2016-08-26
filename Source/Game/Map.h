@@ -4,12 +4,10 @@
 #include "MapPlanet.h"
 #include "MapEntity.h"
 #include <functional>
-#include "../Utility/Line.h"
 #include "../Utility/Mutex.h"
 #include <map>
 #include "../Utility/Thread.h"
 #include "UniformGrid.h"
-#include "../Utility/Exception.h"
 #include "../Utility/DataContainer.h"
 
 using byte = unsigned char;
@@ -45,23 +43,23 @@ public:
 	Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector< byte >& pclans);
 	virtual ~Map();
 
-	virtual bool Select(PointF center, float r2, byte team);
-	virtual void SelectAll(byte team);
+	virtual bool select(PointF center, float r2, byte team);
+	virtual void selectAll(byte team);
 	//tries to add units to an existing m_group
-	virtual void AddToGroup(byte team, int group);
+	virtual void addToGroup(byte team, int group);
 	//tries to make a new m_group with selected units
-	virtual void MakeGroup(byte team, int group);
-	virtual void SelectGroup(byte team, int group);
-	virtual void DeleteGroup(byte team, int group);
+	virtual void makeGroup(byte team, int group);
+	virtual void selectGroup(byte team, int group);
+	virtual void deleteGroup(byte team, int group);
 	// returns true if planet was targetet
-	virtual bool Click(PointF pt, byte team) = 0;
-	virtual void ClickRight(byte team);
-	virtual void Update(float dt) = 0;
-	virtual void SetAllPlanetsOnDefense(byte team);
+	virtual bool setTarget(PointF pt, byte team) = 0;
+	virtual void deselectTarget(byte team);
+	virtual void update(float dt) = 0;
+	virtual void setAllPlanetsOnDefense(byte team);
 	// returns true if anything was selected
-	virtual bool FilterEntityType(byte team, MapObject::EntityType)
+	virtual bool filterEntityType(byte team, MapObject::EntityType)
 	{
-		for (const auto& e : ents[team - 1])
+		for (const auto& e : m_ents[team - 1])
 		{
 			if (e.selected())
 			{
@@ -69,7 +67,7 @@ public:
 			}
 		}
 
-		for (const auto& p : plans)
+		for (const auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 			{
@@ -82,9 +80,9 @@ public:
 
 		return false;
 	}
-	virtual void SelectAllEntityType(byte team, MapObject::EntityType et)
+	virtual void selectAllEntityType(byte team, MapObject::EntityType et)
 	{
-		for (auto& e : ents[team - 1])
+		for (auto& e : m_ents[team - 1])
 		{
 			if (e.getEntityType() == et)
 			{
@@ -96,7 +94,7 @@ public:
 			}
 		}
 
-		for (auto& p : plans)
+		for (auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 			{
@@ -107,51 +105,51 @@ public:
 			}
 		}
 	}
-	virtual byte GameEnd() const = 0;//returns winner m_team
-	virtual bool GameStart() const
+	virtual byte gameEnd() const = 0;//returns winner m_team
+	virtual bool gameStart() const
 	{
 		return true;
 	}
-	float GetWidth() const
+	float getWidth() const
 	{
-		return mWidth;
+		return m_mWidth;
 	}
-	float GetHeight() const
+	float getHeight() const
 	{
-		return mHeight;
+		return m_mHeight;
 	}
-	unsigned int GetNPlans() const
+	unsigned int getNPlans() const
 	{
-		return plans.size();
+		return m_plans.size();
 	}
-	unsigned int CountTeamPlans(byte team) const
+	unsigned int countTeamPlans(byte team) const
 	{
 		int n = 0;
-		for (const auto& p : plans)
+		for (const auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 				++n;
 		}
 		return n;
 	}
-	virtual float GetGameTime() const
+	virtual float getGameTime() const
 	{
 		return 0.0f; // for remote map
 	}
-	byte GetMaxPlayer() const
+	byte getMaxPlayer() const
 	{
-		return nPlayers;
+		return m_nPlayers;
 	}
-	virtual void SetPlanetSpawnType(byte team, MapObject::EntityType t);
+	virtual void setPlanetSpawnType(byte team, MapObject::EntityType t);
 	// multiplayer
-	virtual void AddPacket(DataContainer&&){}
-	int CountAllyPlanets(byte team)
+	virtual void addPacket(DataContainer&&){}
+	int countAllyPlanets(byte team)
 	{
-		if (unsigned(team - 1) >= nPlayers)
+		if (unsigned(team - 1) >= m_nPlayers)
 			return 0;
 
 		int c = 0;
-		for (const auto& p : plans)
+		for (const auto& p : m_plans)
 		{
 			if (isAlly(team, p->getTeam()))
 				c++;
@@ -160,22 +158,22 @@ public:
 	}
 protected:
 	//this will be used in every child of map
-	const size_t nPlayers;
-	const size_t nPlans;
-	const float mWidth; //map width + height
-	const float mHeight;
-	UniformGrid grid;
-	const GameType gameType;
+	const size_t m_nPlayers;
+	const size_t m_nPlans;
+	const float m_mWidth; //map width + height
+	const float m_mHeight;
+	UniformGrid m_grid;
+	const GameType m_gameType;
 
-	std::vector< MapPlanet* > plans;
-	std::vector< LinkedIDList<MapEntity> > ents;
+	std::vector< MapPlanet* > m_plans;
+	std::vector< LinkedIDList<MapEntity> > m_ents;
 
 
-	std::vector< PointF > plansDefend; //this will safe some processor time | this saves the position of attacking enemie
-	Mutex muEnts; //protect the Ents!
+	std::vector< PointF > m_plansDefend; //this will safe some processor time | this saves the position of attacking enemie
+	Mutex m_muEnts; //protect the Ents!
 
 	//clans (multiplayer)
-	std::vector< std::vector< ClanInfo >> clanInfo;
+	std::vector< std::vector< ClanInfo >> m_clanInfo;
 
 protected:
 	///////////////////////////////////////////////////
@@ -184,23 +182,23 @@ protected:
 
 	//Collision
 	bool borderCol(const PointF& p) const;
-	const MapPlanet* GetColPlan(const PointF& pt) const;
-	void RefreshGrid();
-	const MapEntity* GetColEnt(PointF pt, unsigned int id, byte team);
+	const MapPlanet* getColPlan(const PointF& pt) const;
+	void refreshGrid();
+	const MapEntity* getColEnt(PointF pt, unsigned int id, byte team);
 	//Update
-	void SetCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID);
+	void setCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID);
 
 	//Defend
-	PointF GetEntDefend(PlanetID pID);
-	inline void ResetPlanDef()
+	PointF getEntDefend(PlanetID pID);
+	inline void resetPlanDef()
 	{
-		plansDefend.assign(nPlans, PointF{ 0.0f, 0.0f });
+		m_plansDefend.assign(m_nPlans, PointF{ 0.0f, 0.0f });
 	}
-	void SetTargetAvoidingPlanets(const PointF& vP, PointF& vT);
-	void SetPrimaryEntVel(float ds, MapEntity& curEnt);
+	void setTargetAvoidingPlanets(const PointF& vP, PointF& vT);
+	void setPrimaryEntVel(float ds, MapEntity& curEnt);
 	bool col(const PointF& pt, unsigned int id, byte team);
 
-	void SetEntPosition(MapEntity& curEnt, const float dt);
+	void setEntPosition(MapEntity& curEnt, const float dt);
 
 public:
 	//clan helper functions
@@ -223,39 +221,39 @@ public:
 	};
 
 private:
-	std::vector< EventReciever* > evntRecv;
+	std::vector< EventReciever* > m_evntRecv;
 public:
 	void addEventReciever(EventReciever* recv)
 	{
-		evntRecv.push_back(recv);
+		m_evntRecv.push_back(recv);
 	}
 
 protected:
 
 	virtual void Event_EntitySpawn(PlanetID pID, MapEntity& e)
 	{
-		for (auto& r : evntRecv)
+		for (auto& r : m_evntRecv)
 		{
 			r->Event_EntitySpawn(pID, e);
 		}
 	};
 	virtual void Event_EntityKilled(MapEntity& e)
 	{
-		for (auto& r : evntRecv)
+		for (auto& r : m_evntRecv)
 		{
 			r->Event_EntityKilled(e);
 		}
 	};
 	virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e)
 	{
-		for (auto& r : evntRecv)
+		for (auto& r : m_evntRecv)
 		{
 			r->Event_PlanetAttacked(pID, e);
 		}
 	};
 	virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit)
 	{
-		for (auto& r : evntRecv)
+		for (auto& r : m_evntRecv)
 		{
 			r->Event_PlanetCaptured(pID,newTeam,oldTeam, culprit);
 		}
@@ -267,25 +265,25 @@ public:
 	///////////////////////////////////////////////////
 	inline MapPlanet* getPlanP(PlanetID pID)
 	{
-		if (pID < 0 || pID >= (PlanetID)plans.size())
+		if (pID < 0 || pID >= (PlanetID)m_plans.size())
 			return nullptr;
-		return plans[pID];
+		return m_plans[pID];
 	}
 	inline MapPlanet& getPlan(PlanetID pID)
 	{
 		assert(pID >= 0);
-		assert((unsigned)pID < plans.size());
-		return *plans[pID];
+		assert((unsigned)pID < m_plans.size());
+		return *m_plans[pID];
 	}
 	inline unsigned int countUnits(byte team) const
 	{
-		assert(team > 0 && team <= nPlayers);
-		return ents[team - 1].length();
+		assert(team > 0 && team <= m_nPlayers);
+		return m_ents[team - 1].length();
 	}
 	inline unsigned int countPlanets(byte team) const
 	{
 		unsigned int c = 0;
-		for (const auto& p : plans)
+		for (const auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 				c++;
@@ -296,7 +294,7 @@ private:
 	///////////////////////////////////////////////////
 	////////////// collision //////////////////////////
 	///////////////////////////////////////////////////
-	inline MapEntity** GetNextFOVEnt(MapEntity** start, MapEntity** end,
+	inline MapEntity** getNextFOVEnt(MapEntity** start, MapEntity** end,
 		const byte& myTeam, const PointF& vP, const PointF& vV,const MapEntity* me)
 	{
 		while (start != end) //end is always the same
@@ -400,23 +398,23 @@ private:
 	};
 
 protected:
-	void UpdateEntsWithUpdater(std::function<void(EntIterator, EntIterator)>& func)
+	void updateEntsWithUpdater(std::function<void(EntIterator, EntIterator)>& func)
 	{
-		Updater** ppUpd = new Updater*[nPlayers - 1];
+		Updater** ppUpd = new Updater*[m_nPlayers - 1];
 
 		//start & create Threads
-		for (size_t index = 0; index < nPlayers - 1; ++index)
+		for (size_t index = 0; index < m_nPlayers - 1; ++index)
 		{
-			ppUpd[index] = new Updater(func, ents[index]);
+			ppUpd[index] = new Updater(func, m_ents[index]);
 			ppUpd[index]->Begin();
 		}
 
 		//Stop Threads
 		//updFunc(nPlayers - 1); // run one proc on own thread
-		Updater lastUpd(func, ents[nPlayers - 1]);
+		Updater lastUpd(func, m_ents[m_nPlayers - 1]);
 		lastUpd.ThreadProc();
 
-		for (size_t index = 0; index < nPlayers - 1; ++index)
+		for (size_t index = 0; index < m_nPlayers - 1; ++index)
 		{
 			ppUpd[index]->Join();
 			delete ppUpd[index];

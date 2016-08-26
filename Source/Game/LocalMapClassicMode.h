@@ -6,16 +6,16 @@ class WeakAI : public LocalMapSingleplayer::AI
 {
 public:
 	WeakAI(int team, Map& map);
-	virtual void DoTurn(float dt) override;
+	virtual void doTurn(float dt) override;
 private:
 	PointF GetTarget();
 	PointF GetNearestPlan(PointF pos);
 	PointF GetNearestEnt();
 private:
-	const int myTeam;
-	Map& map;
+	const int m_myTeam;
+	Map& m_map;
 
-	float sumTime = 0.0f;
+	float m_sumTime = 0.0f;
 };
 
 class LocalMapClassicMode : public LocalMapSingleplayer

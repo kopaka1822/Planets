@@ -46,7 +46,7 @@ public:
 
 		
 
-		if (!gs.pMap->GameStart())
+		if (!gs.pMap->gameStart())
 		{
 			// print waiting
 			FONT_SMALL.SetColor(Color::White());
@@ -187,7 +187,7 @@ private:
 			break;
 		case PacketType::GameTeamSurrender:
 			Sound::Effect(Sound::S_LOSE);
-			gs.pMap->AddPacket(std::move(con));
+			gs.pMap->addPacket(std::move(con));
 			break;
 		case PacketType::GameClanChange:
 		{
@@ -213,11 +213,11 @@ private:
 
 			HandleClanChange(t1, i1, t2, i2);
 
-			gs.pMap->AddPacket(std::move(con));
+			gs.pMap->addPacket(std::move(con));
 		}
 			break;
 		default:
-			gs.pMap->AddPacket(std::move(con));
+			gs.pMap->addPacket(std::move(con));
 			break;
 		}
 

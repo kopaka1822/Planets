@@ -255,8 +255,8 @@ private:
 	void PrepareNormal()
 	{
 		curStage = Stage::normalMove;
-		gs.pMap->SelectAllEntityType(myTeam, MapObject::etNormal);
-		gs.pMap->Click(PointF(350.0f, 150.0f),myTeam);
+		gs.pMap->selectAllEntityType(myTeam, MapObject::etNormal);
+		gs.pMap->setTarget(PointF(350.0f, 150.0f),myTeam);
 
 		// maybe set camera
 		pMapDraw->SetScalar(scalarFac);
@@ -267,8 +267,8 @@ private:
 	void PrepareSpeeder()
 	{
 		curStage = Stage::speedMove;
-		gs.pMap->SelectAllEntityType(myTeam, MapObject::etSpeeder);
-		gs.pMap->Click(PointF(350.0f, 350.0f), myTeam);
+		gs.pMap->selectAllEntityType(myTeam, MapObject::etSpeeder);
+		gs.pMap->setTarget(PointF(350.0f, 350.0f), myTeam);
 
 		pMapDraw->SetScalar(scalarFac);
 		pMapDraw->SetCam(PointF(250.0f, 350.0f));
@@ -278,8 +278,8 @@ private:
 	void PrepareBomber()
 	{
 		curStage = Stage::bomberMove;
-		gs.pMap->SelectAllEntityType(myTeam, MapObject::etBomber);
-		gs.pMap->Click(PointF(350.0f, 550.0f), myTeam);
+		gs.pMap->selectAllEntityType(myTeam, MapObject::etBomber);
+		gs.pMap->setTarget(PointF(350.0f, 550.0f), myTeam);
 
 		pMapDraw->SetScalar(scalarFac);
 		pMapDraw->SetCam(PointF(250.0f, 550.0f));
@@ -289,8 +289,8 @@ private:
 	void PrepareSaboteur()
 	{
 		curStage = Stage::saboMove;
-		gs.pMap->SelectAllEntityType(myTeam, MapObject::etSaboteur);
-		gs.pMap->Click(PointF(350.0f, 750.0f), myTeam);
+		gs.pMap->selectAllEntityType(myTeam, MapObject::etSaboteur);
+		gs.pMap->setTarget(PointF(350.0f, 750.0f), myTeam);
 
 		pMapDraw->SetScalar(scalarFac);
 		pMapDraw->SetCam(PointF(250.0f, 750.0f));

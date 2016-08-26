@@ -17,19 +17,19 @@ LocalMap::LocalMap(int nPlayers, const std::vector<MapLoader::MapPlanet>& planet
 	:
 	Map(nPlayers,planets.size(),width,height,ty,clns)
 {
-	LoadMapComponents(planets, spawns);
+	loadMapComponents(planets, spawns);
 }
 LocalMap::LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<byte> clns)
 	:
 	Map(nPlayers,nPlanets,mWi,mHei,ty,clns)
 {}
-void LocalMap::LoadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns)
+void LocalMap::loadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns)
 {
 	srand(0); //same seed for spawn process
-	RefreshGrid();
+	refreshGrid();
 	for (unsigned int i = 0; i < planets.size(); i++)
 	{
-		plans.push_back(new LocalPlanet(planets[i], i));
+		m_plans.push_back(new LocalPlanet(planets[i], i));
 	}
 
 	for (const auto& s : spawns)
@@ -37,21 +37,21 @@ void LocalMap::LoadMapComponents(const std::vector<MapLoader::MapPlanet>& planet
 		//Later
 		for (int i = 0; i < s.nUnits; i++)
 		{
-			if (TryEntitySpawn(PointF{ s.x, s.y }, s.team, 0, MapObject::TargetType::tgInvalid, PointF(), -1, false, 800.0f,(MapObject::EntityType)s.type))
+			if (tryEntitySpawn(PointF{ s.x, s.y }, s.team, 0, MapObject::TargetType::tgInvalid, PointF(), -1, false, 800.0f,(MapObject::EntityType)s.type))
 			{
-				grid.AddEntity(&(*(ents[s.team - 1].back())), ents[s.team - 1].back()->getPos());
+				m_grid.addEntity(&(*(m_ents[s.team - 1].back())), m_ents[s.team - 1].back()->getPos());
 			}
 		}
 	}
 
 	srand((unsigned int)time(nullptr)); //different seed for ingame action
 }
-bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
+bool LocalMap::filterEntityType(byte team, MapObject::EntityType et)
 {
 	bool bAnySelect = false;
 	bool bEntSelect = false;
 
-	for (const auto& e : ents[team - 1])
+	for (const auto& e : m_ents[team - 1])
 	{
 		if (e.selected())
 		{
@@ -67,7 +67,7 @@ bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
 
 	if (!bEntSelect)
 	{
-		for (const auto& p : plans)
+		for (const auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 			{
@@ -90,7 +90,7 @@ bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
 	if (!bEntSelect)
 		return true;
 
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		if (e.selected())
 		{
@@ -100,7 +100,7 @@ bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
 				e.deselect();
 		}
 	}
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 		{
@@ -116,12 +116,12 @@ bool LocalMap::FilterEntityType(byte team, MapObject::EntityType et)
 
 	return true;
 }
-bool LocalMap::Select(PointF center, float r2, byte team)
+bool LocalMap::select(PointF center, float r2, byte team)
 {
-	if (Map::Select(center, r2, team))
+	if (Map::select(center, r2, team))
 	{
 		//there is something to select
-		for (auto& e : ents[team - 1])
+		for (auto& e : m_ents[team - 1])
 		{
 			float er2 = (e.getPos() - center).lengthSq();
 
@@ -134,7 +134,7 @@ bool LocalMap::Select(PointF center, float r2, byte team)
 				e.deselect();
 			}
 		}
-		for (auto& p : plans)
+		for (auto& p : m_plans)
 		{
 			if (p->getTeam() == team)
 			{
@@ -157,13 +157,13 @@ bool LocalMap::Select(PointF center, float r2, byte team)
 		return false;
 	}
 }
-bool LocalMap::Click(PointF pt, byte team)
+bool LocalMap::setTarget(PointF pt, byte team)
 {
 	//determine target type
 	bool planetTargeted = false;
 
 	MapEntity::TargetType t = MapEntity::tgPoint;
-	const MapPlanet* obj = GetColPlan(pt);
+	const MapPlanet* obj = getColPlan(pt);
 	if (obj != nullptr)
 	{
 		pt.x = obj->getID();
@@ -179,7 +179,7 @@ bool LocalMap::Click(PointF pt, byte team)
 	}
 	bool uselected = false; //units selected
 
-	for (auto& e : ents[team - 1])
+	for (auto& e : m_ents[team - 1])
 	{
 		if (e.selected())
 		{
@@ -189,7 +189,7 @@ bool LocalMap::Click(PointF pt, byte team)
 
 	}
 
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->getTeam() == team)
 		{
@@ -206,7 +206,7 @@ bool LocalMap::Click(PointF pt, byte team)
 		if (t == MapObject::tgPlanetDefend)
 		{
 			//select him
-			plans[(unsigned int)pt.x]->forceSelect();
+			m_plans[(unsigned int)pt.x]->forceSelect();
 		}
 		return false; // no planet target -> only selected
 	}
@@ -216,43 +216,43 @@ bool LocalMap::Click(PointF pt, byte team)
 	}
 }
 
-byte LocalMap::GameEnd() const
+byte LocalMap::gameEnd() const
 {
 	// find first surviving m_team
 	size_t surv = 0;
-	for (; surv < nPlayers; surv++)
+	for (; surv < m_nPlayers; surv++)
 	{
-		if (ents[surv].length() > 0)
+		if (m_ents[surv].length() > 0)
 			break;
 
 		// search planet
-		for (size_t i = 0; i < nPlans; i++)
-			if (plans[i]->getTeam() == surv + 1)
+		for (size_t i = 0; i < m_nPlans; i++)
+			if (m_plans[i]->getTeam() == surv + 1)
 				goto end; // exit both loops
 	}
 end:
 
-	if (surv >= nPlayers)
+	if (surv >= m_nPlayers)
 		return 0; // noone alive
 
 	size_t other = 0;
-	for (other = surv + 1; other < nPlayers; other++)
+	for (other = surv + 1; other < m_nPlayers; other++)
 	{
 		if (isAlly(surv + 1, other + 1))
 			continue;
 
-		if (ents[other].length() > 0)
+		if (m_ents[other].length() > 0)
 			return 0;
 
-		for (size_t i = 0; i < nPlans; i++)
-			if (plans[i]->getTeam() == other + 1)
+		for (size_t i = 0; i < m_nPlans; i++)
+			if (m_plans[i]->getTeam() == other + 1)
 				return 0;
 	}
 	return surv + 1; // only he and his allies are alive
 }
 LocalMap::~LocalMap()
 {}
-bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
+bool LocalMap::tryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
 	const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType)
 {
 	PointF d;
@@ -263,11 +263,11 @@ bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObje
 		if (borderCol(p))
 			return true;
 
-		if (GetColPlan(p) != nullptr)
+		if (getColPlan(p) != nullptr)
 			return true;
 
 		//entity collision
-		return (GetColEnt(p,-1,0) != nullptr);
+		return (getColEnt(p,-1,0) != nullptr);
 	};
 
 	do
@@ -279,7 +279,7 @@ bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObje
 		d = PointF(float(rand() - randHalf), float(rand() - randHalf)).normalize() * r;
 	} while (isColliding(d + c));
 
-	unsigned int id = ents[team - 1].lastID() + 1;
+	unsigned int id = m_ents[team - 1].lastID() + 1;
 
 	MapEntity* newEnt = nullptr;
 	switch (entType)
@@ -301,12 +301,12 @@ bool LocalMap::TryEntitySpawn(const PointF& c, const byte team, float r, MapObje
 	}
 	assert(newEnt != nullptr);
 
-	muEnts.Lock();
-	ents[team - 1].add(newEnt);
-	muEnts.Unlock();
+	m_muEnts.Lock();
+	m_ents[team - 1].add(newEnt);
+	m_muEnts.Unlock();
 	return true;
 }
-void LocalMap::UpdateEnts(const float dt)
+void LocalMap::updateEnts(const float dt)
 {
 	const float ds = dt * float(MapEntity::SPEED);
 
@@ -317,28 +317,28 @@ void LocalMap::UpdateEnts(const float dt)
 
 		for (auto i = start; i != end; ++i)
 		{
-			SetPrimaryEntVel(ds, (*i));
+			setPrimaryEntVel(ds, (*i));
 		}
 
 		for (auto i = start; i != end; ++i)
 		{
 			if (i->getVelCorrect())
-				SetCrowdEntVel(ds, (*i), i.GetID());
+				setCrowdEntVel(ds, (*i), i.GetID());
 		}
 
 		
 		for (auto i = start; i != end; ++i)
 		{
-			SetEntPosition(*i,dt);
-			AttackNearby(*i);
+			setEntPosition(*i,dt);
+			attackNearby(*i);
 		}
 	};
 
-	UpdateEntsWithUpdater(updFunc);
+	updateEntsWithUpdater(updFunc);
 
-	for (size_t index = 0; index < nPlayers; ++index)
+	for (size_t index = 0; index < m_nPlayers; ++index)
 	{
-		for (auto i = ents[index].begin(), end = ents[index].end(); i != end; ++i)
+		for (auto i = m_ents[index].begin(), end = m_ents[index].end(); i != end; ++i)
 		{
 			if (i->getHP() <= 0)
 			{
@@ -348,19 +348,19 @@ void LocalMap::UpdateEnts(const float dt)
 				if (exprad > 0.0f)
 				{
 					// nearby ents are going to die
-					KillEnts(i->getPos(), exprad,i->getExplosionDamage(),i->getTeam());
+					killEnts(i->getPos(), exprad,i->getExplosionDamage(),i->getTeam());
 				}
 
-				muEnts.Lock();
+				m_muEnts.Lock();
 				i.remove();
-				muEnts.Unlock();
+				m_muEnts.Unlock();
 			}
 		}
 	}
 }
-MapEntity* LocalMap::GetEnemyEnt(const PointF& pt, const byte team)
+MapEntity* LocalMap::getEnemyEnt(const PointF& pt, const byte team)
 {
-	for (auto& e : grid.GetEntities(pt))
+	for (auto& e : m_grid.getEntities(pt))
 	{
 		if (!isAlly(team, e->getTeam()))
 		{
@@ -372,14 +372,14 @@ MapEntity* LocalMap::GetEnemyEnt(const PointF& pt, const byte team)
 	}
 	return nullptr;
 }
-void LocalMap::AttackNearby(MapEntity& curEnt)
+void LocalMap::attackNearby(MapEntity& curEnt)
 {
 	if (!curEnt.hasDamage())
 		return;
 
 	if (curEnt.attacksEntities())
 	{
-		MapEntity* obj = GetEnemyEnt(curEnt.getPos(), curEnt.getTeam());
+		MapEntity* obj = getEnemyEnt(curEnt.getPos(), curEnt.getTeam());
 		if (obj != nullptr)
 		{
 			obj->takeDamage(curEnt.getDamage());
@@ -389,7 +389,7 @@ void LocalMap::AttackNearby(MapEntity& curEnt)
 
 	if (curEnt.attacksPlanets())
 	{
-		for (auto& p : plans)
+		for (auto& p : m_plans)
 		{
 			if (p->isNearby(curEnt.getPos()))
 			{
@@ -430,7 +430,7 @@ void LocalMap::AttackNearby(MapEntity& curEnt)
 	}
 }
 
-void LocalMap::KillEnts(const PointF& center, float radius, int damage, byte team)
+void LocalMap::killEnts(const PointF& center, float radius, int damage, byte team)
 {
 	const float r2 = radius * radius;
 	/*
@@ -458,9 +458,9 @@ void LocalMap::KillEnts(const PointF& center, float radius, int damage, byte tea
 	}*/
 
 	// we cant use the grid because there are some deleted entities inside..
-	for (size_t i = 0; i < nPlayers; i++)
+	for (size_t i = 0; i < m_nPlayers; i++)
 	{
-		for (auto& e : ents[i])
+		for (auto& e : m_ents[i])
 		{
 			if (r2 >= (e.getPos() - center).lengthSq())
 			{
@@ -470,7 +470,7 @@ void LocalMap::KillEnts(const PointF& center, float radius, int damage, byte tea
 	}
 
 	// damage planets
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->isNearby(center))
 		{

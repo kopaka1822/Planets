@@ -3,18 +3,18 @@
 
 PlanetAttackTask::PlanetAttackTask(PlayerAI& ai, PlanetID p)
 	:
-	ai(ai),
-	plan(ai.map.getPlan(p)),
-	gid(ID_START + p)
+	m_ai(ai),
+	m_plan(ai.m_map.getPlan(p)),
+	m_gid(ID_START + p)
 {
 
 }
-void PlanetAttackTask::Destroy()
+void PlanetAttackTask::destroy()
 {
-	ai.map.DeleteGroup(ai.team,gid);
+	m_ai.m_map.deleteGroup(m_ai.m_team,m_gid);
 }
-void PlanetAttackTask::Update()
+void PlanetAttackTask::update()
 {
-	ai.map.SelectGroup(ai.team, gid);
-	ai.map.Click(plan.getPos(), ai.team);
+	m_ai.m_map.selectGroup(m_ai.m_team, m_gid);
+	m_ai.m_map.setTarget(m_plan.getPos(), m_ai.m_team);
 }

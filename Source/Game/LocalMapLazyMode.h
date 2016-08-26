@@ -8,7 +8,7 @@ public:
 	{}
 	virtual ~LazyAI()
 	{}
-	virtual void DoTurn(float dt) override
+	virtual void doTurn(float dt) override
 	{}
 };
 // ai will do nothing

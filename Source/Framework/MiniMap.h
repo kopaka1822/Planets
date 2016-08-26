@@ -9,7 +9,7 @@ public:
 	MiniMap(Map& map, MapDrawer& drawer)
 		:
 		map(map), drawer(drawer),
-		mapWi(map.GetWidth()), mapHi(map.GetHeight())
+		mapWi(map.getWidth()), mapHi(map.getHeight())
 	{}
 	virtual void draw(Drawing& draw) override
 	{
@@ -17,7 +17,7 @@ public:
 
 		draw.DrawBox(RectF(m_pos + mStart, m_pos + mEnd),1.0f,Color::Blue(), Color::Black());
 
-		for (const auto& p : map.plans)
+		for (const auto& p : map.m_plans)
 		{
 			draw.DrawPlanet(fromModel(p->getPos()), Color::GetTeamColor(p->getTeam()), fromModel(p->getRadius()));
 		}

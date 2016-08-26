@@ -17,7 +17,7 @@ std::unique_ptr<LocalMapSingleplayer::AI> LocalMapSingleplayer::SpawnAI(int team
 void LocalMapSingleplayer::InitAI()
 {
 	//make AIs
-	for (int i = 1; i < nPlayers; i++)
+	for (int i = 1; i < m_nPlayers; i++)
 	{
 		pAI.push_back(SpawnAI(i + 1));
 	}
@@ -26,32 +26,32 @@ void LocalMapSingleplayer::InitAI()
 		Map::addEventReciever(a.get());
 	}
 }
-void LocalMapSingleplayer::Update(float dt)
+void LocalMapSingleplayer::update(float dt)
 {
-	RefreshGrid();
+	refreshGrid();
 
 	Timer t;
 	t.StartWatch();
 	for (auto& a : pAI)
 	{
-		a->DoTurn(dt);
+		a->doTurn(dt);
 	}
 
-	for (auto& p : plans)
+	for (auto& p : m_plans)
 	{
 		if (p->update(dt))
 		{
 			//spawn entity
-			if (TryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(), p->selected(), p->getDefenseRadius(), p->getEntityType()))
+			if (tryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(), p->selected(), p->getDefenseRadius(), p->getEntityType()))
 			{
 				byte t = p->getTeam();
-				Map::Event_EntitySpawn(p->getID(), *ents[t - 1].back());
-				grid.AddEntity(&(*(ents[t - 1].back())), ents[t - 1].back()->getPos());
+				Map::Event_EntitySpawn(p->getID(), *m_ents[t - 1].back());
+				m_grid.addEntity(&(*(m_ents[t - 1].back())), m_ents[t - 1].back()->getPos());
 			}
 		}
 	}
 
 	assert(dt > 0.0f);
-	Map::ResetPlanDef();
-	UpdateEnts(dt);
+	Map::resetPlanDef();
+	updateEnts(dt);
 }
