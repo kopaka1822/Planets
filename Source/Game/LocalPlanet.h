@@ -5,7 +5,7 @@
 class LocalPlanet : public MapPlanet
 {
 public:
-	LocalPlanet(const MapLoader::MapPlanet& plan, unsigned int ID)
+	LocalPlanet(const MapLoader::MapPlanet& plan, GameID ID)
 		:
 		MapPlanet(plan,ID),
 		// (radius / 10.0f) * Entity Damage per Second
@@ -42,7 +42,7 @@ public:
 		}
 		return false;
 	}
-	virtual void takeOver(byte team) override
+	virtual void takeOver(TeamID team) override
 	{
 		MapPlanet::takeOver(team);
 		m_sTimer = 0.0f;
@@ -66,6 +66,6 @@ private:
 	float m_sTimer = 0.0f; // spawn timer
 	float m_hTimer = 0.0f; // heal timer
 
-	const int m_healRate;
+	const GameHP m_healRate;
 	float m_lastPercentage = 1.0f;
 };

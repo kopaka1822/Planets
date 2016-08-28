@@ -43,7 +43,7 @@ public:
 
 
 public:
-	MapEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id)
+	MapEntity(const PointF& p, TeamID team, MapObject::TargetType ttype, const PointF& tar, GroupID group, bool selec, GameID id)
 		:
 		MapObject(p, team, MAX_HP, ttype, tar, group),
 		m_vel({ 0.0f, 0.0f }),
@@ -147,13 +147,13 @@ public:
 	void setEvade(PointF nTarget) //sets target + velocity
 	{
 		m_curState = sEvade;
-		m_Tmr = (float)EVADE_TIME;
+		m_Tmr = static_cast<float>(EVADE_TIME);
 		m_target = nTarget.normalize();
 		m_vel = nTarget;
 	}
 	void keepEvading()
 	{
-		m_Tmr = (float)EVADE_TIME;
+		m_Tmr = static_cast<float>(EVADE_TIME);
 	}
 	void targetPointReached()
 	{
@@ -183,7 +183,7 @@ public:
 	//Local
 	virtual int getDamage(){ return 0; }
 	virtual bool hasDamage() const{ return false; }
-	inline unsigned int getID() const
+	inline GameID getID() const
 	{
 		return m_id;
 	}
@@ -205,16 +205,13 @@ public:
 	{
 		return 0.0f;
 	}
-	virtual int getExplosionDamage() const
+	virtual GameHP getExplosionDamage() const
 	{
 		return MAX_HP;
 	}
 protected:
 
 	PointF m_vel;
-
-	//PointF target;
-	//targetType tarTy = tgPlanet;
 	States m_curState = sLazy;
 
 	bool m_mood; //current mood of the entity, determines if it will evade to the left or right
@@ -224,5 +221,5 @@ protected:
 
 
 	bool m_velCorrect = true;
-	const unsigned int m_id;
+	const GameID m_id;
 };

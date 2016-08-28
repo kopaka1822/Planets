@@ -4,7 +4,7 @@
 class RemotePlanet : public MapPlanet
 {
 public:
-	RemotePlanet(const MapLoader::MapPlanet& plan, unsigned int ID)
+	RemotePlanet(const MapLoader::MapPlanet& plan, GameID ID)
 		:
 		MapPlanet(plan,ID)
 	{}

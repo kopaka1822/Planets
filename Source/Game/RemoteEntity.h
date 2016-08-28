@@ -4,7 +4,7 @@
 class RemoteEntity : public MapEntity
 {
 public:
-	RemoteEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec,unsigned int id, EntityType entty, const PointF& drawPos)
+	RemoteEntity(const PointF& p, TeamID team, MapObject::TargetType ttype, const PointF& tar, GroupID group, bool selec, GameID id, EntityType entty, const PointF& drawPos)
 		:
 		MapEntity(p, team, ttype, tar, group, selec,id),
 		bDrawSel(selec),

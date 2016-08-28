@@ -256,6 +256,7 @@
     <ClInclude Include="..\Source\Framework\WaveFile.h" />
     <ClInclude Include="..\Source\Framework\Window.h" />
     <ClInclude Include="..\Source\Game\BomberHuntTask.h" />
+    <ClInclude Include="..\Source\Game\GameTypes.h" />
     <ClInclude Include="..\Source\Game\HuntTask.h" />
     <ClInclude Include="..\Source\Game\Levelpack.h" />
     <ClInclude Include="..\Source\Game\LevelSavedata.h" />

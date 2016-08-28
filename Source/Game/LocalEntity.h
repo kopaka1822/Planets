@@ -4,7 +4,7 @@
 class LocalEntity : public MapEntity
 {
 public:
-	LocalEntity(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
+	LocalEntity(const PointF& p, TeamID team, MapObject::TargetType ttype, const PointF& tar, GroupID group, bool selec, GameID id, const PointF& drawpos)
 		:
 		MapEntity(p,team,ttype,tar,group,selec,id),
 		m_oldPos(drawpos)
@@ -12,9 +12,9 @@ public:
 	virtual ~LocalEntity(){}
 
 	//Check Has Damage!!!!
-	virtual int getDamage() override
+	virtual GameHP getDamage() override
 	{
-		int d = m_charges * DAMAGE;
+		auto d = m_charges * DAMAGE;
 		m_charges = 0;
 		return d;
 	}
@@ -22,7 +22,7 @@ public:
 	{
 		return (m_charges != 0);
 	}
-	virtual void updatePosition(const float dt) override
+	virtual void updatePosition(float dt) override
 	{
 		m_DmgTmr -= dt;
 
@@ -53,6 +53,6 @@ public:
 	}
 private:
 	float m_DmgTmr = 0.0f;
-	int m_charges = 0;
+	GameHP m_charges = 0;
 	PointF m_oldPos;
 };

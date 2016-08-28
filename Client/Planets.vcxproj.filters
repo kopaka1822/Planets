@@ -843,6 +843,9 @@
     <ClInclude Include="..\Source\Framework\UIYNButtonPlay.h">
       <Filter>Source Files\Framework\Game\Interface\Button</Filter>
     </ClInclude>
+    <ClInclude Include="..\Source\Game\GameTypes.h">
+      <Filter>Source Files\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="data\shader\disk.fs">

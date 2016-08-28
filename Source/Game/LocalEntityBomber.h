@@ -4,7 +4,7 @@
 class LocalEntityBomber : public LocalEntity
 {
 public:
-	LocalEntityBomber(const PointF& p, byte team, MapObject::TargetType ttype, const PointF& tar, int group, bool selec, unsigned int id, const PointF& drawpos)
+	LocalEntityBomber(const PointF& p, TeamID team, MapObject::TargetType ttype, const PointF& tar, GroupID group, bool selec, GameID id, const PointF& drawpos)
 		:
 		LocalEntity(p,team,ttype,tar,group,selec,id, drawpos)
 	{

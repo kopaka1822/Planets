@@ -1,8 +1,7 @@
 #pragma once
 #include "../Utility/Rect.h"
 #include <assert.h>
-
-using byte = unsigned char;
+#include "GameTypes.h"
 
 class MapObject
 {
@@ -30,7 +29,7 @@ protected:
 		return fac[et];
 	}
 public:
-	MapObject(PointF position, byte Team, int startHP, TargetType ttype, const PointF& tar, int group)
+	MapObject(PointF position, TeamID Team, GameHP startHP, TargetType ttype, const PointF& tar, GroupID group)
 		:
 		m_tarTy(ttype), m_target(tar),
 		m_pos(position),
@@ -77,7 +76,7 @@ public:
 	{
 		m_isSelected = true;
 	}
-	inline void groupSelect(int selGroup)
+	inline void groupSelect(GroupID selGroup)
 	{
 		if (m_group == selGroup)
 		{
@@ -98,11 +97,11 @@ public:
 	{}
 
 	//m_group
-	inline void groupAssign(int newGroup)
+	inline void groupAssign(GroupID newGroup)
 	{
 		m_group = newGroup;
 	}
-	inline void groupDestroy(int destGroup)
+	inline void groupDestroy(GroupID destGroup)
 	{
 		if (m_group == destGroup)
 		{
@@ -135,7 +134,7 @@ public:
 	}
 
 	//health
-	inline bool takeDamage(int amount) //returns true if died
+	inline bool takeDamage(GameHP amount) //returns true if died
 	{
 		m_hp -= amount;
 		return (m_hp <= 0);
@@ -148,22 +147,18 @@ public:
 	{
 		return m_hp;
 	}
-	inline void setHP(int n)
+	inline void setHP(GameHP n)
 	{
 		m_hp = n;
 	}
-
-	//collision
-	//virtual bool isColliding(const PointF& p) const = 0;
-	//virtual bool isNearby(const PointF& p) const = 0;
 protected:
 	TargetType m_tarTy;
 	PointF m_target;
 
 	PointF m_pos;
 	byte m_team;
-	int m_hp;
+	GameHP m_hp;
 	//user
 	bool m_isSelected = false;
-	int m_group;
+	GroupID m_group;
 };

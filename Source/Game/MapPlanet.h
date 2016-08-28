@@ -8,7 +8,7 @@ using byte = unsigned char;
 class MapPlanet : public MapObject
 {
 public:
-	MapPlanet(const MapLoader::MapPlanet& plan, unsigned int ID)
+	MapPlanet(const MapLoader::MapPlanet& plan, GameID ID)
 		:
 		MapObject({ plan.x, plan.y }, plan.team, plan.HP,MapObject::tgPlanetDefend,PointF(ID,0.0f),-1),
         m_sUnit(plan.sUnit),
@@ -20,7 +20,7 @@ public:
 		m_defR(m_radius + float(PLAN_DEFENSE)),
 		m_defR2(m_defR * m_defR),
 		m_maxHP(plan.HP),
-        m_ID(ID),
+        m_ID(PlanetID(ID)),
         m_curEntType(etNormal)
 	{
 	}
@@ -69,7 +69,7 @@ public:
 
 		return false;
 	}
-	bool takeDamage(int amount, byte team) //returns true if captured
+	bool takeDamage(GameHP amount, TeamID team) //returns true if captured
 	{
 		//if (this->m_team != m_team)
 		//{
@@ -129,7 +129,7 @@ public:
 	{
 		return m_ID;
 	}
-	virtual void takeOver(byte team)
+	virtual void takeOver(TeamID team)
 	{
 		m_hp = m_maxHP;
 		if (this->m_team == 0)
@@ -147,7 +147,7 @@ public:
 		MapObject::setTarget({ m_ID, 0.0f }, tgPlanetDefend);
 		m_curEntType = etNormal;
 	}
-	virtual void sabotage(byte tea)
+	virtual void sabotage(TeamID tea)
 	{
 		if (this->m_team == tea)
 			return;
@@ -174,11 +174,11 @@ public:
 	{
 		return 0.0f;
 	}
-	byte getSubteam() const
+	TeamID getSubteam() const
 	{
 		return m_subteam;
 	}
-	int getSubHP(byte ownTeam) const
+	int getSubHP(TeamID ownTeam) const
 	{
 		if (m_subteam)
 		{
@@ -196,7 +196,7 @@ public:
 			return 2 * m_hp;
 		}
 	}
-	void setSubAndHP(byte sub, int HP)
+	void setSubAndHP(TeamID sub, GameHP HP)
 	{
 		setHP(HP);
 		m_subteam = sub;
@@ -225,11 +225,11 @@ protected:
 	const float m_defR;
 	const float m_defR2;
 
-	const int m_maxHP;
+	const GameHP m_maxHP;
 
-	const short m_ID;
+	const PlanetID m_ID;
 
-	byte m_subteam = 0;
+	TeamID m_subteam = 0;
 
 	EntityType m_curEntType;
 public:

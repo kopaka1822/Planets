@@ -12,9 +12,6 @@
 
 using byte = unsigned char;
 
-using PlanetID = short;
-using EntIterator = LinkedIDList<MapEntity>::element;
-
 class Map
 {
 	friend class PlayerAI;
