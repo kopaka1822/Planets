@@ -669,7 +669,7 @@ void StateGame::SoundBox::Event_EntityKilled(MapEntity& e)
 }
 //virtual void Event_PlanetAttacked(PlanetID pID, const EntityID& eID){};
 
-void StateGame::SoundBox::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) 
+void StateGame::SoundBox::Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit) 
 {
 	if (newTeam != 0)
 	{
@@ -759,7 +759,7 @@ void StateGame::Scoreboard::Event_EntityKilled(MapEntity& e)
 	entLost[e.getTeam() - 1]++;
 }
 //virtual void Event_PlanetAttacked(PlanetID pID, const EntityID& eID){};
-void StateGame::Scoreboard::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) 
+void StateGame::Scoreboard::Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit) 
 {
 	if (oldTeam != 0)
 	{
@@ -827,5 +827,5 @@ void StateGame::Scoreboard::AddBranch(const Map& map)
 
 float StateGame::Scoreboard::GetGametime()
 {
-	return sumTime;
+	return float(sumTime);
 }

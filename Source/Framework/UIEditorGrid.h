@@ -18,7 +18,7 @@ private:
 	{
 		std::vector<MapLoader::MapPlanet> plans;
 		std::vector<MapLoader::MapSpawn> spawns;
-		std::vector<byte> teams;
+		std::vector<TeamID> teams;
 
 		PointF size;
 	};
@@ -668,7 +668,7 @@ public:
 		return MapLoader::SaveMap(filen, itm.plans, itm.spawns, teamCount,itm.size.x,itm.size.y,itm.teams);
 	}
 	void LoadMap(const std::vector< MapLoader::MapPlanet>& plans, const std::vector< MapLoader::MapSpawn >& spawns,
-		float width, float height, const std::vector< byte >& teams)
+		float width, float height, const std::vector< TeamID >& teams)
 	{
 		Reset();
 		Item i;

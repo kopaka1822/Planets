@@ -22,7 +22,7 @@ class LocalMapClassicMode : public LocalMapSingleplayer
 {
 public:
 	LocalMapClassicMode(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
-		float width, float height, Map::GameType ty, std::vector<byte> clns);
+		float width, float height, Map::GameType ty, std::vector<TeamID> clns);
 	virtual ~LocalMapClassicMode()
 	{}
 

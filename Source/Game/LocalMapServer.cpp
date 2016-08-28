@@ -3,7 +3,7 @@
 
 LocalMapServer::LocalMapServer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets,
 	const std::vector<MapLoader::MapSpawn>& spawns, Server& serv, float width, float height,
-	std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< byte > clns)
+	std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns)
 	:
 	LocalMap(nPlayers,planets.size(),width,height, ty, clns),
 	serv(serv),
@@ -141,7 +141,7 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 	}
 	return data;
 }
-void LocalMapServer::deselectTarget(byte team)
+void LocalMapServer::deselectTarget(TeamID team)
 {
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
@@ -152,7 +152,7 @@ void LocalMapServer::deselectTarget(byte team)
 	serv.SendContainerAllReliable(std::move(c));
 	Map::deselectTarget(team);
 }
-bool LocalMapServer::setTarget(PointF pt, byte team)
+bool LocalMapServer::setTarget(PointF pt, TeamID team)
 {
 	//determine target type
 	bool planetTargeted = false;
@@ -716,7 +716,7 @@ void LocalMapServer::UpdateDeath()
 		serv.SendContainerAllReliable(std::move(c));
 	}
 }
-void LocalMapServer::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit)
+void LocalMapServer::Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit)
 {
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
@@ -764,7 +764,7 @@ bool LocalMapServer::isAlive(byte team) const
 	return false;
 }
 
-void LocalMapServer::addToGroup(byte team, int group)
+void LocalMapServer::addToGroup(TeamID team, GroupID group)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -777,7 +777,7 @@ void LocalMapServer::addToGroup(byte team, int group)
 
 	Map::addToGroup(team, group);
 }
-void LocalMapServer::makeGroup(byte team, int group)
+void LocalMapServer::makeGroup(TeamID team, GroupID group)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -790,7 +790,7 @@ void LocalMapServer::makeGroup(byte team, int group)
 
 	Map::makeGroup(team, group);
 }
-void LocalMapServer::selectGroup(byte team, int group)
+void LocalMapServer::selectGroup(TeamID team, GroupID group)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -803,7 +803,7 @@ void LocalMapServer::selectGroup(byte team, int group)
 
 	Map::selectGroup(team, group);
 }
-void LocalMapServer::deleteGroup(byte team, int group)
+void LocalMapServer::deleteGroup(TeamID team, GroupID group)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -816,7 +816,7 @@ void LocalMapServer::deleteGroup(byte team, int group)
 
 	Map::deleteGroup(team, group);
 }
-void LocalMapServer::selectAll(byte team)
+void LocalMapServer::selectAll(TeamID team)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -1001,7 +1001,7 @@ void LocalMapServer::HandleClientSpawntype(ContainerReader& r, byte team)
 	Map::setPlanetSpawnType(team, et);
 }
 
-bool LocalMapServer::filterEntityType(byte team, MapObject::EntityType et)
+bool LocalMapServer::filterEntityType(TeamID team, MapObject::EntityType et)
 {
 	if ((unsigned)et >= MapObject::etNone)
 		return false;
@@ -1056,7 +1056,7 @@ bool LocalMapServer::filterEntityType(byte team, MapObject::EntityType et)
 
 	return LocalMap::filterEntityType(team,et);
 }
-void LocalMapServer::selectAllEntityType(byte team, MapObject::EntityType et)
+void LocalMapServer::selectAllEntityType(TeamID team, MapObject::EntityType et)
 {
 	if ((unsigned)et >= MapObject::etNone)
 		return;

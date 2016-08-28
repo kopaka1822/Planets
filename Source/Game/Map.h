@@ -10,7 +10,7 @@
 #include "UniformGrid.h"
 #include "../Utility/DataContainer.h"
 
-using byte = unsigned char;
+using EntIterator = LinkedIDList<MapEntity>::element;
 
 class Map
 {
@@ -29,6 +29,7 @@ public:
 		sendRequest, // the other one send a request
 		awaiting // waiting for the answer of the other one
 	};
+
 	enum class GameType
 	{
 		AllvAll,
@@ -36,25 +37,27 @@ public:
 		Allicance, // teams specified in map
 		NONE = 0xFF
 	};
+
 public:
-	Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector< byte >& pclans);
+	Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector<TeamID>& pclans);
 	virtual ~Map();
 
-	virtual bool select(PointF center, float r2, byte team);
-	virtual void selectAll(byte team);
+	virtual bool select(PointF center, float r2, TeamID team);
+	virtual void selectAll(TeamID team);
 	//tries to add units to an existing m_group
-	virtual void addToGroup(byte team, int group);
+	virtual void addToGroup(TeamID team, GroupID group);
 	//tries to make a new m_group with selected units
-	virtual void makeGroup(byte team, int group);
-	virtual void selectGroup(byte team, int group);
-	virtual void deleteGroup(byte team, int group);
+	virtual void makeGroup(TeamID team, GroupID group);
+	virtual void selectGroup(TeamID team, GroupID group);
+	virtual void deleteGroup(TeamID team, GroupID group);
 	// returns true if planet was targetet
-	virtual bool setTarget(PointF pt, byte team) = 0;
-	virtual void deselectTarget(byte team);
+	virtual bool setTarget(PointF pt, TeamID team) = 0;
+	virtual void deselectTarget(TeamID team);
 	virtual void update(float dt) = 0;
-	virtual void setAllPlanetsOnDefense(byte team);
+	virtual void setAllPlanetsOnDefense(TeamID team);
+
 	// returns true if anything was selected
-	virtual bool filterEntityType(byte team, MapObject::EntityType)
+	virtual bool filterEntityType(TeamID team, MapObject::EntityType)
 	{
 		for (const auto& e : m_ents[team - 1])
 		{
@@ -77,7 +80,8 @@ public:
 
 		return false;
 	}
-	virtual void selectAllEntityType(byte team, MapObject::EntityType et)
+
+	virtual void selectAllEntityType(TeamID team, MapObject::EntityType et)
 	{
 		for (auto& e : m_ents[team - 1])
 		{
@@ -102,24 +106,29 @@ public:
 			}
 		}
 	}
-	virtual byte gameEnd() const = 0;//returns winner m_team
+
+	virtual TeamID gameEnd() const = 0;//returns winner m_team
 	virtual bool gameStart() const
 	{
 		return true;
 	}
+
 	float getWidth() const
 	{
 		return m_mWidth;
 	}
+
 	float getHeight() const
 	{
 		return m_mHeight;
 	}
+
 	unsigned int getNPlans() const
 	{
 		return m_plans.size();
 	}
-	unsigned int countTeamPlans(byte team) const
+
+	unsigned int countTeamPlans(TeamID team) const
 	{
 		int n = 0;
 		for (const auto& p : m_plans)
@@ -129,18 +138,25 @@ public:
 		}
 		return n;
 	}
+
 	virtual float getGameTime() const
 	{
 		return 0.0f; // for remote map
 	}
-	byte getMaxPlayer() const
+
+	TeamID getMaxPlayer() const
 	{
 		return m_nPlayers;
 	}
-	virtual void setPlanetSpawnType(byte team, MapObject::EntityType t);
+
+	virtual void setPlanetSpawnType(TeamID team, MapObject::EntityType t);
+
 	// multiplayer
-	virtual void addPacket(DataContainer&&){}
-	int countAllyPlanets(byte team)
+	virtual void addPacket(DataContainer&&)
+	{
+	}
+
+	int countAllyPlanets(TeamID team)
 	{
 		if (unsigned(team - 1) >= m_nPlayers)
 			return 0;
@@ -153,6 +169,7 @@ public:
 		}
 		return c;
 	}
+
 protected:
 	//this will be used in every child of map
 	const size_t m_nPlayers;
@@ -162,15 +179,15 @@ protected:
 	UniformGrid m_grid;
 	const GameType m_gameType;
 
-	std::vector< MapPlanet* > m_plans;
-	std::vector< LinkedIDList<MapEntity> > m_ents;
+	std::vector<MapPlanet*> m_plans;
+	std::vector<LinkedIDList<MapEntity>> m_ents;
 
 
-	std::vector< PointF > m_plansDefend; //this will safe some processor time | this saves the position of attacking enemie
+	std::vector<PointF> m_plansDefend; //this will safe some processor time | this saves the position of attacking enemie
 	Mutex m_muEnts; //protect the Ents!
 
 	//clans (multiplayer)
-	std::vector< std::vector< ClanInfo >> m_clanInfo;
+	std::vector<std::vector<ClanInfo>> m_clanInfo;
 
 protected:
 	///////////////////////////////////////////////////
@@ -181,25 +198,27 @@ protected:
 	bool borderCol(const PointF& p) const;
 	const MapPlanet* getColPlan(const PointF& pt) const;
 	void refreshGrid();
-	const MapEntity* getColEnt(PointF pt, unsigned int id, byte team);
+	const MapEntity* getColEnt(PointF pt, GameID id, TeamID team);
 	//Update
-	void setCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID);
+	void setCrowdEntVel(float ds, MapEntity& curEnt, GameID ID);
 
 	//Defend
 	PointF getEntDefend(PlanetID pID);
+
 	inline void resetPlanDef()
 	{
-		m_plansDefend.assign(m_nPlans, PointF{ 0.0f, 0.0f });
+		m_plansDefend.assign(m_nPlans, PointF{0.0f, 0.0f});
 	}
+
 	void setTargetAvoidingPlanets(const PointF& vP, PointF& vT);
 	void setPrimaryEntVel(float ds, MapEntity& curEnt);
-	bool col(const PointF& pt, unsigned int id, byte team);
+	bool col(const PointF& pt, GameID id, TeamID team);
 
 	void setEntPosition(MapEntity& curEnt, const float dt);
 
 public:
 	//clan helper functions
-	bool isAlly(byte team1, byte team2) const;
+	bool isAlly(TeamID team1, TeamID team2) const;
 
 public:
 	///////////////////////////////////////////////////
@@ -208,17 +227,30 @@ public:
 	class EventReciever
 	{
 	public:
-		virtual void Event_EntitySpawn(PlanetID pID,MapEntity& e){};
-		virtual void Event_EntityKilled(MapEntity& e){};
-		virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e){};
+		virtual void Event_EntitySpawn(PlanetID pID, MapEntity& e)
+		{
+		};
+
+		virtual void Event_EntityKilled(MapEntity& e)
+		{
+		};
+
+		virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e)
+		{
+		};
 
 		// culprit may be null if it was not captured by an entity
-		virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit){};
-		virtual ~EventReciever(){}
+		virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit)
+		{
+		};
+
+		virtual ~EventReciever()
+		{
+		}
 	};
 
 private:
-	std::vector< EventReciever* > m_evntRecv;
+	std::vector<EventReciever*> m_evntRecv;
 public:
 	void addEventReciever(EventReciever* recv)
 	{
@@ -234,6 +266,7 @@ protected:
 			r->Event_EntitySpawn(pID, e);
 		}
 	};
+
 	virtual void Event_EntityKilled(MapEntity& e)
 	{
 		for (auto& r : m_evntRecv)
@@ -241,6 +274,7 @@ protected:
 			r->Event_EntityKilled(e);
 		}
 	};
+
 	virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e)
 	{
 		for (auto& r : m_evntRecv)
@@ -248,11 +282,12 @@ protected:
 			r->Event_PlanetAttacked(pID, e);
 		}
 	};
-	virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit)
+
+	virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit)
 	{
 		for (auto& r : m_evntRecv)
 		{
-			r->Event_PlanetCaptured(pID,newTeam,oldTeam, culprit);
+			r->Event_PlanetCaptured(pID, newTeam, oldTeam, culprit);
 		}
 	};
 
@@ -262,22 +297,25 @@ public:
 	///////////////////////////////////////////////////
 	inline MapPlanet* getPlanP(PlanetID pID)
 	{
-		if (pID < 0 || pID >= (PlanetID)m_plans.size())
+		if (pID < 0 || pID >= static_cast<PlanetID>(m_plans.size()))
 			return nullptr;
 		return m_plans[pID];
 	}
+
 	inline MapPlanet& getPlan(PlanetID pID)
 	{
 		assert(pID >= 0);
-		assert((unsigned)pID < m_plans.size());
+		assert(static_cast<size_t>(pID) < m_plans.size());
 		return *m_plans[pID];
 	}
-	inline unsigned int countUnits(byte team) const
+
+	inline unsigned int countUnits(TeamID team) const
 	{
 		assert(team > 0 && team <= m_nPlayers);
 		return m_ents[team - 1].length();
 	}
-	inline unsigned int countPlanets(byte team) const
+
+	inline unsigned int countPlanets(TeamID team) const
 	{
 		unsigned int c = 0;
 		for (const auto& p : m_plans)
@@ -287,12 +325,13 @@ public:
 		}
 		return c;
 	}
+
 private:
 	///////////////////////////////////////////////////
 	////////////// collision //////////////////////////
 	///////////////////////////////////////////////////
 	inline MapEntity** getNextFOVEnt(MapEntity** start, MapEntity** end,
-		const byte& myTeam, const PointF& vP, const PointF& vV,const MapEntity* me)
+	                                 TeamID myTeam, const PointF& vP, const PointF& vV, const MapEntity* me)
 	{
 		while (start != end) //end is always the same
 		{
@@ -300,7 +339,7 @@ private:
 			{
 				const PointF dist = (*start)->getPos() - vP;
 
-				if (dist.lengthSq() < (float)MapEntity::FOV2)
+				if (dist.lengthSq() < static_cast<float>(MapEntity::FOV2))
 				{
 					//inside fov, facing in same direction?
 					if (vV * dist > 0)
@@ -321,33 +360,43 @@ private:
 		{
 		public:
 			Insane(EntIterator start, EntIterator end,
-				std::function<void(EntIterator, EntIterator)>& func)
+			       std::function<void(EntIterator, EntIterator)>& func)
 				:
 				Thread(),
 				start(start), end(end), func(func)
-			{}
+			{
+			}
+
 			virtual ~Insane()
-			{}
+			{
+			}
+
 		protected:
 			virtual int ThreadProc() override
 			{
 				func(start, end);
 				return 0;
 			}
+
 		private:
 			EntIterator start;
 			EntIterator end;
 			std::function<void(EntIterator, EntIterator)>& func;
 		};
+
 	public:
 		Updater(std::function<void(EntIterator, EntIterator)>& updFunc, LinkedIDList<MapEntity>& ents)
 			:
 			Thread(),
 			updFunc(updFunc),
 			ents(ents)
-		{}
+		{
+		}
+
 		virtual ~Updater()
-		{}
+		{
+		}
+
 		virtual int ThreadProc() override
 		{
 			if (ents.length() == 0)
@@ -366,7 +415,10 @@ private:
 				for (unsigned int i = 0; i < nThreads; ++i)
 				{
 					EntIterator start = cur;
-					for (unsigned int u = 0; u < dx; ++u) { ++cur; };
+					for (unsigned int u = 0; u < dx; ++u)
+					{
+						++cur;
+					};
 
 					ppi[i] = new Insane(start, cur, updFunc);
 					ppi[i]->Begin();
@@ -388,6 +440,7 @@ private:
 
 			return 0;
 		}
+
 	private:
 		//const byte m_team;
 		std::function<void(EntIterator, EntIterator)>& updFunc;
@@ -421,3 +474,4 @@ protected:
 		ppUpd = nullptr;
 	}
 };
+

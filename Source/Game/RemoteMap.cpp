@@ -4,7 +4,7 @@
 #include "RemotePlanet.h"
 
 RemoteMap::RemoteMap(Client& cl, int nPlay, const std::vector< MapLoader::MapPlanet >& planets, const std::vector< MapLoader::MapEntity >& entities,
-	float width, float height, float gameTime, Map::GameType ty, std::vector< byte > clns)
+	float width, float height, float gameTime, Map::GameType ty, std::vector< TeamID > clns)
 	:
 	Map(nPlay, planets.size(),width,height,ty,clns),
 	m_serv(cl), m_clock(gameTime)
@@ -22,7 +22,7 @@ RemoteMap::RemoteMap(Client& cl, int nPlay, const std::vector< MapLoader::MapPla
 		m_ents[e.team - 1].add(new RemoteEntity(PointF{ e.x, e.y }, e.team, MapObject::tgInvalid, PointF(), -1, false,id,(MapObject::EntityType)e.type, PointF(e.x,e.y)));
 	}
 }
-void RemoteMap::setAllPlanetsOnDefense(byte team)
+void RemoteMap::setAllPlanetsOnDefense(TeamID team)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -31,7 +31,7 @@ void RemoteMap::setAllPlanetsOnDefense(byte team)
 
 	m_serv.SendReliable(std::move(con));
 }
-bool RemoteMap::filterEntityType(byte team, MapObject::EntityType et)
+bool RemoteMap::filterEntityType(TeamID team, MapObject::EntityType et)
 {
 	if (Map::filterEntityType(team, et))
 	{
@@ -111,7 +111,7 @@ bool RemoteMap::filterEntityType(byte team, MapObject::EntityType et)
 	else
 		return false; // nothing was selected
 }
-void RemoteMap::selectAllEntityType(byte team, MapObject::EntityType et)
+void RemoteMap::selectAllEntityType(TeamID team, MapObject::EntityType et)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -149,7 +149,7 @@ RemoteMap::~RemoteMap()
 {
 
 }
-bool RemoteMap::select(PointF center, float r2, byte team)
+bool RemoteMap::select(PointF center, float r2, TeamID team)
 {
 	//check if anything was selected
 	if (Map::select(center, r2, team))
@@ -199,7 +199,7 @@ bool RemoteMap::select(PointF center, float r2, byte team)
 		return false;
 	}
 }
-void RemoteMap::selectGroup(byte team, int group)
+void RemoteMap::selectGroup(TeamID team, GroupID group)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -228,7 +228,7 @@ void RemoteMap::selectGroup(byte team, int group)
 		}
 	}
 }
-void RemoteMap::deleteGroup(byte team, int group)
+void RemoteMap::deleteGroup(TeamID team, GroupID group)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -238,7 +238,7 @@ void RemoteMap::deleteGroup(byte team, int group)
 
 	m_serv.SendReliable(std::move(con));
 }
-void RemoteMap::addToGroup(byte team, int group)
+void RemoteMap::addToGroup(TeamID team, GroupID group)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -248,7 +248,7 @@ void RemoteMap::addToGroup(byte team, int group)
 
 	m_serv.SendReliable(std::move(con));
 }
-void RemoteMap::makeGroup(byte team, int group)
+void RemoteMap::makeGroup(TeamID team, GroupID group)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -258,7 +258,7 @@ void RemoteMap::makeGroup(byte team, int group)
 
 	m_serv.SendReliable(std::move(con));
 }
-void RemoteMap::selectAll(byte team)
+void RemoteMap::selectAll(TeamID team)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
@@ -278,7 +278,7 @@ void RemoteMap::selectAll(byte team)
 			p->drawSelect();
 	}
 }
-bool RemoteMap::setTarget(PointF pt, byte team)
+bool RemoteMap::setTarget(PointF pt, TeamID team)
 {
 	DataContainer c = m_serv.GetConRelSmall();
 	ContainerWriter w(c);
@@ -318,7 +318,7 @@ bool RemoteMap::setTarget(PointF pt, byte team)
 
 	return false;
 }
-void RemoteMap::deselectTarget(byte team)
+void RemoteMap::deselectTarget(TeamID team)
 {
 	DataContainer c = m_serv.GetConRelSmall();
 	ContainerWriter w(c);
@@ -373,7 +373,7 @@ void RemoteMap::update(float dt)
 			m_bGameStart = true;
 	}
 }
-byte RemoteMap::gameEnd() const
+TeamID RemoteMap::gameEnd() const
 {
 	return m_winner;
 }
@@ -902,7 +902,7 @@ void RemoteMap::handleClanChange(ContainerReader& r)
 	m_clanInfo[t2 - 1][t1 - 1] = i2;
 }
 
-void RemoteMap::setPlanetSpawnType(byte team, MapObject::EntityType t)
+void RemoteMap::setPlanetSpawnType(TeamID team, MapObject::EntityType t)
 {
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);

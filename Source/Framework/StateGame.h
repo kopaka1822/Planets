@@ -36,7 +36,7 @@ class StateGame : public GameState
 		virtual void Event_EntityKilled(MapEntity& e) override;
 		//virtual void Event_PlanetAttacked(PlanetID pID, const EntityID& eID){};
 
-		virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) override;
+		virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit) override;
 		void Update(int nPlans);
 		virtual ~SoundBox(){}
 		void Reset();
@@ -64,7 +64,7 @@ class StateGame : public GameState
 		virtual void Event_EntitySpawn(PlanetID pID, MapEntity& e) override;
 		virtual void Event_EntityKilled(MapEntity& e) override;
 		//virtual void Event_PlanetAttacked(PlanetID pID, const EntityID& eID){};
-		virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) override;
+		virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit) override;
 		void SaveInDatabase(bool isWinner);
 		bool IsWinner() const;
 		void Update(float dt, const Map& map);

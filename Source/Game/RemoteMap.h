@@ -7,16 +7,16 @@ class RemoteMap : public Map
 {
 public:
 	RemoteMap(Client& cl, int nPlay, const std::vector< MapLoader::MapPlanet >& planets, const std::vector< MapLoader::MapEntity >& entities,
-		float width, float height, float gameTime, Map::GameType ty, std::vector< byte > clns);
+		float width, float height, float gameTime, Map::GameType ty, std::vector< TeamID > clns);
 	virtual ~RemoteMap();
-	virtual bool select(PointF center, float r2, byte team) override;
-	virtual void selectGroup(byte team, int group) override;
-	virtual void deleteGroup(byte team, int group) override;
-	virtual bool setTarget(PointF pt, byte team) override;
-	virtual void deselectTarget(byte team) override;
+	virtual bool select(PointF center, float r2, TeamID team) override;
+	virtual void selectGroup(TeamID team, GroupID group) override;
+	virtual void deleteGroup(TeamID team, GroupID group) override;
+	virtual bool setTarget(PointF pt, TeamID team) override;
+	virtual void deselectTarget(TeamID team) override;
 	virtual void update(float dt) override;
-	virtual byte gameEnd() const override;
-	virtual void setAllPlanetsOnDefense(byte team) override;
+	virtual TeamID gameEnd() const override;
+	virtual void setAllPlanetsOnDefense(TeamID team) override;
 	virtual bool gameStart() const override
 	{
 		return m_bGameStart;
@@ -25,12 +25,12 @@ public:
 	{
 		return m_clock.getTimeSecond();
 	}
-	virtual void addToGroup(byte team, int group) override;
-	virtual void makeGroup(byte team, int group) override;
-	virtual void selectAll(byte team) override;
-	virtual void setPlanetSpawnType(byte team, MapObject::EntityType t) override;
-	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
-	virtual void selectAllEntityType(byte team, MapObject::EntityType et) override;
+	virtual void addToGroup(TeamID team, GroupID group) override;
+	virtual void makeGroup(TeamID team, GroupID group) override;
+	virtual void selectAll(TeamID team) override;
+	virtual void setPlanetSpawnType(TeamID team, MapObject::EntityType t) override;
+	virtual bool filterEntityType(TeamID team, MapObject::EntityType et) override;
+	virtual void selectAllEntityType(TeamID team, MapObject::EntityType et) override;
 	virtual void addPacket(DataContainer&& con) override;
 private:
 	Client& m_serv;

@@ -2,7 +2,7 @@
 #include "../Utility/Line.h"
 #include "../Utility/Exception.h"
 
-Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector< byte >& pclans)
+Map::Map(int nPlayers, int nPlans, float width, float height, GameType ty, const std::vector< TeamID >& pclans)
 	:
 	m_nPlayers(nPlayers),
 	m_nPlans(nPlans),
@@ -53,7 +53,7 @@ Map::~Map()
 /////////////////////////// USER INPUT /////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
-bool Map::select(PointF center, float r2, byte team)
+bool Map::select(PointF center, float r2, TeamID team)
 {
 	//check if anything was selected in the first place...
 	if (r2 < 6400.0f) //80 px squared
@@ -85,7 +85,7 @@ bool Map::select(PointF center, float r2, byte team)
 	return true;
 }
 
-void Map::selectAll(byte team)
+void Map::selectAll(TeamID team)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -99,7 +99,7 @@ void Map::selectAll(byte team)
 	}
 }
 
-void Map::addToGroup(byte team, int group)
+void Map::addToGroup(TeamID team, GroupID group)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -114,7 +114,7 @@ void Map::addToGroup(byte team, int group)
 	}
 }
 
-void Map::makeGroup(byte team, int group)
+void Map::makeGroup(TeamID team, GroupID group)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -133,7 +133,7 @@ void Map::makeGroup(byte team, int group)
 	}
 }
 
-void Map::selectGroup(byte team, int group)
+void Map::selectGroup(TeamID team, GroupID group)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -146,7 +146,7 @@ void Map::selectGroup(byte team, int group)
 	}
 }
 
-void Map::deleteGroup(byte team, int group)
+void Map::deleteGroup(TeamID team, GroupID group)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -159,7 +159,7 @@ void Map::deleteGroup(byte team, int group)
 	}
 }
 
-void Map::deselectTarget(byte team)
+void Map::deselectTarget(TeamID team)
 {
 	for (auto& e : m_ents[team - 1])
 	{
@@ -172,7 +172,7 @@ void Map::deselectTarget(byte team)
 	}
 }
 
-void Map::setAllPlanetsOnDefense(byte team)
+void Map::setAllPlanetsOnDefense(TeamID team)
 {
 	for (auto& p : m_plans)
 	{
@@ -186,7 +186,7 @@ void Map::setAllPlanetsOnDefense(byte team)
 	}
 }
 
-void Map::setPlanetSpawnType(byte team, MapObject::EntityType t)
+void Map::setPlanetSpawnType(TeamID team, MapObject::EntityType t)
 {
 	assert(t != MapObject::EntityType::etNone);
 
@@ -234,7 +234,7 @@ void Map::refreshGrid()
 	}
 }
 
-const MapEntity* Map::getColEnt(PointF pt, unsigned int id, byte team)
+const MapEntity* Map::getColEnt(PointF pt, GameID id, TeamID team)
 {
 	auto& list = m_grid.getEntities(pt);
 	for (auto& e : list)
@@ -250,7 +250,7 @@ const MapEntity* Map::getColEnt(PointF pt, unsigned int id, byte team)
 	return nullptr;
 }
 
-void Map::setCrowdEntVel(float ds, MapEntity& curEnt, const unsigned int ID)
+void Map::setCrowdEntVel(float ds, MapEntity& curEnt, GameID ID)
 {
 	ds *= curEnt.getSpeedModifier();
 	VectorF vV = curEnt.getVel();
@@ -678,7 +678,7 @@ void Map::setPrimaryEntVel(float ds, MapEntity& curEnt)
 		break;
 	}
 }
-bool Map::col(const PointF& pt, unsigned int id, byte team)
+bool Map::col(const PointF& pt, GameID id, TeamID team)
 {
 	if (getColPlan(pt) != nullptr)
 		return true;
@@ -727,7 +727,7 @@ void Map::setEntPosition(MapEntity& curEnt, const float dt)
 	}
 }
 
-bool Map::isAlly(byte team1, byte team2) const
+bool Map::isAlly(TeamID team1, TeamID team2) const
 {
 	if (byte(team1 - 1) >= m_nPlayers || byte(team2 - 1) >= m_nPlayers)
 		//if (team1 == 0 || team2 == 0 || team1 > nPlayers || team2 > nPlayers)

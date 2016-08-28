@@ -76,7 +76,7 @@ int UniformGrid::getBoxSize() const
 	return m_boxsz;
 }
 // own m_team
-size_t UniformGrid::countUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countUnits(TeamID team, PointF pos, float radius)
 {
 	byte t = team - 1;
 	assert(t < m_nTeams);
@@ -110,7 +110,7 @@ size_t UniformGrid::countUnits(byte team, PointF pos, float radius)
 	return count;
 }
 // own m_team + ally
-size_t UniformGrid::countAllyUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countAllyUnits(TeamID team, PointF pos, float radius)
 {
 	byte t = team - 1;
 	assert(t < m_nTeams);
@@ -137,7 +137,7 @@ size_t UniformGrid::countAllyUnits(byte team, PointF pos, float radius)
 			PointF mid = PointF(x * m_boxsz, y * m_boxsz);
 			if ((mid - pos).lengthSq() < tstrad2)
 			{
-				for (byte i = 0; i < m_nTeams; i++)
+				for (TeamID i = 0; i < m_nTeams; i++)
 				{
 					if (!m_map.isAlly(team, i + 1))
 						continue;
@@ -151,7 +151,7 @@ size_t UniformGrid::countAllyUnits(byte team, PointF pos, float radius)
 	return count;
 }
 // enemies (no allies)
-size_t UniformGrid::countEnemyUnits(byte team, PointF pos, float radius)
+size_t UniformGrid::countEnemyUnits(TeamID team, PointF pos, float radius)
 {
 	byte t = team - 1;
 	assert(t < m_nTeams);
@@ -192,7 +192,7 @@ size_t UniformGrid::countEnemyUnits(byte team, PointF pos, float radius)
 	return count;
 }
 
-PointI UniformGrid::getEnemyAccumulationPoint(byte team, const PointF& pos, float radius, size_t lowerLimit)
+PointI UniformGrid::getEnemyAccumulationPoint(TeamID team, const PointF& pos, float radius, size_t lowerLimit)
 {
 	byte t = team - 1;
 	assert(t < m_nTeams);
@@ -243,7 +243,7 @@ PointI UniformGrid::getEnemyAccumulationPoint(byte team, const PointF& pos, floa
 	return bestBox;
 }
 
-size_t UniformGrid::countUnitsInBox(byte team, PointF pos)
+size_t UniformGrid::countUnitsInBox(TeamID team, PointF pos)
 {
 	assert(unsigned(team - 1) < unsigned(m_nTeams));
 
@@ -257,7 +257,7 @@ size_t UniformGrid::countUnitsInBox(byte team, PointF pos)
 
 	
 }
-size_t UniformGrid::countUnitsInBoxRaw(byte team, PointI posi)
+size_t UniformGrid::countUnitsInBoxRaw(TeamID team, PointI posi)
 {
 	assert(posi.x >= 0 && posi.x < m_width);
 	assert(posi.y >= 0 && posi.y < m_height);

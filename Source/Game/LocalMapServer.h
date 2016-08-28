@@ -11,15 +11,15 @@ public:
 public:
 	LocalMapServer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns, 
 		Server& serv, float width, float height,
-		std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< byte > clns);
+		std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns);
 	virtual ~LocalMapServer();
 
 	std::vector< DataContainer > GetStartData();
 
 	virtual void update(float dt) override;
-	virtual void deselectTarget(byte team) override;
-	virtual bool setTarget(PointF pt, byte team) override;
-	virtual byte gameEnd() const override
+	virtual void deselectTarget(TeamID team) override;
+	virtual bool setTarget(PointF pt, TeamID team) override;
+	virtual TeamID gameEnd() const override
 	{
 		return winner;
 	}
@@ -28,13 +28,13 @@ public:
 		clock.setStartTime(startsec);
 	}
 
-	virtual void addToGroup(byte team, int group) override;
-	virtual void makeGroup(byte team, int group) override;
-	virtual void selectGroup(byte team, int group) override;
-	virtual void deleteGroup(byte team, int group) override;
-	virtual void selectAll(byte team) override;
-	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
-	virtual void selectAllEntityType(byte team, MapObject::EntityType et) override;
+	virtual void addToGroup(TeamID team, GroupID group) override;
+	virtual void makeGroup(TeamID team, GroupID group) override;
+	virtual void selectGroup(TeamID team, GroupID group) override;
+	virtual void deleteGroup(TeamID team, GroupID group) override;
+	virtual void selectAll(TeamID team) override;
+	virtual bool filterEntityType(TeamID team, MapObject::EntityType et) override;
+	virtual void selectAllEntityType(TeamID team, MapObject::EntityType et) override;
 
 	bool HandleSurrender(byte team);
 	float GetAvgUpdTime()
@@ -49,14 +49,14 @@ public:
 		inData.push_back(std::move(con));
 	}
 
-	size_t CountUnits(byte team)
+	size_t CountUnits(TeamID team)
 	{
 		if (unsigned(team - 1) >= m_nPlayers)
 			return 0;
 
 		return m_ents[team - 1].length();
 	}
-	byte GetNPlayers()
+	TeamID GetNPlayers()
 	{
 		return m_nPlayers;
 	}
@@ -65,7 +65,7 @@ public:
 		return bGameStart;
 	}
 protected:
-	virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity*) override;
+	virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity*) override;
 private:
 	Server& serv;
 	NetClock clock;
@@ -141,9 +141,9 @@ private:
 	// debugging
 	float sumTime = 0.0f;
 	unsigned int runs = 0;
-	byte lastTeamUpdate = 0;
+	TeamID lastTeamUpdate = 0;
 
 	const unsigned int MAX_PACKSIZE;// = 4000;//1400; // more than 1467 does not work on jans server..
 
-	const std::vector< byte > startTeams; // to send map data
+	const std::vector< TeamID > startTeams; // to send map data
 };

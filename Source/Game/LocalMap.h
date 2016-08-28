@@ -7,14 +7,14 @@ class LocalMap : public Map
 {
 public:
 	LocalMap(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
-		float width, float height, Map::GameType ty, std::vector<byte> clns);
-	LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<byte> clns);
+		float width, float height, Map::GameType ty, std::vector<TeamID> clns);
+	LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<TeamID> clns);
 	virtual ~LocalMap();
 
-	virtual bool select(PointF center, float r2, byte team);
-	virtual bool setTarget(PointF pt, byte team) override;
-	virtual byte gameEnd() const override;
-	virtual bool filterEntityType(byte team, MapObject::EntityType et) override;
+	virtual bool select(PointF center, float r2, TeamID team);
+	virtual bool setTarget(PointF pt, TeamID team) override;
+	virtual TeamID gameEnd() const override;
+	virtual bool filterEntityType(TeamID team, MapObject::EntityType et) override;
 protected:
 	bool tryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
 		const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType);

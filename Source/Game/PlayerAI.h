@@ -54,7 +54,7 @@ protected:
 	virtual void Event_EntitySpawn(PlanetID pID, MapEntity& e)override;
 	virtual void Event_EntityKilled(MapEntity& e)override;
 	virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e)override;
-	virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity*)override;
+	virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity*)override;
 private:
 	size_t groupTransfer(int from, int to, size_t num);
 	void addHunter(MapEntity& e);

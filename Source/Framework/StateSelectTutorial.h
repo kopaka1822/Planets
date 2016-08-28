@@ -100,7 +100,7 @@ private:
 		ents.push_back(e);
 
 		// easy ai
-		gs.pMap = std::unique_ptr< LocalMapClassicMode >(new LocalMapClassicMode(2, plans, ents, 1000.0f, 500.0f, Map::GameType::AllvAll, std::vector<byte>()));
+		gs.pMap = std::unique_ptr< LocalMapClassicMode >(new LocalMapClassicMode(2, plans, ents, 1000.0f, 500.0f, Map::GameType::AllvAll, std::vector<TeamID>()));
 		
 		StateSingle::LoadDefaultNames(gs);
 
@@ -163,7 +163,7 @@ private:
 		ents.push_back(e);
 
 		// lazy ai
-		gs.pMap = std::unique_ptr< LocalMapLazyMode >(new LocalMapLazyMode(2, plans, ents, 500.0f, 900.0f, Map::GameType::AllvAll, std::vector<byte>()));
+		gs.pMap = std::unique_ptr< LocalMapLazyMode >(new LocalMapLazyMode(2, plans, ents, 500.0f, 900.0f, Map::GameType::AllvAll, std::vector<TeamID>()));
 
 		StateSingle::LoadDefaultNames(gs);
 

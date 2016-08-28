@@ -334,7 +334,7 @@ void PlayerAI::Event_PlanetAttacked(PlanetID pID, const MapEntity& e) // not thr
 {
 
 }
-void PlayerAI::Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity*) // not thread safe
+void PlayerAI::Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity*) // not thread safe
 {
 	if (m_map.isAlly(newTeam, m_team))
 	{

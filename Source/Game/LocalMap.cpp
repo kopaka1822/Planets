@@ -13,13 +13,13 @@
 
 
 LocalMap::LocalMap(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
-	float width, float height, Map::GameType ty, std::vector<byte> clns)
+	float width, float height, Map::GameType ty, std::vector<TeamID> clns)
 	:
 	Map(nPlayers,planets.size(),width,height,ty,clns)
 {
 	loadMapComponents(planets, spawns);
 }
-LocalMap::LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<byte> clns)
+LocalMap::LocalMap(int nPlayers, int nPlanets, float mWi, float mHei, Map::GameType ty, std::vector<TeamID> clns)
 	:
 	Map(nPlayers,nPlanets,mWi,mHei,ty,clns)
 {}
@@ -46,7 +46,7 @@ void LocalMap::loadMapComponents(const std::vector<MapLoader::MapPlanet>& planet
 
 	srand((unsigned int)time(nullptr)); //different seed for ingame action
 }
-bool LocalMap::filterEntityType(byte team, MapObject::EntityType et)
+bool LocalMap::filterEntityType(TeamID team, MapObject::EntityType et)
 {
 	bool bAnySelect = false;
 	bool bEntSelect = false;
@@ -116,7 +116,7 @@ bool LocalMap::filterEntityType(byte team, MapObject::EntityType et)
 
 	return true;
 }
-bool LocalMap::select(PointF center, float r2, byte team)
+bool LocalMap::select(PointF center, float r2, TeamID team)
 {
 	if (Map::select(center, r2, team))
 	{
@@ -157,7 +157,7 @@ bool LocalMap::select(PointF center, float r2, byte team)
 		return false;
 	}
 }
-bool LocalMap::setTarget(PointF pt, byte team)
+bool LocalMap::setTarget(PointF pt, TeamID team)
 {
 	//determine target type
 	bool planetTargeted = false;
@@ -216,7 +216,7 @@ bool LocalMap::setTarget(PointF pt, byte team)
 	}
 }
 
-byte LocalMap::gameEnd() const
+TeamID LocalMap::gameEnd() const
 {
 	// find first surviving m_team
 	size_t surv = 0;

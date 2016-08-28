@@ -906,7 +906,7 @@ private:
 		muDieEnts.Unlock();
 	}
 	//Planet capture animation
-	virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity*) override
+	virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity*) override
 	{
 		int numParts = int(Settings::GetDetailLevel() * 40.0f);
 		if (numParts == 0)

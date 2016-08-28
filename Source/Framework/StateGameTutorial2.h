@@ -32,7 +32,7 @@ class StateGameTutorial2 : public StateGameSingle
 		virtual void Event_PlanetAttacked(PlanetID pID, const MapEntity& e) override{};
 
 		// culprit may be null if it was not captured by an entity
-		virtual void Event_PlanetCaptured(PlanetID pID, byte newTeam, byte oldTeam, const MapEntity* culprit) override
+		virtual void Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID oldTeam, const MapEntity* culprit) override
 		{
 			if (newTeam != 0)
 				bCapture = true;
@@ -317,7 +317,7 @@ private:
 		if (mis.length())
 		{
 			std::string all = "Mission: " + mis;
-			int maxlen = (Framework::STD_DRAW_X - 20) / FONT_SMALL.GetFontWidth();
+			int maxlen = int((Framework::STD_DRAW_X - 20) / FONT_SMALL.GetFontWidth());
 			if (mis.length() > maxlen)
 			{
 				lblMission.SetText(all.substr(0, maxlen - 1));

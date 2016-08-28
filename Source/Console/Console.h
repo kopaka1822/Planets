@@ -23,29 +23,32 @@ public:
 	static void WriteLine(bool b);
 	static void WriteLine(char c);
 
-	template<class ArgF>
+	/*template<class ArgF>
 	static void Write(const ArgF& first)
 	{
 		Write(first);
-	}
+	}*/
 	template <class ArgF,class... ArgT>
 	static void Write(const ArgF& first,const ArgT&... args)
 	{
 		Write(first);
 		Write(args...);
 	}
+	static void Write()
+	{}
 
-	template<class ArgF>
+	/*template<class ArgF>
 	static void WriteLine(const ArgF& first)
 	{
 		WriteLine(first);
-	}
+	}*/
 	template <class ArgF, class... ArgT>
 	static void WriteLine(const ArgF& first, const ArgT&... args)
 	{
 		Write(first);
 		WriteLine(args...);
 	}
+	static void WriteLine(){}
 
 	// Input
 	static std::string ReadString();

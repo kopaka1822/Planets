@@ -13,7 +13,7 @@ public:
 	};
 public:
 	LocalMapSingleplayer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
-		float width, float height, Map::GameType ty, std::vector<byte> clns, bool bInitAI = true);
+		float width, float height, Map::GameType ty, std::vector<TeamID> clns, bool bInitAI = true);
 	virtual ~LocalMapSingleplayer()
 	{}
 

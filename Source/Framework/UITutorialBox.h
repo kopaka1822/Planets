@@ -86,7 +86,7 @@ public:
 
 		font.SetColor(Color::White());
 		
-		for (int i = 0; i < lines.size(); i++)
+		for (size_t i = 0; i < lines.size(); i++)
 		{
 			font.Text(lines[i], fontPos[i]);
 		}

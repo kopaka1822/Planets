@@ -319,7 +319,7 @@ protected:
 	// map data
 	std::vector< MapLoader::MapPlanet > MapPlanets;
 	std::vector< MapLoader::MapEntity > MapEntities;
-	std::vector< byte > teams;
+	std::vector< TeamID > teams;
 	float MapWidth = -1.0f;
 	float MapHeight = -1.0f;
 	bool MapComplete = false;

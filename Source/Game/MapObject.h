@@ -124,7 +124,7 @@ public:
 		return m_pos;
 	}
 
-	inline byte getTeam() const
+	inline TeamID getTeam() const
 	{
 		return m_team;
 	}
@@ -156,7 +156,7 @@ protected:
 	PointF m_target;
 
 	PointF m_pos;
-	byte m_team;
+	TeamID m_team;
 	GameHP m_hp;
 	//user
 	bool m_isSelected = false;

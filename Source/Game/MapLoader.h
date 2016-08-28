@@ -3,6 +3,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
+#include "GameTypes.h"
 #include <fstream>
 #include <string>
 #include <vector>
@@ -125,8 +126,8 @@ public:
 		return header.height;
 	}
 	static bool SaveMap(const std::string& file, const std::vector< MapPlanet >& p,
-		const std::vector< MapSpawn >& s, byte nTeams,
-		float width, float height, const std::vector< byte >& teams = std::vector< byte >(), std::string pass = std::string())
+		const std::vector< MapSpawn >& s, TeamID nTeams,
+		float width, float height, const std::vector< TeamID >& teams = std::vector< TeamID >(), std::string pass = std::string())
 	{
 		FILE* pFile = nullptr;
 		pFile = fopen(file.c_str(), "wb");
@@ -141,13 +142,13 @@ public:
 	}
 
 	static bool SaveMap(FILE* pFile, const std::vector< MapPlanet >& p,
-		const std::vector< MapSpawn >& s, byte nTeams,
-		float width, float height, const std::vector< byte >& teams, std::string pass = std::string())
+		const std::vector< MapSpawn >& s, TeamID nTeams,
+		float width, float height, const std::vector< TeamID >& teams, std::string pass = std::string())
 	{
 		//Write header
 		MapHeader head;
-		head.nPlanets = (byte)p.size();
-		head.nSpawns = (byte)s.size();
+		head.nPlanets = static_cast<byte>(p.size());
+		head.nSpawns = static_cast<byte>(s.size());
 		head.nTeams = nTeams;
 		head.sig[0] = 'M';
 		head.sig[1] = 'A';
@@ -160,7 +161,7 @@ public:
 		if (head.passwd)
 		{
 			//assert(pass.length() <= 9);
-			size_t len = pass.length();
+			auto len = pass.length();
 			if (len > 9) len = 9;
 			for (unsigned int i = 0; i < len; ++i)
 			{
@@ -219,7 +220,7 @@ public:
 		p->HP =(int)float(2.7f * (powf((p->radius + 15.0f),2.0f) - powf((p->radius),2.0f))); //int(sqrtf(p->radius) * 200.0f + 1000.0f); 3.282f
 		p->sUnit = 28.125f / p->radius + 0.75f;//4.0f * powf(float(M_E), logf(0.97265f) * p->radius);
 	}
-	std::vector< byte > GetTeams() const
+	std::vector< TeamID > GetTeams() const
 	{
 		return teams;
 	}
@@ -338,12 +339,12 @@ private:
 			teams.push_back(i + 1);
 		}
 	}
-	static bool TestTeams(const std::vector< byte >& tms, byte maxt)
+	static bool TestTeams(const std::vector< TeamID >& tms, byte maxt)
 	{
 		if (maxt > tms.size())
 			return false;
 
-		for (byte i = 0; i < maxt; i++)
+		for (TeamID i = 0; i < maxt; i++)
 		{
 			if (tms[i] != i + 1)
 				return true;
@@ -353,7 +354,7 @@ private:
 	MapHeader header;
 	std::vector< MapPlanet > planets;
 	std::vector< MapSpawn > spawns;
-	std::vector< byte > teams;
+	std::vector< TeamID > teams;
 	std::string pwd;
 	bool bTeamsSet = false;
 };

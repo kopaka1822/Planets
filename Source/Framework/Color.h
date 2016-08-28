@@ -1,6 +1,7 @@
 #pragma once
 #include "Settings.h"
 #include "../Utility/Tools.h"
+#include "../Game/GameTypes.h"
 
 class Color
 {
@@ -57,7 +58,7 @@ public:
 		return c;
 	}
 	//statics
-	static Color GetTeamColor(unsigned char team)
+	static Color GetTeamColor(TeamID team)
 	{
 		return Settings::GetColor(team);
 	}

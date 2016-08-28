@@ -47,7 +47,7 @@ public:
 	virtual void Bind() override
 	{
 		// update uniform
-		curCol = curCol.mix(desCol, 0.2);
+		curCol = curCol.mix(desCol, 0.2f);
 
 		glUseProgram(program);
 		glUniform3f(color, curCol.r, curCol.g, curCol.b);

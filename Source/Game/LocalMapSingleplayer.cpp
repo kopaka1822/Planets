@@ -3,7 +3,7 @@
 #include "PlayerAI.h"
 
 LocalMapSingleplayer::LocalMapSingleplayer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns,
-	float width, float height, Map::GameType ty, std::vector<byte> clns, bool bInitAI)
+	float width, float height, Map::GameType ty, std::vector<TeamID> clns, bool bInitAI)
 	:
 	LocalMap(nPlayers,planets,spawns,width,height,ty,clns)
 {
