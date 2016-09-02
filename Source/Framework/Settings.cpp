@@ -55,7 +55,7 @@ static float fxaaMul;
 static float fxaaShift;
 static bool bStarfield;
 
-static const unsigned int curVersion = 24;
+static const unsigned int curVersion = 25;
 
 static unsigned long long MenuScore;
 
@@ -200,7 +200,7 @@ void Settings::LoadFromFile()
 		{
 			LOGWRITE("loading settings from file");
 			int version = r.readInt();
-			if (!(version == curVersion || version == 23))
+			if (version < 23 || version > curVersion)
 				throw Exception("deprecated config.dat");
 
 			bFullscreen = r.readChar() != 0;
@@ -211,11 +211,18 @@ void Settings::LoadFromFile()
 			volMusic = r.readFloat();
 			volSound = r.readFloat();
 
-			for (int i = 0; i < Input::GK_SIZE; i++)
+			int gkMax = Input::GK_SIZE;
+			if (version < 25)
+				gkMax = 17;
+
+			for (int i = 0; i < gkMax; i++)
 			{
-				inp[i].t = (Input::GKstruct::type)r.readChar();
+				inp[i].t = Input::GKstruct::type(r.readChar());
 				inp[i].code = r.readInt();
 			}
+
+			if (version < 25)
+				inp[Input::GK_TURBO] = {Input::GKstruct::type::Key,SDL_SCANCODE_S};
 
 			int nServs = r.readInt();
 			for (int i = 0; i < nServs; i++)
@@ -254,7 +261,7 @@ void Settings::LoadFromFile()
 			bDeselectOnTarget = r.readChar() != 0;
 			planetGlowFactor = r.readFloat();
 
-			if(version < curVersion)
+			if(version < 24)
 			{
 				bStarfield = true;
 			}
@@ -373,15 +380,13 @@ void Settings::RestoreDefault()
 	inp[Input::GK_FILTERSABO] = { Input::GKstruct::Key, SDL_SCANCODE_R };
 	inp[Input::GK_PLANDEFENSE] = { Input::GKstruct::Key, SDL_SCANCODE_D };
 
+	inp[Input::GK_TURBO] = { Input::GKstruct::Key, SDL_SCANCODE_S };
+
 	MenuScore = 0;
 	servers.clear();
 	ServerInfo si;
-	si.port = 7123;
-	si.nick = "Beta Server 1";
-	si.IP = "std-io.de";
-	servers.push_back(si);
 
-	si.nick = "Beta Server 2";
+	si.nick = "Beta Server";
 	si.IP = "progmem.de";
 	servers.push_back(si);
 

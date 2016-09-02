@@ -55,6 +55,7 @@ public:
 		lblGroupadd("Add to Group", FONT_MED),
 		lblGroupmake("Assign Group", FONT_MED),
 		lblDeselectOnTarget("Auto Deselect", FONT_MED),
+		lblTurbo("Fast Forward",FONT_MED),
 
 		btnDisableOnTarget(Settings::DeselectOnTargetSelect(), FONT_MED),
 		ctrlLeft(FONT_MED, Settings::GetGamekey(Input::GK_CLICK)),
@@ -63,6 +64,7 @@ public:
 		ctrlSelAll(FONT_MED, Settings::GetGamekey(Input::GK_SELECTALL)),
 		ctrlGroupadd(FONT_MED, Settings::GetGamekey(Input::GK_ADDGROUP)),
 		ctrlGroupmake(FONT_MED, Settings::GetGamekey(Input::GK_MAKEGROUP)),
+		ctrlTurbo(FONT_MED, Settings::GetGamekey(Input::GK_TURBO)),
 
 		lblRestart("Please restart the game to apply changes",FONT_SMALL),
 		btnLines(Settings::TargetLinesEnabled()),
@@ -157,6 +159,7 @@ public:
 		ctrlFilterSpeed.AdjustToFont(rw);
 		ctrlFilterSabo.AdjustToFont(rw);
 		ctrlAllPlanDefense.AdjustToFont(rw);
+		ctrlTurbo.AdjustToFont(rw);
 
 		// General
 		itmScroll.AddItem(&lblName, &tInpName);
@@ -210,6 +213,7 @@ public:
 		scrollControls.AddItem(&lblFilterSpeed, &ctrlFilterSpeed);
 		scrollControls.AddItem(&lblFilterSabo, &ctrlFilterSabo);
 		scrollControls.AddItem(&lblAllPlanDefense, &ctrlAllPlanDefense);
+		scrollControls.AddItem(&lblTurbo, &ctrlTurbo);
 
 		//itmScroll.OrderItems();
 		grid.OrderItems();
@@ -272,6 +276,7 @@ public:
 		Settings::SetGamekey(Input::GK_FILTERSPEED, ctrlFilterSpeed.GetKey());
 		Settings::SetGamekey(Input::GK_FILTERSABO, ctrlFilterSabo.GetKey());
 		Settings::SetGamekey(Input::GK_PLANDEFENSE, ctrlAllPlanDefense.GetKey());
+		Settings::SetGamekey(Input::GK_TURBO, ctrlTurbo.GetKey());
 
 		if (tInpName.GetText().length() > 0)
 			Settings::SetName(tInpName.GetText());
@@ -452,6 +457,7 @@ private:
 	UILabel lblGroupadd;
 	UILabel lblChat;
 	UILabel lblPlayer;
+	UILabel lblTurbo;
 
 	UILabel lblFilterEnt;
 	UILabel lblFilterBomb;
@@ -477,6 +483,7 @@ private:
 
 	UIButtonDetect ctrlChat;
 	UIButtonDetect ctrlPlayer;
+	UIButtonDetect ctrlTurbo;
 
 	// Shader
 	UILabel lblShaderStory;

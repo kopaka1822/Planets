@@ -27,6 +27,7 @@ public:
 		GK_FILTERSPEED,
 		GK_FILTERSABO,
 		GK_PLANDEFENSE, // all planets on defense
+		GK_TURBO,
 
 		GK_SIZE
 	};

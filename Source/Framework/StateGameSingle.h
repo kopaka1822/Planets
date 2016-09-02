@@ -9,7 +9,7 @@ public:
 		:
 		StateGame(1, Database::GetGameStruct().nTeams)
 	{
-		Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
+		StateGame::Event_Resize(Framework::DrawStart(), Framework::DrawWidth());
 		btnFastForward.enable();
 	}
 	virtual ~StateGameSingle()
@@ -44,9 +44,12 @@ public:
 				turboFac += TURBO_VEL;
 		}
 	}
-	virtual void Event_KeyUp(SDL_Scancode code) override
+
+	virtual void Event_GameKeyUp(Input::GameKey k, const PointF& p) override
 	{
-		if (code == SDL_SCANCODE_T)
+		StateGame::Event_GameKeyUp(k, p);
+
+		if(k == Input::GK_TURBO)
 		{
 			btnFastForward.SetState(!btnFastForward.GetState());
 		}
