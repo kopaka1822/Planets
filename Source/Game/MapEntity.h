@@ -104,7 +104,7 @@ public:
 		m_curState = sLazy;
 	}
 
-	virtual void updatePosition(const float dt)
+	virtual void updatePosition(float dt)
 	{
 		m_pos += m_vel;
 

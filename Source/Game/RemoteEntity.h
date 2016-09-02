@@ -44,7 +44,7 @@ public:
 		drawDeselect();
 		MapObject::deselect();
 	}
-	virtual void updatePosition(const float dt) override
+	virtual void updatePosition(float dt) override
 	{
 		if (m_curState == MapEntity::States::sTarget)
 			MapEntity::updatePosition(dt);

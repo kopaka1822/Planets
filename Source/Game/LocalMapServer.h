@@ -11,7 +11,7 @@ public:
 public:
 	LocalMapServer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns, 
 		Server& serv, float width, float height,
-		std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns);
+		std::function<TeamID(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns);
 	virtual ~LocalMapServer();
 
 	std::vector< DataContainer > GetStartData();
@@ -71,13 +71,13 @@ private:
 	NetClock clock;
 	bool bGameStart = false;
 
-	std::function<byte(int)> GetPlayerTeam;
+	std::function<TeamID(int)> GetPlayerTeam;
 
 	std::vector< DataContainer > inData;
 private: //functions
-	unsigned int nEntities() const
+	size_t nEntities() const
 	{
-		unsigned int c = 0;
+		size_t c = 0;
 		for (size_t i = 0; i < m_nPlayers; ++i)
 		{
 			c += m_ents[i].length();
@@ -86,28 +86,28 @@ private: //functions
 	}
 	void UpdatePlanets(float dt);
 	void ReceiveData();
-	void HandleClientSelect(ContainerReader& r, byte team);
-	void HandleClientClanRequest(byte asking, byte team);
-	void HandleClientClanDestroy(byte asking, byte team);
-	void HandleClientSpawntype(ContainerReader& r, byte team);
-	void HandleClientPlanDefense(ContainerReader& r, byte team);
+	void HandleClientSelect(ContainerReader& r, TeamID team);
+	void HandleClientClanRequest(TeamID asking, TeamID team);
+	void HandleClientClanDestroy(TeamID asking, TeamID team);
+	void HandleClientSpawntype(ContainerReader& r, TeamID team);
+	void HandleClientPlanDefense(ContainerReader& r, TeamID team);
 	void UpdateMovement(float dt, const float curTime);
 	void AttackNearby(MapEntity& curEnt);
 	void UpdateDeath();
 	void SendWinnerMessage();
 	void SynchClock(float curTime);
 
-	bool isAlive(byte team) const;
+	bool isAlive(TeamID team) const;
 	float CalcMoveResendTime() const;
 
-	void SendAllyRequest(byte from, byte to);
-	void SendAllyFormed(byte t1, byte t2);
-	void SendAllyResolve(byte t1, byte t2);
-	void SendAllyDeny(byte from, byte to);
+	void SendAllyRequest(TeamID from, TeamID to);
+	void SendAllyFormed(TeamID t1, TeamID t2);
+	void SendAllyResolve(TeamID t1, TeamID t2);
+	void SendAllyDeny(TeamID from, TeamID to);
 
-	void SendClanUpdate(byte t1, byte t2);
+	void SendClanUpdate(TeamID t1, TeamID t2);
 
-	bool AllyAllowed(byte t1, byte t2) const
+	bool AllyAllowed(TeamID t1, TeamID t2) const
 	{
 		if (t1 == t2)
 			return false;
@@ -120,7 +120,7 @@ private: //functions
 
 		return true;
 	}
-	int CountAllies(byte team) const
+	int CountAllies(TeamID team) const
 	{
 		int count = 0;
 		for (const auto& e : m_clanInfo[team - 1])
@@ -130,8 +130,8 @@ private: //functions
 	}
 private:
 	//server constants
-	const unsigned int maxEntLen;
-	byte winner = 0;
+	const size_t maxEntLen;
+	TeamID winner = 0;
 
 	// timer
 	float lastClock = 0.0f;
@@ -140,7 +140,7 @@ private:
 
 	// debugging
 	float sumTime = 0.0f;
-	unsigned int runs = 0;
+	size_t runs = 0;
 	TeamID lastTeamUpdate = 0;
 
 	const unsigned int MAX_PACKSIZE;// = 4000;//1400; // more than 1467 does not work on jans server..

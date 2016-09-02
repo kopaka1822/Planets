@@ -84,7 +84,7 @@ void Graphic::Dispose()
 
 Graphic::~Graphic()
 {
-	Dispose();
+	
 }
 
 float scalar = 1.0f;

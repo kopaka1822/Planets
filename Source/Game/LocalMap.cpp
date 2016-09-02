@@ -27,7 +27,7 @@ void LocalMap::loadMapComponents(const std::vector<MapLoader::MapPlanet>& planet
 {
 	srand(0); //same seed for spawn process
 	refreshGrid();
-	for (unsigned int i = 0; i < planets.size(); i++)
+	for (size_t i = 0; i < planets.size(); i++)
 	{
 		m_plans.push_back(new LocalPlanet(planets[i], i));
 	}
@@ -44,7 +44,7 @@ void LocalMap::loadMapComponents(const std::vector<MapLoader::MapPlanet>& planet
 		}
 	}
 
-	srand((unsigned int)time(nullptr)); //different seed for ingame action
+	srand(static_cast<unsigned int>(time(nullptr))); //different seed for ingame action
 }
 bool LocalMap::filterEntityType(TeamID team, MapObject::EntityType et)
 {
@@ -206,7 +206,7 @@ bool LocalMap::setTarget(PointF pt, TeamID team)
 		if (t == MapObject::tgPlanetDefend)
 		{
 			//select him
-			m_plans[(unsigned int)pt.x]->forceSelect();
+			m_plans[size_t(pt.x)]->forceSelect();
 		}
 		return false; // no planet target -> only selected
 	}
@@ -252,8 +252,8 @@ end:
 }
 LocalMap::~LocalMap()
 {}
-bool LocalMap::tryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
-	const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType)
+bool LocalMap::tryEntitySpawn(const PointF& c, TeamID team, float r, MapObject::TargetType ttype,
+                              const PointF& target, GroupID group, bool isSelected, float maxR, MapObject::EntityType entType)
 {
 	PointF d;
 	const int randHalf = RAND_MAX / 2;
@@ -358,7 +358,7 @@ void LocalMap::updateEnts(const float dt)
 		}
 	}
 }
-MapEntity* LocalMap::getEnemyEnt(const PointF& pt, const byte team)
+MapEntity* LocalMap::getEnemyEnt(const PointF& pt, TeamID team)
 {
 	for (auto& e : m_grid.getEntities(pt))
 	{
@@ -430,32 +430,9 @@ void LocalMap::attackNearby(MapEntity& curEnt)
 	}
 }
 
-void LocalMap::killEnts(const PointF& center, float radius, int damage, byte team)
+void LocalMap::killEnts(const PointF& center, float radius, GameHP damage, TeamID team)
 {
 	const float r2 = radius * radius;
-	/*
-	const float off = grid.GetBoxSize();
-	const float offhalf = off / 2.0f;
-
-
-	float xStart = center.x - radius;
-	float yStart = center.y - radius;
-	float xEnd = center.x + radius;
-	float yEnd = center.y + radius;
-
-	for (float x = xStart; x < xEnd; x += off)
-	{
-		for (float y = yStart; y < yEnd; y += off)
-		{
-			for (auto& e : grid.GetEntities(PointF(x, y)))
-			{
-				if (r2 >= (e->GetPos() - center).lengthSq())
-				{
-					e->TakeDamage(damage);
-				}
-			}
-		}
-	}*/
 
 	// we cant use the grid because there are some deleted entities inside..
 	for (size_t i = 0; i < m_nPlayers; i++)

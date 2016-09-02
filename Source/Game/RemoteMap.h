@@ -34,7 +34,7 @@ public:
 	virtual void addPacket(DataContainer&& con) override;
 private:
 	Client& m_serv;
-	byte m_winner = 0;
+	TeamID m_winner = 0;
 	NetClock m_clock;
 	bool m_bGameStart = false;
 

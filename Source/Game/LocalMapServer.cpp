@@ -3,14 +3,14 @@
 
 LocalMapServer::LocalMapServer(int nPlayers, const std::vector<MapLoader::MapPlanet>& planets,
 	const std::vector<MapLoader::MapSpawn>& spawns, Server& serv, float width, float height,
-	std::function<byte(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns)
+	std::function<TeamID(int)> GetPlayerTeam, Map::GameType ty, std::vector< TeamID > clns)
 	:
 	LocalMap(nPlayers,planets.size(),width,height, ty, clns),
 	serv(serv),
-	maxEntLen(std::min((MAX_PACKSIZE - (25)) * 8,unsigned(5000))),
 	GetPlayerTeam(GetPlayerTeam),
-	startTeams(clns),
-	MAX_PACKSIZE(NetServer::GetMaxPackSize())
+	maxEntLen(std::min((MAX_PACKSIZE - (25)) * 8,unsigned(5000))),
+	MAX_PACKSIZE(NetServer::GetMaxPackSize()),
+	startTeams(clns)
 {
 	LocalMap::loadMapComponents(planets, spawns);
 }
@@ -32,7 +32,7 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 		DataContainer con = serv.GetConRel();
 		ContainerWriter w(con);
 
-		w.writeShort((short)PacketType::MapPlanets);
+		w.writeShort(short(PacketType::MapPlanets));
 
 		/*
 		Message Format:
@@ -111,9 +111,9 @@ std::vector< DataContainer > LocalMapServer::GetStartData()
 		// Teams and gametype
 		DataContainer con = serv.GetConRel();
 		ContainerWriter w(con);
-		w.writeShort((short)PacketType::MapTeams);
-		w.writeByte(m_nPlayers);
-		w.writeByte((byte)m_gameType);
+		w.writeShort(short(PacketType::MapTeams));
+		w.writeByte(byte(m_nPlayers));
+		w.writeByte(byte(m_gameType));
 		if (m_gameType == GameType::Allicance)
 		{
 			assert(startTeams.size() >= m_nPlayers);
@@ -146,7 +146,7 @@ void LocalMapServer::deselectTarget(TeamID team)
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
 
-	w.writeShort((short)PacketType::GameDeselect);
+	w.writeShort(short(PacketType::GameDeselect));
 	w.writeByte(team);
 
 	serv.SendContainerAllReliable(std::move(c));
@@ -176,7 +176,7 @@ bool LocalMapServer::setTarget(PointF pt, TeamID team)
 	//send info
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
-	w.writeShort((short)PacketType::GameClick);
+	w.writeShort(short(PacketType::GameClick));
 	w.writeByte(team);
 	w.writeFloat(pt.x);
 	w.writeFloat(pt.y);
@@ -213,7 +213,7 @@ bool LocalMapServer::setTarget(PointF pt, TeamID team)
 		if (t == MapObject::tgPlanetDefend)
 		{
 			// user clicked on a planet!
-			PlanetID pid = (PlanetID)pt.x;
+			PlanetID pid = PlanetID(pt.x);
 			m_plans[pid]->forceSelect();
 		}
 		return false;
@@ -271,7 +271,7 @@ void LocalMapServer::SendWinnerMessage()
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
 
-	w.writeShort((short)PacketType::GameEnd);
+	w.writeShort(short(PacketType::GameEnd));
 	w.writeByte(winner); //winner clan
 
 	serv.SendContainerAllReliable(std::move(c));
@@ -337,7 +337,7 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 					ContainerWriter w(c);
 
 
-					w.writeShort((short)PacketType::GamePositions);
+					w.writeShort(short(PacketType::GamePositions));
 					w.writeFloat(curTime);
 					w.writeByte(index + 1); //m_team
 
@@ -378,8 +378,8 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 			{
 				DataContainer c = serv.GetConUnrel();
 				ContainerWriter w(c);
-				w.writeShort((short)PacketType::GamePlanetHealth);
-				w.writeByte((byte)(*p)->getID()); //  start planet
+				w.writeShort(short(PacketType::GamePlanetHealth));
+				w.writeByte(byte((*p)->getID())); //  start planet
 
 				while (c.length() < MAX_PACKSIZE && p != end)
 				{
@@ -387,7 +387,7 @@ void LocalMapServer::UpdateMovement(float dt, const float curTime)
 					w.writeByte((*p)->getSubteam());
 					w.writeInt((*p)->getHP());
 
-					p++;
+					++p;
 				}
 
 				serv.SendContainerAllUnreliable(std::move(c));
@@ -489,7 +489,7 @@ void LocalMapServer::UpdatePlanets(float dt)
 				if (p->update(dt))
 				{
 					if (tryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(),
-						p->selected(),p->getDefenseRadius(),p->getEntityType()))
+					                   p->selected(),p->getDefenseRadius(),p->getEntityType()))
 					{
 						SpawnEvent s;
 						s.team = p->getTeam();
@@ -510,14 +510,14 @@ void LocalMapServer::UpdatePlanets(float dt)
 		DataContainer c = serv.GetConRel();
 		ContainerWriter w(c);
 
-		w.writeShort((short)PacketType::GameSpawn);
+		w.writeShort(short(PacketType::GameSpawn));
 
 		for (const auto& se : spEvnts)
 		{
 			w.writeByte(se.team);
 			w.writeFloat(se.pos.x);
 			w.writeFloat(se.pos.y);
-			w.writeByte((byte)se.plan);
+			w.writeByte(byte(se.plan));
 			w.writeByte(se.type);
 		}
 		w.writeByte(0);
@@ -537,7 +537,7 @@ void LocalMapServer::ReceiveData()
 			if (team < 1 || team > m_nPlayers)
 				throw std::domain_error("m_team");
 
-			PacketType t = (PacketType)r.readShort();
+			PacketType t = PacketType(r.readShort());
 
 			switch (t)
 			{
@@ -580,10 +580,10 @@ void LocalMapServer::ReceiveData()
 				HandleClientSpawntype(r, team);
 				break;
 			case PacketType::ClientFilterEntityType:
-				filterEntityType(team, (MapObject::EntityType)r.readByte());
+				filterEntityType(team, MapObject::EntityType(r.readByte()));
 				break;
 			case PacketType::ClientAllEntityType:
-				selectAllEntityType(team, (MapObject::EntityType)r.readByte());
+				selectAllEntityType(team, MapObject::EntityType(r.readByte()));
 				break;
 			case PacketType::ClientPlanDefense:
 				HandleClientPlanDefense(r, team);
@@ -597,7 +597,7 @@ void LocalMapServer::ReceiveData()
 	}
 	inData.clear();
 }
-void LocalMapServer::HandleClientSelect(ContainerReader& r, byte team)
+void LocalMapServer::HandleClientSelect(ContainerReader& r, TeamID team)
 {
 	PointF center;
 	center.x = r.readFloat();
@@ -607,7 +607,7 @@ void LocalMapServer::HandleClientSelect(ContainerReader& r, byte team)
 	DataContainer c = serv.GetConRel();
 	ContainerWriter w(c);
 
-	w.writeShort((short)PacketType::GameSelect);
+	w.writeShort(short(PacketType::GameSelect));
 
 	w.writeByte(team);
 
@@ -682,7 +682,7 @@ void LocalMapServer::UpdateDeath()
 
 	for (size_t index = 0; index < m_nPlayers; ++index)
 	{
-		d.team = (byte)(index + 1);
+		d.team = byte(index + 1);
 		for (auto i = m_ents[index].begin(), end = m_ents[index].end(); i != end; ++i)
 		{
 			if (i->getHP() <= 0)
@@ -704,7 +704,7 @@ void LocalMapServer::UpdateDeath()
 		DataContainer c = serv.GetConRel();
 		ContainerWriter w(c);
 
-		w.writeShort((short)PacketType::GameDeath);
+		w.writeShort(short(PacketType::GameDeath));
 
 		for (const auto& d : dEv)
 		{
@@ -720,8 +720,8 @@ void LocalMapServer::Event_PlanetCaptured(PlanetID pID, TeamID newTeam, TeamID o
 {
 	DataContainer c = serv.GetConRelSmall();
 	ContainerWriter w(c);
-	w.writeShort((short)PacketType::GamePlanetCapture);
-	w.writeByte((char)pID);
+	w.writeShort(short(PacketType::GamePlanetCapture));
+	w.writeByte(byte(pID));
 	w.writeByte(newTeam);
 	if (culprit)
 	{
@@ -744,13 +744,13 @@ void LocalMapServer::SynchClock(float curTime)
 	DataContainer con = serv.GetConUnrelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameClock);
+	w.writeShort(short(PacketType::GameClock));
 	w.writeFloat(curTime);
 
 	serv.SendContainerAllUnreliable(std::move(con));
 }
 
-bool LocalMapServer::isAlive(byte team) const
+bool LocalMapServer::isAlive(TeamID team) const
 {
 	if (m_ents[team - 1].length() != 0)
 		return true;
@@ -769,7 +769,7 @@ void LocalMapServer::addToGroup(TeamID team, GroupID group)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameAddToGroup);
+	w.writeShort(short(PacketType::GameAddToGroup));
 	w.writeByte(team);
 	w.writeInt(group);
 
@@ -782,7 +782,7 @@ void LocalMapServer::makeGroup(TeamID team, GroupID group)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameMakeGroup);
+	w.writeShort(short(PacketType::GameMakeGroup));
 	w.writeByte(team);
 	w.writeInt(group);
 
@@ -795,7 +795,7 @@ void LocalMapServer::selectGroup(TeamID team, GroupID group)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameSelectGroup);
+	w.writeShort(short(PacketType::GameSelectGroup));
 	w.writeByte(team);
 	w.writeInt(group);
 
@@ -808,7 +808,7 @@ void LocalMapServer::deleteGroup(TeamID team, GroupID group)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameDeleteGroup);
+	w.writeShort(short(PacketType::GameDeleteGroup));
 	w.writeByte(team);
 	w.writeInt(group);
 
@@ -821,7 +821,7 @@ void LocalMapServer::selectAll(TeamID team)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameSelectAll);
+	w.writeShort(short(PacketType::GameSelectAll));
 	w.writeByte(team);
 
 	serv.SendContainerAllReliable(std::move(con));
@@ -855,7 +855,7 @@ bool LocalMapServer::HandleSurrender(byte team)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameTeamSurrender);
+	w.writeShort(short(PacketType::GameTeamSurrender));
 	w.writeByte(team);
 
 	serv.SendContainerAllReliable(std::move(con));
@@ -879,7 +879,7 @@ bool LocalMapServer::HandleSurrender(byte team)
 	return true;
 }
 
-void LocalMapServer::HandleClientClanRequest(byte asking, byte team)
+void LocalMapServer::HandleClientClanRequest(TeamID asking, TeamID team)
 {
 	if (m_gameType != GameType::UnholyAlliance)
 		return;
@@ -910,7 +910,7 @@ void LocalMapServer::HandleClientClanRequest(byte asking, byte team)
 	// send request -> do nothing because already asked
 	// ally -> already allied...
 }
-void LocalMapServer::HandleClientClanDestroy(byte asking, byte team)
+void LocalMapServer::HandleClientClanDestroy(TeamID asking, TeamID team)
 {
 	if (m_gameType != GameType::UnholyAlliance)
 		return;
@@ -940,28 +940,28 @@ void LocalMapServer::HandleClientClanDestroy(byte asking, byte team)
 	}
 }
 
-void  LocalMapServer::SendAllyRequest(byte from, byte to)
+void  LocalMapServer::SendAllyRequest(TeamID from, TeamID to)
 {
 	m_clanInfo[from - 1][to - 1] = ClanInfo::awaiting;
 	m_clanInfo[to - 1][from - 1] = ClanInfo::sendRequest;
 
 	SendClanUpdate(from, to);
 }
-void  LocalMapServer::SendAllyFormed(byte t1, byte t2)
+void  LocalMapServer::SendAllyFormed(TeamID t1, TeamID t2)
 {
 	m_clanInfo[t1 - 1][t2 - 1] = ClanInfo::Ally;
 	m_clanInfo[t2 - 1][t1 - 1] = ClanInfo::Ally;
 
 	SendClanUpdate(t1, t2);
 }
-void  LocalMapServer::SendAllyResolve(byte t1, byte t2)
+void  LocalMapServer::SendAllyResolve(TeamID t1, TeamID t2)
 {
 	m_clanInfo[t1 - 1][t2 - 1] = ClanInfo::noAlly;
 	m_clanInfo[t2 - 1][t1 - 1] = ClanInfo::noAlly;
 
 	SendClanUpdate(t1, t2);
 }
-void  LocalMapServer::SendAllyDeny(byte from, byte to)
+void  LocalMapServer::SendAllyDeny(TeamID from, TeamID to)
 {
 	m_clanInfo[from - 1][to - 1] = ClanInfo::noAlly;
 	m_clanInfo[to - 1][from - 1] = ClanInfo::noAlly;
@@ -969,31 +969,31 @@ void  LocalMapServer::SendAllyDeny(byte from, byte to)
 	SendClanUpdate(from, to);
 }
 
-void LocalMapServer::SendClanUpdate(byte t1, byte t2)
+void LocalMapServer::SendClanUpdate(TeamID t1, TeamID t2)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameClanChange);
+	w.writeShort(short(PacketType::GameClanChange));
 	w.writeByte(t1);
-	w.writeByte((byte)(m_clanInfo[t1 - 1][t2 - 1]));
+	w.writeByte(byte(m_clanInfo[t1 - 1][t2 - 1]));
 	w.writeByte(t2);
-	w.writeByte((byte)(m_clanInfo[t2 - 1][t1 - 1]));
+	w.writeByte(byte(m_clanInfo[t2 - 1][t1 - 1]));
 
 	serv.SendContainerAllReliable(std::move(con));
 }
 
-void LocalMapServer::HandleClientSpawntype(ContainerReader& r, byte team)
+void LocalMapServer::HandleClientSpawntype(ContainerReader& r, TeamID team)
 {
-	MapObject::EntityType et = (MapObject::EntityType)r.readByte();
+	MapObject::EntityType et = MapObject::EntityType(r.readByte());
 	if (et > MapObject::etSaboteur)
 		throw std::domain_error("HandleClientSpawntype");
 
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameSetPlanetSpawntpye);
-	w.writeByte((char)et);
+	w.writeShort(short(PacketType::GameSetPlanetSpawntpye));
+	w.writeByte(byte(et));
 	w.writeByte(team);
 
 	serv.SendContainerAllReliable(std::move(con));
@@ -1003,7 +1003,7 @@ void LocalMapServer::HandleClientSpawntype(ContainerReader& r, byte team)
 
 bool LocalMapServer::filterEntityType(TeamID team, MapObject::EntityType et)
 {
-	if ((unsigned)et >= MapObject::etNone)
+	if (unsigned(et) >= MapObject::etNone)
 		return false;
 
 	// check for any ent select first
@@ -1048,7 +1048,7 @@ bool LocalMapServer::filterEntityType(TeamID team, MapObject::EntityType et)
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameFilterEntityType);
+	w.writeShort(short(PacketType::GameFilterEntityType));
 	w.writeByte(team);
 	w.writeByte(et);
 
@@ -1058,13 +1058,13 @@ bool LocalMapServer::filterEntityType(TeamID team, MapObject::EntityType et)
 }
 void LocalMapServer::selectAllEntityType(TeamID team, MapObject::EntityType et)
 {
-	if ((unsigned)et >= MapObject::etNone)
+	if (unsigned(et) >= MapObject::etNone)
 		return;
 
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::GameAllEntityType);
+	w.writeShort(short(PacketType::GameAllEntityType));
 	w.writeByte(team);
 	w.writeByte(et);
 
@@ -1072,12 +1072,12 @@ void LocalMapServer::selectAllEntityType(TeamID team, MapObject::EntityType et)
 
 	LocalMap::selectAllEntityType(team, et);
 }
-void LocalMapServer::HandleClientPlanDefense(ContainerReader& r, byte team)
+void LocalMapServer::HandleClientPlanDefense(ContainerReader& r, TeamID team)
 {
 	DataContainer con = serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ServerPlanDefense);
+	w.writeShort(short(PacketType::ServerPlanDefense));
 	w.writeByte(team);
 
 	serv.SendContainerAllReliable(std::move(con));

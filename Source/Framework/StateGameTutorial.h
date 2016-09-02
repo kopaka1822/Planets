@@ -318,7 +318,7 @@ private:
 		{
 			std::string all = "Mission: " + mis;
 			int maxlen = int((Framework::STD_DRAW_X - 20) / FONT_SMALL.GetFontWidth());
-			if (mis.length() > maxlen)
+			if (mis.length() > size_t(maxlen))
 			{
 				lblMission.SetText(all.substr(0, maxlen - 1));
 				lblMission2.SetText(all.substr(maxlen - 1));

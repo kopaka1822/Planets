@@ -2,7 +2,7 @@
 #include "DataContainer.h"
 #include "Writer.h"
 
-class ContainerWriter : public Writer
+class ContainerWriter final : public Writer
 {
 public:
 	ContainerWriter(DataContainer& r)
@@ -11,7 +11,7 @@ public:
 	{}
 	virtual ~ContainerWriter(){}
 protected:
-	virtual void _write(const void* pSrc, size_t len) override
+	virtual void _write(const void* pSrc, size_t len) override final
 	{
 		ref.append(pSrc, len);
 	}

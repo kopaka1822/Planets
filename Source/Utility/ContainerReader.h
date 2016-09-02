@@ -3,7 +3,7 @@
 #include "Reader.h"
 #include "Tools.h"
 
-class ContainerReader : public Reader
+class ContainerReader final : public Reader
 {
 public:
 	ContainerReader(const DataContainer& r)
@@ -38,7 +38,7 @@ public:
 		return ref[rPos - size];
 	}
 protected:
-	virtual void _read(void* dstBuffer, size_t len) override
+	virtual void _read(void* dstBuffer, size_t len) override final
 	{
 		if (rPos + len > ref.length())
 			throw std::out_of_range(tool::getClassname(*this));

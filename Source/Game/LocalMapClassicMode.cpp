@@ -117,7 +117,7 @@ PointF WeakAI::GetNearestPlan(PointF pos)
 }
 PointF WeakAI::GetNearestEnt()
 {
-	for (int i = 0; i < m_map.m_nPlayers; i++)
+	for (size_t i = 0; i < m_map.m_nPlayers; i++)
 	{
 		if (i != m_myTeam)
 		{

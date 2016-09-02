@@ -16,12 +16,12 @@ public:
 	virtual TeamID gameEnd() const override;
 	virtual bool filterEntityType(TeamID team, MapObject::EntityType et) override;
 protected:
-	bool tryEntitySpawn(const PointF& c, const byte team, float r, MapObject::TargetType ttype,
-		const PointF& target, int group, bool isSelected, float maxR, MapObject::EntityType entType);
-	MapEntity* getEnemyEnt(const PointF& pt, const byte team);
+	bool tryEntitySpawn(const PointF& c, TeamID team, float r, MapObject::TargetType ttype,
+	                    const PointF& target, GroupID group, bool isSelected, float maxR, MapObject::EntityType entType);
+	MapEntity* getEnemyEnt(const PointF& pt, TeamID team);
 	//initialization
 	void loadMapComponents(const std::vector<MapLoader::MapPlanet>& planets, const std::vector<MapLoader::MapSpawn>& spawns);
-	void killEnts(const PointF& center, float radius, int damage, byte team);
+	void killEnts(const PointF& center, float radius, GameHP damage, TeamID team);
 
 protected:
 

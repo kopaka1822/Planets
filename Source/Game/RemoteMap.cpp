@@ -27,7 +27,7 @@ void RemoteMap::setAllPlanetsOnDefense(TeamID team)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientPlanDefense);
+	w.writeShort(short(PacketType::ClientPlanDefense));
 
 	m_serv.SendReliable(std::move(con));
 }
@@ -39,7 +39,7 @@ bool RemoteMap::filterEntityType(TeamID team, MapObject::EntityType et)
 		DataContainer con = m_serv.GetConRelSmall();
 		ContainerWriter w(con);
 
-		w.writeShort((short)PacketType::ClientFilterEntityType);
+		w.writeShort(short(PacketType::ClientFilterEntityType));
 		w.writeByte(et);
 
 		m_serv.SendReliable(std::move(con));
@@ -116,7 +116,7 @@ void RemoteMap::selectAllEntityType(TeamID team, MapObject::EntityType et)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientAllEntityType);
+	w.writeShort(short(PacketType::ClientAllEntityType));
 	w.writeByte(et);
 
 	m_serv.SendReliable(std::move(con));
@@ -158,7 +158,7 @@ bool RemoteMap::select(PointF center, float r2, TeamID team)
 		DataContainer c = m_serv.GetConRelSmall();
 		ContainerWriter w(c);
 
-		w.writeShort((short)PacketType::ClientSelect);
+		w.writeShort(short(PacketType::ClientSelect));
 		w.writeFloat(center.x);
 		w.writeFloat(center.y);
 		w.writeFloat(r2);
@@ -204,7 +204,7 @@ void RemoteMap::selectGroup(TeamID team, GroupID group)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientSelectGroup);
+	w.writeShort(short(PacketType::ClientSelectGroup));
 	w.writeInt(group);
 
 	m_serv.SendReliable(std::move(con));
@@ -233,7 +233,7 @@ void RemoteMap::deleteGroup(TeamID team, GroupID group)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientDeleteGroup);
+	w.writeShort(short(PacketType::ClientDeleteGroup));
 	w.writeInt(group);
 
 	m_serv.SendReliable(std::move(con));
@@ -243,7 +243,7 @@ void RemoteMap::addToGroup(TeamID team, GroupID group)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientAddToGroup);
+	w.writeShort(short(PacketType::ClientAddToGroup));
 	w.writeInt(group);
 
 	m_serv.SendReliable(std::move(con));
@@ -253,7 +253,7 @@ void RemoteMap::makeGroup(TeamID team, GroupID group)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientMakeGroup);
+	w.writeShort(short(PacketType::ClientMakeGroup));
 	w.writeInt(group);
 
 	m_serv.SendReliable(std::move(con));
@@ -263,7 +263,7 @@ void RemoteMap::selectAll(TeamID team)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientSelectAll);
+	w.writeShort(short(PacketType::ClientSelectAll));
 
 	m_serv.SendReliable(std::move(con));
 
@@ -283,7 +283,7 @@ bool RemoteMap::setTarget(PointF pt, TeamID team)
 	DataContainer c = m_serv.GetConRelSmall();
 	ContainerWriter w(c);
 
-	w.writeShort((short)PacketType::ClientClick);
+	w.writeShort(short(PacketType::ClientClick));
 	w.writeFloat(pt.x);
 	w.writeFloat(pt.y);
 
@@ -323,7 +323,7 @@ void RemoteMap::deselectTarget(TeamID team)
 	DataContainer c = m_serv.GetConRelSmall();
 	ContainerWriter w(c);
 
-	w.writeShort((short)PacketType::ClientDeselect);
+	w.writeShort(short(PacketType::ClientDeselect));
 	m_serv.SendReliable(std::move(c));
 
 	for (auto& e : m_ents[team - 1])
@@ -386,7 +386,7 @@ void RemoteMap::receiveData(bool& updatePositions)
 		try
 		{
 			ContainerReader r(p);
-			PacketType t = (PacketType)r.readShort();
+			PacketType t = PacketType(r.readShort());
 
 			switch (t)
 			{
@@ -491,8 +491,8 @@ void RemoteMap::handleSpawn(ContainerReader& r)
 		pos.x = r.readFloat();
 		pos.y = r.readFloat();
 		PlanetID pID = r.readByte();
-		assert((unsigned)pID < m_nPlans);
-		if ((unsigned)pID >= m_nPlans)
+		assert(unsigned(pID) < m_nPlans);
+		if (unsigned(pID) >= m_nPlans)
 			throw std::domain_error("HandleSpawn");
 
 
@@ -500,7 +500,7 @@ void RemoteMap::handleSpawn(ContainerReader& r)
 
 
 		unsigned int id = m_ents[curTeam - 1].lastID() + 1;
-		MapObject::EntityType type = (MapObject::EntityType)r.readByte();
+		MapObject::EntityType type = MapObject::EntityType(r.readByte());
 		PointF planPos = m_plans[pID]->getPos();
 
 		m_ents[curTeam - 1].add(new RemoteEntity(pos, curTeam, m_plans[pID]->getTargetType(), m_plans[pID]->getTarget(),
@@ -573,7 +573,7 @@ void RemoteMap::handleGameClick(ContainerReader& r)
 	PointF pt;
 	pt.x = r.readFloat();
 	pt.y = r.readFloat();
-	MapEntity::TargetType t = (MapEntity::TargetType)r.readByte();
+	MapEntity::TargetType t = MapEntity::TargetType(r.readByte());
 
 	bool uSelected = false;
 
@@ -603,7 +603,7 @@ void RemoteMap::handleGameClick(ContainerReader& r)
 		if (t == MapObject::tgPlanetDefend)
 		{
 			// select planet
-			PlanetID pid = (PlanetID)pt.x;
+			PlanetID pid = PlanetID(pt.x);
 			m_plans[pid]->forceSelect();
 		}
 	}
@@ -649,48 +649,6 @@ void RemoteMap::handleEntPosUpdate(ContainerReader& r)
 
 		id = r.readInt();
 	} while (id != 0);
-	/*
-	float dt = gameTime.GetTimeDelta(r.readFloat());
-	D3DCOLOR colo = C_RED;
-	dt = max(dt, 0.0f);
-	if (dt == 0.0f)
-		colo = C_DARKGREEN;
-
-	const byte m_team = r.readByte();
-
-	int id = r.readInt();
-	PointF pos;
-	bool mood;
-	auto e = ents[m_team - 1].begin();
-	const auto end = ents[0].end();
-
-	if (e == end)
-		return;
-	do
-	{
-		while (e.GetID() < id)
-		{
-			++e;
-			if (e == end)
-				return;
-		}
-		pos.x = r.readFloat();
-		pos.y = r.readFloat();
-		mood = r.readByte();
-
-		assert(e != end);
-		if (e.GetID() == id)
-		{
-			e->SetPosition(pos);
-			if (e->GetMood() != mood)
-				e->ChangeMood();
-
-			e->SetUpdateTime(dt);
-		}
-
-		id = r.readInt();
-	} while (id != 0);
-	*/
 }
 void RemoteMap::updateMovement(float dt)
 {
@@ -725,8 +683,8 @@ void RemoteMap::updateMovement(float dt)
 void RemoteMap::handleDie(ContainerReader& r)
 {
 	// death events are sent in order from m_team 1 to n
-	byte curTeam = r.readByte();
-	byte lastTeam = curTeam;
+	TeamID curTeam = r.readByte();
+	TeamID lastTeam = curTeam;
 	if (curTeam <= 0)
 		return;
 
@@ -761,11 +719,11 @@ void RemoteMap::handleDie(ContainerReader& r)
 void RemoteMap::handlePlanCap(ContainerReader& r)
 {
 	PlanetID pID = r.readByte();
-	byte newT = r.readByte();
-	byte oldT = m_plans[pID]->getTeam();
-	byte hasCulprit = r.readByte();
+	TeamID newT = r.readByte();
+	TeamID oldT = m_plans[pID]->getTeam();
+	TeamID hasCulprit = r.readByte();
 
-	byte cTeam = 0;
+	TeamID cTeam = 0;
 	size_t cID = 0;
 	if (hasCulprit)
 	{
@@ -790,11 +748,11 @@ void RemoteMap::handlePlanCap(ContainerReader& r)
 }
 void RemoteMap::handlePlanUpd(ContainerReader& r)
 {
-	byte start = r.readByte();
+	TeamID start = r.readByte();
 	while (r.remaining() >= 6 && start < m_nPlans)
 	{
-		byte team = r.readByte();
-		byte subteam = r.readByte();
+		TeamID team = r.readByte();
+		TeamID subteam = r.readByte();
 		int hp = r.readInt();
 		if (m_plans[start]->getTeam() == team)
 		{
@@ -852,23 +810,10 @@ void RemoteMap::updateMovementServer()
 	};
 
 	updateEntsWithUpdater(updFunc);
-
-	/*
-	for (int index = 0; index < nPlayers; index++)
-	{
-		for (auto i = ents[index].begin(), end = ents[index].end(); i != end; i++)
-		{
-			if (i->GetUpdateTime() != 0.0f)
-				if (i->getVelCorrect())
-					SetCrowdEntVel(i->GetUpdateTime() * float(MapEntity::SPEED), (*i), i.GetID());
-		}
-	}
-	*/
-
 }
 void RemoteMap::handleSurrender(ContainerReader& r)
 {
-	byte team = r.readByte();
+	TeamID team = r.readByte();
 
 	// kill entities
 	while (m_ents[team - 1].length() != 0)
@@ -889,14 +834,15 @@ void RemoteMap::handleSurrender(ContainerReader& r)
 }
 void RemoteMap::handleClanChange(ContainerReader& r)
 {
-	byte t1 = r.readByte();
+	TeamID t1 = r.readByte();
 	ClanInfo i1 = ClanInfo(r.readByte());
 
-	byte t2 = r.readByte();
+	TeamID t2 = r.readByte();
 	ClanInfo i2 = ClanInfo(r.readByte());
 
 	assert(t1 >= 0 && t1 <= m_nPlayers);
 	assert(t2 >= 0 && t2 <= m_nPlayers);
+	// TODO assert range
 
 	m_clanInfo[t1 - 1][t2 - 1] = i1;
 	m_clanInfo[t2 - 1][t1 - 1] = i2;
@@ -907,7 +853,7 @@ void RemoteMap::setPlanetSpawnType(TeamID team, MapObject::EntityType t)
 	DataContainer con = m_serv.GetConRelSmall();
 	ContainerWriter w(con);
 
-	w.writeShort((short)PacketType::ClientSetPlanetSpawntype);
+	w.writeShort(short(PacketType::ClientSetPlanetSpawntype));
 	w.writeByte(t);
 
 	m_serv.SendReliable(std::move(con));
@@ -915,8 +861,8 @@ void RemoteMap::setPlanetSpawnType(TeamID team, MapObject::EntityType t)
 
 void RemoteMap::handlePlanetSpawntype(ContainerReader& r)
 {
-	MapObject::EntityType et = (MapObject::EntityType)r.readByte();
-	byte team = r.readByte();
+	MapObject::EntityType et = MapObject::EntityType(r.readByte());
+	TeamID team = r.readByte();
 
 	if (et > MapObject::etSaboteur)
 		return;
@@ -930,7 +876,7 @@ void RemoteMap::handleSelectAllEntityType(ContainerReader& r)
 		return;
 
 	byte team = r.readByte();
-	MapObject::EntityType et = (MapObject::EntityType)r.readByte();
+	MapObject::EntityType et = MapObject::EntityType(r.readByte());
 
 	if (unsigned(team - 1) >= m_nPlayers)
 		return;
@@ -943,7 +889,7 @@ void RemoteMap::handleSelectAllEntityType(ContainerReader& r)
 void RemoteMap::handleFilterEntityType(ContainerReader& r)
 {
 	byte team = r.readByte();
-	MapObject::EntityType et = (MapObject::EntityType)r.readByte();
+	MapObject::EntityType et = MapObject::EntityType(r.readByte());
 
 	if (unsigned(team - 1) >= m_nPlayers)
 		return;
@@ -986,7 +932,7 @@ void RemoteMap::handlePlanDefend(ContainerReader& r)
 {
 	if (r.remaining() == 1)
 	{
-		byte team = r.readByte();
+		TeamID team = r.readByte();
 
 		Map::setAllPlanetsOnDefense(team);
 	}

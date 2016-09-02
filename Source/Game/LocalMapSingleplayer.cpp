@@ -17,7 +17,7 @@ std::unique_ptr<LocalMapSingleplayer::AI> LocalMapSingleplayer::SpawnAI(int team
 void LocalMapSingleplayer::InitAI()
 {
 	//make AIs
-	for (int i = 1; i < m_nPlayers; i++)
+	for (size_t i = 1; i < m_nPlayers; i++)
 	{
 		pAI.push_back(SpawnAI(i + 1));
 	}
@@ -44,9 +44,9 @@ void LocalMapSingleplayer::update(float dt)
 			//spawn entity
 			if (tryEntitySpawn(p->getPos(), p->getTeam(), p->getRadius(), p->getTargetType(), p->getTarget(), p->getGroup(), p->selected(), p->getDefenseRadius(), p->getEntityType()))
 			{
-				byte t = p->getTeam();
-				Map::Event_EntitySpawn(p->getID(), *m_ents[t - 1].back());
-				m_grid.addEntity(&(*(m_ents[t - 1].back())), m_ents[t - 1].back()->getPos());
+				auto team = p->getTeam();
+				Map::Event_EntitySpawn(p->getID(), *m_ents[team - 1].back());
+				m_grid.addEntity(&(*(m_ents[team - 1].back())), m_ents[team - 1].back()->getPos());
 			}
 		}
 	}
