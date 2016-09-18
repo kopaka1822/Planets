@@ -1,12 +1,18 @@
 #version 330
+#pragma optimize(off)
 
 uniform vec2 rtexel;
 uniform uint offset;
 
+uint intmod(uint a, uint b)
+{
+	return a - (a / b) * b;
+}
+
 uint randomInt(uint n)
 {
 	uint val = uint(n) * uint(541) + uint(463);
-	return uint(mod(val,1000.0));
+	return intmod(val,1000u);
 }
 
 float toFloat(uint n)
@@ -14,17 +20,9 @@ float toFloat(uint n)
 	return (float(n) / 500.0) - 1.0;
 }
 
-uint fac(uint n)
-{
-	uint v = (n * n + n) / uint(2);
-	
-	return v;
-}
-
 float random(uint n)
 {
-	return sin(float(fac(uint(n + uint(1))))) * 1.1;
-	//return sin(float(n)) * 1.1;
+	return sin(float(n)) * 1.1;
 }
 
 out float intense;
@@ -35,15 +33,15 @@ void main()
 	uint r2 = randomInt(r);
 	uint r3 = randomInt(r2);
 	
-	gl_Position = vec4(random(r),random(r2),0.0,1.0);
+	vec2 pos = vec2(random(r),random(r2));
+	gl_Position = vec4(pos,0.0,1.0);
 	
 	// intensity
-	
 	float val = ((random(r3) + 1.0) / 2.0) * 0.3 + 0.2;
 	
 	float phi = 0.0;
 	
-	float modfac = mod(gl_InstanceID, 80) + 1.0;
+	float modfac = float(intmod(uint(gl_InstanceID), 80u )) + 1.0;
 	phi = (rtexel.y * 6.28 * modfac + float(gl_InstanceID));
 	
 	
