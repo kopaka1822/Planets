@@ -23,31 +23,6 @@ public:
 	static void WriteLine(bool b);
 	static void WriteLine(char c);
 
-#pragma warning( push )
-#pragma warning( disable : 4717)
-
-	template <class ArgF,class... ArgT>
-	static void Write(const ArgF& first,const ArgT&... args)
-	{
-		Write(first);
-		Write(args...);
-	}
-	static void Write()
-	{}
-
-	/*template<class ArgF>
-	static void WriteLine(const ArgF& first)
-	{
-		WriteLine(first);
-	}*/
-	template <class ArgF, class... ArgT>
-	static void WriteLine(const ArgF& first, const ArgT&... args)
-	{
-		Write(first);
-		WriteLine(args...);
-	}
-
-#pragma warning( pop )
 	static void WriteLine(){}
 
 	// Input
