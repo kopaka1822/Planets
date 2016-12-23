@@ -140,6 +140,8 @@ private:
 	void ApplyRadial(FramebufferObject& srcFbo);
 	void ApplyFXAA(FramebufferObject& srcFbo);
 	Database::GameTex ChooseTexture(Database::GameTex in);
+
+	bool hasMinVersion(int major, int minor) const;
 private:
 	Texture texStory;
 	Texture texNoise;

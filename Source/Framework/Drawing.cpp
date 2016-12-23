@@ -89,7 +89,9 @@ void Drawing::Create()
 		shFXAA.Create();
 		shTexAdd.Create();
 		shGlow.Create();
-		shStarfield.Create();
+
+		if(hasMinVersion(3,3))
+			shStarfield.Create();
 	}
 
 	Log::Write("creating openGL textures");
@@ -141,7 +143,9 @@ void Drawing::Dispose()
 		shFXAA.Dispose();
 		shTexAdd.Dispose();
 		shGlow.Dispose();
-		shStarfield.Dispose();
+
+		if(hasMinVersion(3,3))
+			shStarfield.Dispose();
 	}
 
 	GLCheck("Dispose");
@@ -301,7 +305,7 @@ void Drawing::DrawStarfield()
 	if(curShaderConfig & Storybook)
 		return;
 
-	if(Settings::GetStarfield() && (oglMajorVersion > 3 || (oglMajorVersion == 3 && oglMinorVersion >= 3)))
+	if(Settings::GetStarfield() && hasMinVersion(3,3))
 	{
 		shStarfield.Update(planmove);
 
@@ -336,119 +340,10 @@ void Drawing::DrawStarfield()
 
 void Drawing::SetStarfieldColor(const Color& col)
 {
-	shStarfield.setColor(col);
+	if(hasMinVersion(3,3))
+		shStarfield.setColor(col);
 }
 
-/*
-void Drawing::ApplyGlowing(FramebufferObject* pFbo)
-{
-	fbo.SaveTexture(); // this is the original scene
-	// drawing texture
-
-
-	
-		Steps:
-			1.	DrawScene
-			2.	Filter bright elements
-			3.	blur horizontal
-			4.	blur vertical
-			5.	add images together
-	
-
-	// this will store the result of the brightness filter
-	// 2.	Filter bright elements
-	
-
-
-	//if (pFbo)
-		//pFbo->CreateAndApply(realWidth, realHeight);
-	
-	
-	FramebufferObject fbo2;
-	fbo2.CreateAndApply(realWidth, realHeight);
-	{
-		shFXAA.SetStep(PointF(1.0f / realWidth, 1.0f / realHeight));
-		fbo.DrawTextureInShader(shFXAA);
-	//}
-	//fbo2.SaveTexture();
-	//
-	//fbo2.DrawTextureInShader(shFXAA);
-
-
-	//if (pFbo)
-		//pFbo->SaveTexture();
-
-	//FramebufferObject onlyBright;
-	//onlyBright.CreateAndApply(realWidth, realHeight);
-	//{
-	//	fbo.DrawTextureInShader(shBrightFilter);
-	//}
-	//onlyBright.SaveTexture();
-
-	//// 3.	blur horizontal
-	//FramebufferObject blur1;
-	//blur1.CreateAndApply(realWidth, realHeight);
-	//{
-	//	shBlur.SetParameters(PointF(1.0f / realWidth, 0.0f));
-	//	onlyBright.DrawTextureInShader(shBlur);
-	//}
-	//blur1.SaveTexture();
-
-	//// 4.	blur vertical
-	//FramebufferObject blur2;
-	//blur2.CreateAndApply(realWidth, realHeight);
-	//{
-	//	shBlur.SetParameters(PointF(0.0f, 1.0f / realHeight));
-	//	blur1.DrawTextureInShader(shBlur);
-	//}
-	//blur2.SaveTexture();
-
-	//// 5.	add images together
-	//// now combine original with blurred
-	///*if (isBlurring)
-	//{
-	//	FramebufferObject radial;
-	//	radial.CreateAndApply(realWidth, realHeight, GL_LINEAR);
-	//	{
-	//		shTexAdd.SetFactor(1.0f);
-	//		fbo.DrawTextureInShader(shTexAdd);
-	//		shTexAdd.SetFactor(1.0f);
-	//		blur2.DrawTextureInShader(shTexAdd, GL_SRC_ALPHA, GL_ONE);
-	//	}
-	//	radial.SaveTexture();
-
-	//	curBlur += 0.025f;
-	//	float sinblur = sinf(curBlur);
-	//	sinblur = std::max(sinblur, 0.0f);
-	//	float sinsq = sinblur * sinblur * sinblur;
-
-	//	shRadBlur.SetParameters(blurCenter, PointF(1.0f / realWidth, 1.0f / realHeight),
-	//		-sinsq, 1.0f + sinblur * 3.0f);
-	//	radial.DrawTextureInShader(shRadBlur);
-
-	//	if (sinblur == 0.0f)
-	//		isBlurring = false;
-	//}
-	//else
-	//{
-	//	if (pFbo)
-	//		pFbo->CreateAndApply(realWidth, realHeight);
-	//	{
-	//		shTexAdd.SetFactor(1.0f);
-	//		fbo.DrawTextureInShader(shTexAdd);
-	//		shTexAdd.SetFactor(1.0f);
-	//		blur2.DrawTextureInShader(shTexAdd, GL_SRC_ALPHA, GL_ONE);
-	//	}
-	//	if (pFbo)
-	//		pFbo->SaveTexture();
-	//}
-
-	//onlyBright.Dispose();
-	//blur1.Dispose();
-	//blur2.Dispose();
-	fbo.Dispose();
-	GLCheck("apply image");
-}*/
 void Drawing::LoadShaders()
 {
 	Log::Write("loading shaders");
@@ -461,7 +356,9 @@ void Drawing::LoadShaders()
 	shFXAA.Load();
 	shTexAdd.Load();
 	shGlow.Load();
-	shStarfield.Load();
+
+	if(hasMinVersion(3,3))
+		shStarfield.Load();
 
 	Log::Write("shaders loaded");
 }
@@ -640,6 +537,12 @@ Database::GameTex Drawing::ChooseTexture(Database::GameTex in)
 	}
 	return in;
 }
+
+bool Drawing::hasMinVersion(int major, int minor) const
+{
+	return oglMajorVersion > major || (major == oglMajorVersion && oglMinorVersion >= minor);
+}
+
 void Drawing::DrawParticle(PointF pos, Color color, float r, Database::GameTex tex)
 {
 	Texture& texture = Database::GetTexture(ChooseTexture(tex));
@@ -677,33 +580,7 @@ void Drawing::DrawParticleArray(const PointF* pArray, unsigned int len, Color co
 	}
 	ShutParticles();
 }
-//void Drawing::DrawParticleArray(const PointF* pArray, const Color* pColors, unsigned int len, float size, Database::GameTex tex, PointF translation, float scale, PointF ul)
-//{
-//	if (len == 0)
-//		return;
-//
-//	Texture& texture = Database::GetTexture(ChooseTexture(tex));
-//	InitParticels(Color::White(), size * scale, texture); // pass dummy color
-//
-//	// do translation
-//	glTranslatef(ul.x, ul.y, 0.0f);
-//	glScalef(scale, scale, 1.0f);
-//	glTranslatef(-translation.x, -translation.y, 0.0f);
-//	{
-//		glEnableClientState(GL_COLOR_ARRAY);
-//		glEnableClientState(GL_VERTEX_ARRAY);
-//		{
-//			glColorPointer(4, GL_FLOAT, 0, pColors);
-//			glVertexPointer(2, GL_FLOAT, 0, pArray);
-//
-//
-//			glDrawArrays(GL_POINTS, 0, len);
-//		}
-//		glDisableClientState(GL_VERTEX_ARRAY);
-//		glDisableClientState(GL_COLOR_ARRAY);
-//	}
-//	ShutParticles();
-//}
+
 void Drawing::InitParticels(const Color& col, float size, Texture& tex)
 {
 	glMatrixMode(GL_MODELVIEW);

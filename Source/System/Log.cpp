@@ -76,6 +76,7 @@ void Log::Info(const std::string& i)
 	}
 
 }
+
 void Log::Error(const std::exception& e)
 {
 	LOG_ERROR = true;
