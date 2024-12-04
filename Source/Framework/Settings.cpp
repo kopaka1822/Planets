@@ -384,11 +384,6 @@ void Settings::RestoreDefault()
 
 	MenuScore = 0;
 	servers.clear();
-	ServerInfo si;
-
-	si.nick = "Beta Server";
-	si.IP = "progmem.de";
-	servers.push_back(si);
 
 	for (auto& a : acvments)
 	{
